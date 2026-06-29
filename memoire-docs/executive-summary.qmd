@@ -1,0 +1,6 @@
+# Executive Summary {.unnumbered}
+
+The executive summary should give a clear understanding of the study developed
+in the thesis (problem statement, methodology, work carried out, results,
+interpretation and conclusion). It should take the form of an article
+publishable in a professional or academic journal, 3 to 7 pages long.

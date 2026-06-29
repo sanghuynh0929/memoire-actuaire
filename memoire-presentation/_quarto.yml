@@ -1,0 +1,7 @@
+project:
+  title: "Optimal Transport"
+  type: default
+
+# Project-level metadata applied to all documents.
+# Render the whole project with:  quarto render
+# Preview with live reload with:  quarto preview optimal-transport.qmd

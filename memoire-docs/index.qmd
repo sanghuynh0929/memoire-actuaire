@@ -1,0 +1,117 @@
+```{=latex}
+% ---- Roman page numbering for the front matter -----------------------
+\pagenumbering{arabic}
+\selectlanguage{english}
+```
+
+# Abstract {.unnumbered}
+
+```{=latex}
+\thispagestyle{empty}
+\noindent\rule{\textwidth}{0.4pt}\\[0.4em]
+```
+
+Fairness considerations are becoming central in insurance pricing, particularly
+under regulatory and societal pressure to avoid discriminatory outcomes. This
+thesis investigates demographic parity as a fairness criterion in insurance,
+with a specific focus on multi-peril insurance pricing. The problem is naturally
+framed through optimal transport, which provides a principled way to transform
+risk scores across protected groups while preserving actuarial relevance.
+
+In the single-peril setting, fairness adjustment is relatively tractable: the
+problem is unidimensional and the optimal transport map, or equivalently the
+Wasserstein barycenter, admits a closed-form solution in terms of the quantile
+function. However, in the multi-peril setting, risk is inherently
+multidimensional. Closed-form solutions for the barycenter no longer exist, and
+the direct computation of Wasserstein barycenters becomes computationally
+prohibitive. At the same time, modern machine learning models used for insurance
+pricing increasingly exploit complex dependency structures between risks, further
+complicating fairness adjustments.
+
+This thesis makes four main contributions. First, it provides a structured
+review of fairness notions in insurance, with an emphasis on demographic parity
+and its implications for pricing. Second, it studies multi-peril insurance
+pricing both under independent risks and under complex dependence structures,
+highlighting how machine learning methods leverage such dependencies. Third, it
+investigates two scalable optimal transport-based approaches for fairness in the
+multi-peril setting: (i) Lifted Sliced Wasserstein Distance, where fairness is
+enforced via an approximation of the Wasserstein barycenter and a transport plan
+is provided, and (ii) a Conditional Normalizing Flow approach, where fairness is
+achieved by learning transport maps through invertible flows. Finally, a post-hoc
+autocalibration procedure is proposed to restore calibration after fairness
+adjustments.
+
+Overall, this work demonstrates how recent advances in optimal transport and
+machine learning enable practical and scalable fairness corrections for
+multi-peril insurance pricing, bridging the gap between theoretical fairness
+concepts and real-world actuarial applications.
+
+```{=latex}
+\noindent\rule{\textwidth}{0.4pt}\\[0.6em]
+```
+
+*Keywords*: *multi-peril pricing*, *fairness*, *demographic parity*,
+*optimal transport*, *calibration*, *machine learning*.
+
+```{=latex}
+\selectlanguage{french}
+```
+
+# Résumé {.unnumbered}
+
+```{=latex}
+\thispagestyle{empty}
+\noindent\rule{\textwidth}{0.4pt}\\[0.4em]
+```
+
+Les considérations d'équité deviennent centrales dans la tarification des
+assurances, notamment sous la pression réglementaire et sociétale visant à
+éviter toute discrimination. Cette thèse étudie la parité démographique comme
+critère d'équité en assurance, en particulier dans le cadre de la tarification
+des assurances multirisques. Le problème est naturellement abordé par le biais
+du transport optimal, qui offre une méthode rigoureuse pour transformer les
+scores de risque entre les groupes protégés tout en préservant leur pertinence
+actuarielle.
+
+Dans le contexte d'un risque unique, l'ajustement d'équité est relativement
+simple : le problème est unidimensionnel et l'application de transport optimal,
+ou de manière équivalente le barycentre de Wasserstein, admet une solution
+analytique en fonction de la fonction quantile. Cependant, dans le contexte
+multirisque, le risque est intrinsèquement multidimensionnel. Les solutions
+analytiques pour le barycentre n'existent plus et le calcul direct des
+barycentres de Wasserstein devient prohibitif. Parallèlement, les modèles
+d'apprentissage automatique modernes utilisés pour la tarification des assurances
+exploitent de plus en plus les structures de dépendance complexes entre les
+risques, ce qui complexifie davantage les ajustements d'équité.
+
+Cette thèse apporte quatre contributions principales. Premièrement, cet article
+propose une analyse structurée des notions d'équité en assurance, en mettant
+l'accent sur la parité démographique et ses implications en matière de
+tarification. Deuxièmement, il étudie la tarification des assurances multirisques,
+tant en présence de risques indépendants que de structures de dépendance
+complexes, en soulignant comment les méthodes d'apprentissage automatique
+exploitent ces dépendances. Troisièmement, il examine deux approches évolutives,
+basées sur le transport optimal, pour garantir l'équité dans le contexte
+multirisque : (i) la distance Lifted Sliced Wasserstein, où l'équité est assurée
+par une approximation du barycentre de Wasserstein et un plan de transport est
+fourni, et (ii) une approche par flux normalisant conditionnel, où l'équité est
+obtenue par l'apprentissage de cartes de transport via des flux inversibles.
+Enfin, une procédure d'auto-calibration a posteriori est proposée pour rétablir
+la calibration après les ajustements d'équité.
+
+En résumé, ce travail démontre comment les progrès récents en matière de
+transport optimal et d'apprentissage automatique permettent des corrections
+d'équité pratiques et évolutives pour la tarification des assurances
+multirisques, comblant ainsi le fossé entre les concepts théoriques d'équité et
+les applications actuarielles concrètes.
+
+```{=latex}
+\noindent\rule{\textwidth}{0.4pt}\\[0.6em]
+```
+
+*Mots-clés*: *tarification multirisque*, *équité*, *parité démographique*,
+*transport optimal*, *calibration*, *machine learning*.
+
+```{=latex}
+\selectlanguage{english}
+```

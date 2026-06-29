@@ -1,0 +1,93 @@
+% =====================================================================
+%  ISFA mémoire — front matter (title page + abstracts)
+%  This partial REPLACES Quarto's default before-body.tex, so the usual
+%  \maketitle is gone and we draw the ISFA cover by hand.
+%  Fields like candidate / memoir-title are filled from _quarto.yml.
+% =====================================================================
+
+% ---- Roman page numbering for the front matter -----------------------
+\pagenumbering{roman}
+
+% =====================================================================
+%  TITLE PAGE
+% =====================================================================
+\newgeometry{inner=1cm, outer=1cm, top=1cm, bottom=0cm}
+
+\begin{titlepage}
+\thispagestyle{empty}
+
+% --- Logos (only drawn if the files exist in logo/) -------------------
+\begin{tikzpicture}[remember picture, overlay]
+  \IfFileExists{logo/logo_ida.png}{%
+    \node[xshift=-7cm, yshift=-3.1cm] at (current page.north)
+      {\includegraphics[scale=0.11]{logo/logo_ida.png}};}{}
+  \IfFileExists{logo/ucbl.jpg}{%
+    \node[below = 0.5cm] at (current page.north)
+      {\includegraphics[scale=0.11]{logo/ucbl.jpg}};}{}
+  \IfFileExists{logo/logoISFAlong.jpg}{%
+    \node[xshift=6.8cm, yshift=-3.3cm] at (current page.north)
+      {\includegraphics[scale=0.11]{logo/logoISFAlong.jpg}};}{}
+\end{tikzpicture}
+
+\vspace*{3cm}
+
+{\Large\bfseries
+\begin{center}
+Mémoire présenté le : $defense-date$ \\[0.3cm]
+pour l'obtention du Diplôme Universitaire d'actuariat de l'ISFA \\
+et l'admission à l'Institut des Actuaires
+\end{center}
+}
+
+\vspace*{0.75cm}
+
+\noindent Par : $candidate$ \\[0.3cm]
+\noindent Titre : $memoir-title$ \\[0.3cm]
+\noindent Confidentialité : \quad
+$if(confidential)$\(\square\) NON \qquad \(\boxtimes\) OUI$else$\(\boxtimes\) NON \qquad \(\square\) OUI$endif$
+\quad (Durée : \(\square\) 1 an \quad \(\square\) 2 ans)
+\\
+\textit{Les signataires s'engagent à respecter la confidentialité indiquée ci-dessus}
+\vspace*{0.5cm}
+
+\noindent
+\begin{minipage}[t]{0.53\textwidth}
+\begin{tabular}[t]{@{}p{6.5cm} >{\raggedleft\arraybackslash}m{2cm}}
+\textit{Membres présents du jury de l'Institut des Actuaires} & \textit{Signature} \\[1.2cm]
+\fillin{6.8cm} & \\[0.8cm]
+\fillin{6.8cm} & \\[0.8cm]
+\fillin{6.8cm} & \\[0.8cm]
+\textit{Membres présents du jury de l'ISFA} & \\[1.2cm]
+\fillin{6.8cm} & \\[0.8cm]
+\fillin{6.8cm} & \\[0.8cm]
+\fillin{6.8cm} & \\[0.8cm]
+\fillin{6.8cm} & \\[0.8cm]
+
+% \textit{Sécrétariat : } Mme. A & \\ 
+% \textit{Bibliothèque : } Mme. B & \\
+\end{tabular}
+\end{minipage}%
+\begin{minipage}[t]{0.47\textwidth}
+\textit{Entreprise :} \\
+\textit{Nom : $company$} \\[0.3cm]
+\textit{Signature :} \\[0.5cm]
+\textit{Directeur de mémoire en entreprise :} \\
+\textit{Nom : $company-tutor$} \\[0.3cm]
+\textit{Signature :} \\[0.5cm]
+\textit{Invité :} \\
+\textit{Nom : $guest$} \\[0.3cm]
+\textit{Signature :} \\[0.5cm]
+\textit{\textbf{Autorisation de publication et de mise en ligne sur un site de
+diffusion de documents actuariels} (après expiration de l'éventuel délai de
+confidentialité)}\\[0.2cm]
+Signature du responsable entreprise \\
+\framebox[7cm]{\rule{0mm}{1.5cm}} \\
+Signature du candidat \\
+\framebox[7cm]{\rule{0mm}{1.5cm}}
+\end{minipage}
+
+\end{titlepage}
+\restoregeometry
+
+\cleardoublepage
+\selectlanguage{french}

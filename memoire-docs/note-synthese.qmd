@@ -1,0 +1,9 @@
+# Note de Synthèse {.unnumbered}
+
+La note de synthèse doit permettre une bonne compréhension de l'étude
+développée dans le mémoire (notamment problématique, méthodologie suivie,
+travaux, résultats, interprétation et conclusion). Elle doit prendre la forme
+d'un article publiable dans une revue professionnelle académique, dans un
+volume de 3 à 7 feuillets. Le jury appréciera l'adéquation du format du résumé,
+et demandera en tant que de besoin les adaptations nécessaires pour une
+éventuelle publication.

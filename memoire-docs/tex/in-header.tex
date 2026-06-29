@@ -1,0 +1,55 @@
+% =====================================================================
+%  Extra packages + custom macros for the ISFA mémoire
+%  (Quarto already loads: hyperref, xcolor, amsmath, graphicx, geometry,
+%   fontenc/inputenc, natbib via cite-method. Do NOT reload those.)
+% =====================================================================
+
+% --- Languages: French main + English for the abstract / summary -----
+\usepackage[english, french]{babel}
+
+% --- Maths & symbols --------------------------------------------------
+\usepackage{amsfonts, amssymb}
+
+% --- Title-page graphics ---------------------------------------------
+\usepackage{tikz}
+
+% --- Tables & layout helpers -----------------------------------------
+\usepackage{multirow, multicol, array}
+\usepackage{wrapfig}
+\usepackage{subfig}
+\usepackage{eurosym}
+\usepackage{todonotes}
+
+% Don't hyphenate too aggressively (default 50, max 10000)
+\hyphenpenalty=400
+\setlength{\columnsep}{.35in}
+
+% Footnotes restart per page, printed as symbols (as in the original)
+\usepackage[stable]{footmisc}
+
+% =====================================================================
+%  Custom macros (from the original main-file.tex).
+%  \providecommand avoids clashes with Quarto's own definitions.
+% =====================================================================
+\providecommand{\cyan}[1]{{\color{cyan}#1}}
+\providecommand{\blue}[1]{{\color{blue}#1}}
+\providecommand{\red}[1]{\textbf{{\color{red}#1}}}
+\providecommand{\pkg}{\textbf}
+\providecommand{\sigle}{\textsc}
+\providecommand{\code}{\texttt}
+\providecommand{\soft}{\textsf}
+\providecommand{\myskip}{\vspace{\parskip}}
+\providecommand{\expo}{\textsuperscript}
+\providecommand{\HRule}{\noindent\rule{\textwidth}{1pt}}
+\providecommand{\II}{\mbox{\large 1\hskip -0.353em 1}}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\card}{\textrm{Card}}
+\providecommand{\logit}{\textrm{logit}}
+\providecommand{\probit}{\textrm{probit}}
+\providecommand{\boldit}[1]{\textbf{\textit{#1}}}
+\providecommand{\fillin}[1]{\makebox[#1]{\dotfill}}
+
+% A bit of breathing room between paragraphs, like the original
+\setlength{\parskip}{0.5\baselineskip}

@@ -1,0 +1,75 @@
+project:
+  type: book
+  output-dir: _output
+
+# ---------------------------------------------------------------------------
+#  ISFA mémoire metadata
+#  These fields feed the title page (tex/before-body.tex).
+#  Edit them, not the .tex file.
+# ---------------------------------------------------------------------------
+candidate: "Sang HUYNH"
+memoir-title: "An Optimal Transport Framework for Fairness in Multi-peril Insurance Pricing"
+defense-date: "15 janvier 2027"
+company: "Lya Protect"
+company-tutor: "Antoine PAULET"
+academic-advisor: "Maud THOMAS"
+guest: "Arthur CHARPENTIER"
+confidential: false                   # true => OUI is ticked on the cover
+confidential-duration: ""             # "1 an" or "2 ans" if confidential
+
+book:
+  title: "An Optimal Transport Framework for Fairness in Multi-peril Insurance Pricing"
+  author: "Sang HUYNH"
+  output-file: "Huynh_memoire_ISFA"
+  # Front matter (unnumbered) then numbered chapters.
+  chapters:
+    - index.qmd                   # Abstract (EN) + Résumé (FR)
+    - executive-summary.qmd
+    - note-synthese.qmd
+    - acknowledgements.qmd
+    - chapters/01-fairness-discrimination.qmd
+    - chapters/02-optimal-transport.qmd
+    - chapters/03-framework.qmd
+    - chapters/04-numerical.qmd
+    - chapters/05-conclusion.qmd
+    - references.qmd
+  appendices:
+    - appendices/A-annexe1.qmd
+    - appendices/B-annexe2.qmd
+
+# Harvard-style citations via natbib (matches the original agsm style).
+bibliography: references.bib
+# cite-method: natbib
+# biblio-style: agsm
+
+format:
+  pdf:
+    documentclass: report
+    classoption: ["11pt", "a4paper", "twoside", "openright"]
+    papersize: a4
+    geometry:
+      - left=2cm
+      - right=2cm
+      - top=3cm
+      - bottom=3cm
+    pdf-engine: pdflatex
+    number-sections: true
+    toc: true
+    toc-depth: 2
+    toc-title: "Table of Contents"
+    lof: false
+    lot: false
+    colorlinks: true
+    linkcolor: black
+    citecolor: cyan
+    urlcolor: blue
+    keep-tex: true                    # inspect the generated .tex while tuning
+    template-partials:
+      - tex/before-body.tex           # ISFA cover + bilingual abstracts
+    include-in-header:
+      - tex/in-header.tex             # extra packages + custom macros
+
+  # Optional web version; the title page / abstracts partial is PDF-only.
+  # html:
+  #   theme: cosmo
+  #   toc: true
