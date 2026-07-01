@@ -6,11 +6,11 @@
 <script src="memoire-presentation_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="memoire-presentation_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="memoire-presentation_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="memoire-presentation_files/libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="memoire-presentation_files/libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Sang Huynh">
-  <meta name="dcterms.date" content="2026-06-29">
+  <meta name="dcterms.date" content="2026-07-01">
   <title>An Optimal Transport Framework to Fairness in Non-Life Multiperil Insurance</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -232,39 +232,19 @@ Sang Huynh
     </div>
 </div>
 
-  <p class="date">2026-06-29</p>
+  <p class="date">2026-07-01</p>
 </section>
-<section id="agenda" class="slide level2 smaller">
+<section id="agenda" class="slide level2 smaller" data-background-color="#0f172a">
 <h2>Agenda</h2>
-<p>::: - <strong>Discrimination and Fairness in Insurance</strong> — What are the aspects of discrimination and fairness in insurance? - <strong>The Dependent Risk Pricing Problem</strong> — Why are we interested in pricing dependent risks? - <strong>An Introduction to Optimal Transport</strong> — The tools we are using to solve the problem. - <strong>The Framework to Multivariate Fair Regression</strong> — How we use optimal transport to achieve DP-fairness in multiperil insurance. - <strong>Applications</strong> — Some case studies to illustrate the framework. :::</p>
-<aside class="notes">
-<p>Speaker note: keep the framing concrete. The whole talk is “move this pile of sand onto that hole at minimum cost,” then we make it rigorous and then fast. Press ‘S’ to open the speaker view with these notes and a timer.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="aspects-of-discrimination-and-fairness" class="title-slide slide level1 center">
-<h1>Aspects of Discrimination and Fairness</h1>
 <ul>
-<li><p>The business of insurance is the business of discrimination <span class="citation" data-cites="AvrahamLogueSchwarcz2014">(<a href="#/references" role="doc-biblioref" onclick="">Avraham et al. 2014</a>)</span>. Insurers discriminate between policyholders based on their risk characteristics to determine the premium.</p></li>
-<li><p>However, some characteristics are considered sensitive and are not allowed to be used for pricing, such as race, disability status, sexual orientation, etc. by human rights legislation in many jurisdictions <span class="citation" data-cites="CIA2023BiasFairness">(<a href="#/references" role="doc-biblioref" onclick="">Canadian Institute of Actuaries 2023</a>)</span>.</p></li>
-<li><p>Models can either be</p>
-<ul>
-<li><strong>directly discriminatory</strong>: when the sensitive characteristics are used directly in the model, or</li>
-<li><strong>indirectly discriminatory</strong>: when the sensitive characteristics are not used directly, but other features that are correlated with the sensitive characteristics are used in the model.</li>
-</ul></li>
+<li><strong>Discrimination and Fairness in Insurance</strong> — What are the aspects of discrimination and fairness in insurance?</li>
+<li><strong>The Dependent Risk Pricing Problem</strong> — Why are we interested in pricing dependent risks?</li>
+<li><strong>An Introduction to Optimal Transport</strong> — The tools we are using to solve the problem.</li>
+<li><strong>The Framework to Multivariate Fair Regression</strong> — How we use optimal transport to achieve DP-fairness in multiperil insurance.</li>
+<li><strong>Applications</strong> — Some case studies to illustrate the framework.</li>
 </ul>
 </section>
-
-<section id="aspects-of-discrimination-and-fairness-1" class="title-slide slide level1 center">
+<section id="aspects-of-discrimination-and-fairness" class="title-slide slide level1 center">
 <h1>Aspects of Discrimination and Fairness</h1>
 <ul>
 <li>The business of insurance is the business of discrimination <span class="citation" data-cites="AvrahamLogueSchwarcz2014">(<a href="#/references" role="doc-biblioref" onclick="">Avraham et al. 2014</a>)</span>. Insurers discriminate between policyholders based on their risk characteristics to determine the premium.</li>
@@ -300,7 +280,6 @@ The authors in <span class="citation" data-cites="RufBoutharouiteDetyniecki2020"
 </li>
 <li>Sufficiency (or Equal Opportunities): <span class="math inline">\(Y \perp S \mid \hat Y\)</span></li>
 </ul>
-<p>The independence property is studied extensively in regression problems <span class="citation" data-cites="chzhen2020fair">(<a href="#/references" role="doc-biblioref" onclick="">Chzhen et al. 2020</a>)</span>, whereas research on the other two properties are mostly focused in classification problems, with the exception for the very recent preprints <span class="citation" data-cites="denuit2026balance">(<a href="#/references" role="doc-biblioref" onclick="">Denuit et al. 2026</a>)</span> for separation and <span class="citation" data-cites="xi2025fairreweighing">(<a href="#/references" role="doc-biblioref" onclick="">Xi and Yu 2025</a>)</span>.</p>
 <p>The impossibility of satisfying several notions of fairness are proven in <span class="citation" data-cites="BarocasHardtNarayanan2023">(<a href="#/references" role="doc-biblioref" onclick="">Barocas et al. 2023</a>)</span> and <span class="citation" data-cites="friedler2021possibility">(<a href="#/references" role="doc-biblioref" onclick="">Friedler et al. 2021</a>)</span>.</p>
 </section>
 
@@ -310,13 +289,15 @@ The authors in <span class="citation" data-cites="RufBoutharouiteDetyniecki2020"
 <img data-src="img/dimensions%20of%20fairness.png" class="r-stretch"><p><span class="citation" data-cites="CoteCoteCharpentier2025ScalableToolbox">(<a href="#/references" role="doc-biblioref" onclick="">Côté et al. 2025</a>)</span> considered the Fairness problem in Actuarial Pricing along these three axes:</p>
 <ul>
 <li>Actuarial Fairness: this is what actuaries usually think about – the premium should “fairly” reflect the level of riskyness of the insured.</li>
-<li>Causality: this belongs to the “individual fairness”, and is discussed in <span class="citation" data-cites="LindholmRichmanTsanakasWuthrich2021">(<a href="#/references" role="doc-biblioref" onclick="">Lindholm et al. 2021</a>)</span></li>
+<li>Causality: this belongs to the “individual fairness”, and is discussed in <span class="citation" data-cites="LindholmRichmanTsanakasWuthrich2021">(<a href="#/references" role="doc-biblioref" onclick="">Lindholm et al. 2021</a>)</span>. Its aim is to modify the best-estimate price to be <span class="math display">\[
+\mu^*(\mathbf X) := \int_{\mathbf d} \mu(\mathbf X, \mathbf d) \, d\mathbb P^*(\mathbf d)
+\]</span> where the pricing distribution <span class="math inline">\(\mathbb P^*(\mathbf d)\)</span> has the same support as <span class="math inline">\(\mathbf D \sim \mathbb P(\mathbf d)\)</span></li>
 <li>Solidarity: this is the Independence property of “group fairness”.</li>
 </ul>
-<p>The paper outlines ways to quantify the impact of each dimension…</p>
+<p>The paper above outlines ways to quantify the impact of each dimension.</p>
 </section>
 
-<section id="the-multiperil-insurance-pricing-problem" class="title-slide slide level1 center" data-background-color="#0f172a">
+<section id="the-multiperil-insurance-pricing-problem" class="title-slide slide level1 center">
 <h1>The Multiperil Insurance Pricing Problem</h1>
 <ul>
 <li>Many common P&amp;C insurance policies, as well as health insurance policies, bundle multiple guarantees in a single contract.</li>
@@ -333,46 +314,38 @@ The authors in <span class="citation" data-cites="RufBoutharouiteDetyniecki2020"
 </section>
 
 <section>
-<section id="what-has-been-proposed-for-this-problem-in-terms-of-fairness-mitigation" class="title-slide slide level1 center">
-<h1>What has been proposed for this problem in terms of fairness mitigation?</h1>
+<section id="multiperil-pricing" class="title-slide slide level1 center">
+<h1>Multiperil Pricing</h1>
 
-</section>
-<section id="moving-a-sandpile" class="slide level2 smaller">
-<h2>Moving a sandpile</h2>
-<p>You have a pile of sand shaped like distribution <span class="src"><span class="math inline">\(\mu\)</span></span>. You want to reshape it into <span class="tgt"><span class="math inline">\(\nu\)</span></span>.</p>
-<ul>
-<li class="fragment">Moving a grain from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> costs <span class="math inline">\(c(x, y)\)</span> — often the squared distance <span class="math inline">\(\|x - y\|^2\)</span>.</li>
-<li class="fragment">A <span class="plan"><strong>transport plan</strong></span> says <em>how much</em> mass goes from each <span class="math inline">\(x\)</span> to each <span class="math inline">\(y\)</span>.</li>
-<li class="fragment"><strong>Optimal transport</strong> = the plan with the lowest total cost.</li>
+<img data-src="img/trf%20model.png" class="r-stretch quarto-figure-center"><p class="caption">The model in Spedicato &amp; Richman paper</p><ul>
+<li>Basically the model exploits the embeddings (especially the CLS token) to learn a shared latent information of cross-peril relationship.</li>
+<li>We will use this as our pricing model.</li>
 </ul>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>The total cost of the <em>best</em> plan is a meaningful <strong>distance</strong> between the two distributions — this is the idea that makes OT so useful.</p>
-</div>
-</div>
-</div>
-</div>
+</section>
+<section id="what-has-been-proposed-in-terms-of-fairness-mitigation" class="slide level2">
+<h2>What has been proposed in terms of fairness mitigation?</h2>
+<ul>
+<li><span class="citation" data-cites="charpentier2023mitigating">(<a href="#/references" role="doc-biblioref" onclick="">Charpentier et al. 2023</a>)</span> based on the results of <span class="citation" data-cites="chzhen2020fair">(<a href="#/references" role="doc-biblioref" onclick="">Chzhen et al. 2020</a>)</span> to study Demographic Parity</li>
+<li><span class="citation" data-cites="denuit2026balance">(<a href="#/references" role="doc-biblioref" onclick="">Denuit et al. 2026</a>)</span> and <span class="citation" data-cites="xi2025fairreweighing">(<a href="#/references" role="doc-biblioref" onclick="">Xi and Yu 2025</a>)</span> has recently studied the notion of Sufficiency and Separation in the regression setting</li>
+<li><span class="citation" data-cites="Lindholm2023multitaskDFIP">(<a href="#/references" role="doc-biblioref" onclick="">Lindholm et al. 2023</a>)</span> has applied the multitask NN approach to the “Causal” axis to jointly estimate the best-estimate price and the probabilities <span class="math inline">\(\mathbb P\)</span>. Though applied in the univariate pricing problem, I believe it can be extensible to the multivariate due to the flexibility of the multitask neural network.</li>
+<li><span class="citation" data-cites="hu2023multitaskfairness">(<a href="#/references" role="doc-biblioref" onclick="">Hu et al. 2023</a>)</span> has studied the multitask learning problem, which is very close to our setup; however, it only tackles per-task fairness. In our problem, we will show why joint fairness is important since contracts might be modulable and dimension-wise fairness does not ensure joint fairness in different combinations.</li>
+<li>We wish to go one step further and apply it to the multiperil pricing problem, using theory from optimal transport.</li>
+</ul>
 </section></section>
 <section>
-<section id="monges-problem" class="title-slide slide level1 center" data-background-color="#0f172a">
-<h1>Monge’s Problem</h1>
-
-</section>
-<section id="monge-1781-transport-maps" class="slide level2 smaller">
-<h2>Monge (1781): transport <em>maps</em></h2>
-<p>Find a map <span class="math inline">\(T : X \to Y\)</span> that pushes <span class="src"><span class="math inline">\(\mu\)</span></span> onto <span class="tgt"><span class="math inline">\(\nu\)</span></span> (written <span class="math inline">\(T_\# \mu = \nu\)</span>) and minimizes the total cost:</p>
+<section id="a-primer-to-optimal-transport" class="title-slide slide level1 center">
+<h1>A Primer to Optimal Transport</h1>
+<p>You have a pile of sand shaped like distribution <span class="src"><span class="math inline">\(\mu\)</span></span>. You want to reshape it into <span class="tgt"><span class="math inline">\(\nu\)</span></span>.</p>
+<ul>
+<li>Moving a grain from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> costs <span class="math inline">\(c(x, y)\)</span> — often the squared distance <span class="math inline">\(\|x - y\|^2\)</span>.</li>
+<li>A <span class="plan"><strong>transport map</strong></span> says <em>how much</em> mass goes from each <span class="math inline">\(x\)</span> to each <span class="math inline">\(y\)</span>.</li>
+<li><strong>Optimal transport</strong> = the map with the lowest total cost.</li>
+</ul>
+<p>The total cost of the <em>best</em> plan is a meaningful <strong>distance</strong> between the two distributions.</p>
+<p>Formally, the Monge problem (1781) can be stated as follows: find a map <span class="math inline">\(T : X \to Y\)</span> that pushes <span class="src"><span class="math inline">\(\mu\)</span></span> onto <span class="tgt"><span class="math inline">\(\nu\)</span></span> (written <span class="math inline">\(T_\# \mu = \nu\)</span>) and minimizes the total cost:</p>
 <p><span class="math display">\[
 \inf_{T \,:\, T_\#\mu = \nu} \; \int_X c\big(x,\, T(x)\big)\, d\mu(x)
 \]</span></p>
-<div class="fragment">
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -386,71 +359,22 @@ The authors in <span class="citation" data-cites="RufBoutharouiteDetyniecki2020"
 </div>
 </div>
 </div>
-</div>
-</section></section>
-<section>
-<section id="kantorovichs-relaxation" class="title-slide slide level1 center" data-background-color="#0f172a">
-<h1>Kantorovich’s Relaxation</h1>
-
 </section>
-<section id="kantorovich-1942-transport-plans" class="slide level2 smaller">
-<h2>Kantorovich (1942): transport <em>plans</em></h2>
-<p>Instead of a map, optimize over <strong>couplings</strong> — joint distributions <span class="math inline">\(\pi\)</span> on <span class="math inline">\(X \times Y\)</span> whose marginals are <span class="src"><span class="math inline">\(\mu\)</span></span> and <span class="tgt"><span class="math inline">\(\nu\)</span></span>:</p>
+<section id="kantorovich-relaxation-1942-transport-plans" class="slide level2 smaller">
+<h2>Kantorovich Relaxation (1942): transport <em>plans</em></h2>
+<p>Instead of a map, optimize over <strong>couplings</strong> — joint distributions <span class="math inline">\(\gamma\)</span> on <span class="math inline">\(X \times Y\)</span> whose marginals are <span class="src"><span class="math inline">\(\mu\)</span></span> and <span class="tgt"><span class="math inline">\(\nu\)</span></span>:</p>
 <p><span class="math display">\[
-\Pi(\mu,\nu) = \Big\{ \pi \ge 0 \;:\; \textstyle\int_Y d\pi = \mu,\;\; \int_X d\pi = \nu \Big\}
+\Gamma(\mu,\nu) = \Big\{ \gamma \ge 0 \;:\; \textstyle\int_Y d\gamma = \mu,\;\; \int_X d\gamma = \nu \Big\}
 \]</span></p>
 <p>The optimal transport cost becomes</p>
 <p><span class="math display">\[
-\mathcal{T}_c(\mu,\nu) \;=\; \inf_{\pi \in \Pi(\mu,\nu)} \int_{X\times Y} c(x,y)\, d\pi(x,y)
+\mathcal{T}_c(\mu,\nu) \;=\; \inf_{\gamma \in \Gamma(\mu,\nu)} \int_{X\times Y} c(x,y)\, d\gamma(x,y)
 \]</span></p>
 <ul>
-<li class="fragment">Mass <strong>can</strong> now split — <span class="math inline">\(\pi(x,\cdot)\)</span> may spread over many destinations.</li>
-<li class="fragment">The objective is <strong>linear</strong> in <span class="math inline">\(\pi\)</span> over a <strong>convex</strong> set → a solution always exists.</li>
-<li class="fragment">For nice costs, the Kantorovich optimum coincides with a Monge map <span class="citation" data-cites="villani2009optimal">(<a href="#/references" role="doc-biblioref" onclick="">Villani 2009</a>)</span>.</li>
+<li>Mass <strong>can</strong> now split — <span class="math inline">\(\gamma(x,\cdot)\)</span> may spread over many destinations.</li>
+<li>The objective is <strong>linear</strong> in <span class="math inline">\(\gamma\)</span> over a <strong>convex</strong> set → a solution always exists.</li>
+<li>For nice costs, the Kantorovich optimum coincides with a Monge map <span class="citation" data-cites="villani2009optimal">(<a href="#/references" role="doc-biblioref" onclick="">Villani 2009</a>)</span>.</li>
 </ul>
-</section></section>
-<section>
-<section id="wasserstein-distance" class="title-slide slide level1 center" data-background-color="#0f172a">
-<h1>Wasserstein Distance</h1>
-
-</section>
-<section id="a-metric-between-distributions" class="slide level2 smaller">
-<h2>A metric between distributions</h2>
-<p>Take the cost to be a distance to the power <span class="math inline">\(p\)</span>, i.e.&nbsp;<span class="math inline">\(c(x,y) = d(x,y)^p\)</span>:</p>
-<p><span class="math display">\[
-W_p(\mu, \nu) \;=\; \left( \inf_{\pi \in \Pi(\mu,\nu)} \int d(x,y)^p \, d\pi(x,y) \right)^{1/p}
-\]</span></p>
-<div class="columns">
-<div class="column" style="width:55%;">
-<p><strong>Why people love it</strong></p>
-<ul>
-<li>It is a genuine <strong>metric</strong> (symmetry, triangle inequality).</li>
-<li>It respects the <strong>geometry</strong> of the underlying space.</li>
-<li>It stays meaningful even when distributions have <strong>disjoint support</strong> — unlike KL divergence, which blows up.</li>
-</ul>
-</div><div class="column" style="width:45%;">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Earth Mover’s Distance</strong></p>
-</div>
-<div class="callout-content">
-<p>In computer vision, <span class="math inline">\(W_1\)</span> is known as the <strong>Earth Mover’s Distance</strong> — the minimum “work” to turn one histogram into another.</p>
-</div>
-</div>
-</div>
-</div></div>
-</section></section>
-<section>
-<section id="discrete-ot" class="title-slide slide level1 center" data-background-color="#0f172a">
-<h1>Discrete OT</h1>
-
-</section>
-<section id="its-just-a-linear-program" class="slide level2 smaller">
-<h2>It’s just a linear program</h2>
 <p>With empirical distributions <span class="math inline">\(\mu = \sum_{i=1}^n a_i \delta_{x_i}\)</span> and <span class="math inline">\(\nu = \sum_{j=1}^m b_j \delta_{y_j}\)</span>, a plan is a matrix <span class="math inline">\(P \in \mathbb{R}^{n \times m}_{+}\)</span> and the cost is <span class="math inline">\(C_{ij} = c(x_i, y_j)\)</span>:</p>
 <p><span class="math display">\[
 \min_{P \,\ge\, 0} \; \langle C, P \rangle
@@ -458,32 +382,81 @@ W_p(\mu, \nu) \;=\; \left( \inf_{\pi \in \Pi(\mu,\nu)} \int d(x,y)^p \, d\pi(x,y
 P \mathbf{1}_m = a, \;\; P^\top \mathbf{1}_n = b
 \]</span></p>
 <ul>
-<li class="fragment"><span class="math inline">\(\langle C, P\rangle = \sum_{ij} C_{ij} P_{ij}\)</span> is the total transport cost.</li>
-<li class="fragment">The row sums must equal the source weights <span class="math inline">\(a\)</span>; column sums the target weights <span class="math inline">\(b\)</span>.</li>
-<li class="fragment">Exactly solvable with the <strong>network simplex</strong> / Hungarian algorithm…</li>
-<li class="fragment">…but that costs roughly <span class="math inline">\(O(n^3 \log n)\)</span> — painful for large <span class="math inline">\(n\)</span>.</li>
+<li><span class="math inline">\(\langle C, P\rangle = \sum_{ij} C_{ij} P_{ij}\)</span> is the total transport cost.</li>
+<li>The row sums must equal the source weights <span class="math inline">\(a\)</span>; column sums the target weights <span class="math inline">\(b\)</span>.</li>
+<li>Exactly solvable with the <strong>network simplex</strong> / Hungarian algorithm, time complexity <span class="math inline">\(O(n^3 \log n)\)</span>, intractable for large <span class="math inline">\(n\)</span>.</li>
 </ul>
-</section></section>
-<section>
-<section id="sinkhorn" class="title-slide slide level1 center" data-background-color="#0f172a">
-<h1>Sinkhorn</h1>
-
 </section>
-<section id="entropic-regularization" class="slide level2 smaller">
-<h2>Entropic regularization</h2>
-<p>Add an entropy penalty <span class="math inline">\(H(P) = -\sum_{ij} P_{ij}(\log P_{ij} - 1)\)</span> <span class="citation" data-cites="cuturi2013sinkhorn">(<a href="#/references" role="doc-biblioref" onclick="">Cuturi 2013</a>)</span>:</p>
+<section id="transportation-on-the-real-line" class="slide level2">
+<h2>Transportation on the real line</h2>
+<p>Let <span class="math inline">\(\mu, \nu\)</span> be probability measures on <span class="math inline">\(\mathbb R\)</span> with finite p-th moment. Let <span class="math inline">\(c(x,y) = h(x-y)\)</span> where <span class="math inline">\(h: \mathbb R \to [0, \infty)\)</span> is convex.</p>
+<ul>
+<li>If <span class="math inline">\(\mu\)</span> has no atom, i.e.&nbsp;its cdf is continuous, then <span class="math inline">\(F^{-1}_\nu \circ F_\mu\)</span> is an optimal transport map, and is unique if <span class="math inline">\(h\)</span> is strictly convex.</li>
+<li>We have <span class="math display">\[
+\min_{\gamma\in\Gamma(\mu,\nu)}\int_{\mathbb R^2}c(x,y)d\gamma(x,y) = \int_0^1 c(F_{\mu}^{-1}(s), F_{\nu}^{-1}(s)) ds
+\]</span></li>
+</ul>
+<p>This shows that 1D transportation is trivial, and numerically just takes <span class="math inline">\(O(n\log n)\)</span> to sort the atoms for empirical measures <span class="math inline">\(\mu, \nu\)</span>. This is the basis of the method that <span class="citation" data-cites="charpentier2023mitigating">(<a href="#/references" role="doc-biblioref" onclick="">Charpentier et al. 2023</a>)</span> and <span class="citation" data-cites="hu2023multitaskfairness">(<a href="#/references" role="doc-biblioref" onclick="">Hu et al. 2023</a>)</span> uses.</p>
+</section>
+<section id="wasserstein-distance" class="slide level2">
+<h2>Wasserstein distance</h2>
+<p>Take the cost to be a distance to the power <span class="math inline">\(p\)</span>, i.e.&nbsp;<span class="math inline">\(c(x,y) = d(x,y)^p\)</span>:</p>
+<p><span class="math display">\[
+W_p(\mu, \nu) \;=\; \left( \inf_{\pi \in \Pi(\mu,\nu)} \int d(x,y)^p \, d\pi(x,y) \right)^{1/p}
+\]</span></p>
+<ul>
+<li>It is a <strong>metric</strong> (symmetry, triangle inequality).</li>
+<li>It respects the <strong>geometry</strong> of the underlying space.</li>
+<li>It stays meaningful even when distributions have <strong>disjoint support</strong>, unlike KL divergence, which blows up.</li>
+</ul>
+</section>
+<section id="wasserstein-barycenter" class="slide level2">
+<h2>Wasserstein barycenter</h2>
+<p>Given <span class="math inline">\(\{\mu_s\}_{s \in \mathcal S}\)</span>. We seek to find the measure <span class="math inline">\(\nu^*\)</span> that minimizes <span class="math display">\[
+\nu^* \in {\arg\min}_{\nu} \sum_{s\in\mathcal S}p_s W_2^2(\nu,\mu_s)
+\]</span></p>
+<p>In the fairness setting, let <span class="math inline">\(\mu_s\)</span> be the law of the predictions of group <span class="math inline">\(s\)</span>, and <span class="math inline">\(p_s = \mathbb P(S = s)\)</span>, the proportion of the population that belongs to group <span class="math inline">\(s\)</span>. We seek to find the transport map <span class="math inline">\(\mathcal T_s\)</span> for each group to the barycenter.</p>
+
+<img data-src="img/barycenter%20vs%20arithmean.png" class="r-stretch"><p>The Wasserstein barycenter has many desirable properties:</p>
+<ul>
+<li>Over simple arithmetic mean: preservation of geometry - no multimodality problems, etc.</li>
+<li>The barycenter preserves the global balance property, i.e.&nbsp;the mean of the barycenter is the barycenter of means.</li>
+<li><span class="citation" data-cites="chzhen2020fair">(<a href="#/references" role="doc-biblioref" onclick="">Chzhen et al. 2020</a>)</span> proved in the univariate setting that: Amongst DP-fair adjustments, the barycenter is the optimal in terms of MSE. We will generalize this to the multivariate case.</li>
+</ul>
+</section>
+<section id="optimality-result" class="slide level2">
+<h2>Optimality Result</h2>
+<p>Formally, let <span class="math inline">\((X, S, Y) \in \mathbb R^d \times \mathcal S \times \mathbb R^p\)</span> with <span class="math inline">\(p_s = \mathbb P(S=s) &gt; 0\)</span> and <span class="math inline">\(\mathbb E\|Y\|^2 &lt; \infty\)</span>. Let</p>
+<p><span class="math display">\[
+f^*(x, s) := \mathbb E[Y \mid X=x, S=s]
+\]</span></p>
+<p>be the Bayes (unconstrained) regressor, and for each <span class="math inline">\(s\)</span> let</p>
+<p><span class="math display">\[
+\mu_s := \mathcal L(f^*(X, s)\mid S=s) \in\mathcal P_2(\mathbb R^p)
+\]</span></p>
+<p>Let <span class="math inline">\(\nu\)</span> be the <span class="math inline">\(W_2\)</span> barycenter of <span class="math inline">\(\{\mu_s\}\)</span> with weights <span class="math inline">\(\{p_s\}\)</span>, and let <span class="math inline">\(\mathcal T_s = \nabla \phi_s\)</span> be the optimal transport map pushing <span class="math inline">\(\mu_s\)</span> to <span class="math inline">\(\nu\)</span>. Then the regressor <span class="math inline">\(f^*_{DP}(x,s) = \mathcal T_s(f^*(x,s))\)</span> is DP fair (i.e.&nbsp;maps everything to the same law) and satisfies</p>
+<p><span class="math display">\[
+f^*_{DP}\in{\arg\min}_{f\in\mathcal F_{DP}} \mathbb E[\|f(X,S) - Y\|^2]
+\]</span></p>
+<p>with exact excess risk <span class="math display">\[
+\mathbb E[\|f^*_{DP}(X,S) - Y\|^2] - \mathbb E[\|f^*(X,S) - Y\|^2] = \sum_s p_s W_2^2(\mu_s, \nu)
+\]</span></p>
+</section>
+<section id="algorithm-to-find-the-barycenter" class="slide level2">
+<h2>Algorithm to find the barycenter</h2>
+<p>To relax the problem into a strictly convex problem, <span class="citation" data-cites="cuturi2013sinkhorn">(<a href="#/references" role="doc-biblioref" onclick="">Cuturi 2013</a>)</span> proposed adding an entropy penalty <span class="math inline">\(H(P) = -\sum_{ij} P_{ij}(\log P_{ij} - 1)\)</span> term:</p>
 <p><span class="math display">\[
 \min_{P \in \Pi(a,b)} \; \langle C, P \rangle \;-\; \varepsilon\, H(P)
 \]</span></p>
 <ul>
-<li class="fragment">The unique solution has the form <span class="math inline">\(P^\star = \operatorname{diag}(u)\, K \, \operatorname{diag}(v)\)</span>, where <span class="math inline">\(K = e^{-C/\varepsilon}\)</span>.</li>
-<li class="fragment">Finding <span class="math inline">\(u, v\)</span> reduces to <strong>alternating rescalings</strong> of rows and columns:</li>
+<li>The unique solution has the form <span class="math inline">\(P^\star = \operatorname{diag}(u)\, K \, \operatorname{diag}(v)\)</span>, where <span class="math inline">\(K = e^{-C/\varepsilon}\)</span>.</li>
+<li>Finding <span class="math inline">\(u, v\)</span> reduces to <strong>alternating rescalings</strong> of rows and columns:</li>
 </ul>
 <p><span class="math display">\[
 u \leftarrow \frac{a}{K v}, \qquad v \leftarrow \frac{b}{K^\top u}
 \]</span></p>
 <ul>
-<li class="fragment">Each iteration is a couple of matrix–vector products → <strong>GPU-friendly</strong> and <strong>differentiable</strong>.</li>
+<li>Each iteration is a couple of matrix–vector products → <strong>GPU-friendly</strong> and <strong>differentiable</strong>, time complexity only <span class="math inline">\(O(n^2)\)</span>.</li>
 </ul>
 </section>
 <section id="sinkhorn-in-10-lines" class="slide level2" data-auto-animate="true">
@@ -499,19 +472,6 @@ u \leftarrow \frac{a}{K v}, \qquad v \leftarrow \frac{b}{K^\top u}
 <span id="cb1-9" class="hljs-ln-code"><a href=""></a>        u <span class="op">=</span> a <span class="op">/</span> (K <span class="op">@</span> v)</span>
 <span id="cb1-10" class="hljs-ln-code"><a href=""></a></span>
 <span id="cb1-11" class="hljs-ln-code"><a href=""></a>    <span class="cf">return</span> u[:, <span class="va">None</span>] <span class="op">*</span> K <span class="op">*</span> v[<span class="va">None</span>, :]   <span class="co"># the transport plan P</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<aside class="notes">
-<p>Walk through the line highlights one click at a time: imports, the kernel, the iteration, then the returned plan. Mention that in practice you do this in log-space for numerical stability.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="try-it-two-point-clouds" class="slide level2 smaller">
 <h2>Try it: two point clouds</h2>
@@ -543,83 +503,10 @@ u \leftarrow \frac{a}{K v}, \qquad v \leftarrow \frac{b}{K^\top u}
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section id="applications" class="title-slide slide level1 center" data-background-color="#0f172a">
-<h1>Applications</h1>
-
-</section>
-<section id="where-ot-shows-up-in-ml" class="slide level2 smaller">
-<h2>Where OT shows up in ML</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Generative modeling</strong></p>
-<ul>
-<li>Wasserstein GANs use <span class="math inline">\(W_1\)</span> as a stabler loss <span class="citation" data-cites="arjovsky2017wasserstein">(<a href="#/references" role="doc-biblioref" onclick="">Arjovsky et al. 2017</a>)</span>.</li>
-<li>Flow- and diffusion-based models borrow OT geometry.</li>
-</ul>
-<p><strong>Domain adaptation</strong></p>
-<ul>
-<li>Align a labeled source domain to an unlabeled target by transporting features.</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Single-cell biology</strong></p>
-<ul>
-<li>Infer developmental trajectories by transporting cells across time points.</li>
-</ul>
-<p><strong>NLP &amp; vision</strong></p>
-<ul>
-<li><em>Word Mover’s Distance</em> compares documents via word-embedding transport.</li>
-<li><strong>Color transfer</strong>: move the color histogram of one image onto another.</li>
-</ul>
-</div></div>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>The common thread: whenever you need to <strong>compare</strong> or <strong>morph</strong> distributions while respecting geometry, OT is a natural tool <span class="citation" data-cites="peyre2019computational">(<a href="#/references" role="doc-biblioref" onclick="">Peyré and Cuturi 2019</a>)</span>.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="summary" class="slide level2 smaller">
-<h2>Summary</h2>
-<ul>
-<li class="fragment"><strong>Monge</strong> asked for a transport <em>map</em> — elegant, but can fail to exist.</li>
-<li class="fragment"><strong>Kantorovich</strong> relaxed to transport <em>plans</em> — convex, always solvable.</li>
-<li class="fragment">The optimal cost gives the <strong>Wasserstein distance</strong>, a geometry-aware metric.</li>
-<li class="fragment">Discrete OT is a <strong>linear program</strong>; <strong>Sinkhorn</strong> makes it fast and differentiable.</li>
-<li class="fragment">OT now powers generative models, domain adaptation, biology, and more.</li>
-</ul>
-<div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>One-line takeaway</strong></p>
-</div>
-<div class="callout-content">
-<p>Optimal transport is the mathematics of <em>moving distributions at minimum cost</em> — and that single idea turns out to be remarkably useful.</p>
-</div>
-</div>
-</div>
-</div>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-arjovsky2017wasserstein" class="csl-entry" role="listitem">
-Arjovsky, Martin, Soumith Chintala, and Léon Bottou. 2017. <span>“Wasserstein Generative Adversarial Networks.”</span> <em>International Conference on Machine Learning (ICML)</em>.
-</div>
 <div id="ref-AvrahamLogueSchwarcz2014" class="csl-entry" role="listitem">
 Avraham, Ronen, Kyle D. Logue, and Daniel Schwarcz. 2014. <span>“Understanding Insurance Antidiscrimination Laws.”</span> <em>Southern California Law Review</em> 87 (2): 195–274.
 </div>
@@ -628,6 +515,9 @@ Barocas, Solon, Moritz Hardt, and Arvind Narayanan. 2023. <em>Fairness and Machi
 </div>
 <div id="ref-CIA2023BiasFairness" class="csl-entry" role="listitem">
 Canadian Institute of Actuaries. 2023. <em>Bias and Fairness in Pricing and Underwriting of Property and Casualty (p&amp;c) Risks</em>. Practice Resource Document. Canadian Institute of Actuaries. <a href="https://www.cia-ica.ca/publications/223056e/">https://www.cia-ica.ca/publications/223056e/</a>.
+</div>
+<div id="ref-charpentier2023mitigating" class="csl-entry" role="listitem">
+Charpentier, Arthur, François Hu, and Philipp Ratz. 2023. <span>“Mitigating Discrimination in Insurance with Wasserstein Barycenters.”</span> <em>Joint European Conference on Machine Learning and Knowledge Discovery in Databases</em>, 161–77.
 </div>
 <div id="ref-chzhen2020fair" class="csl-entry" role="listitem">
 Chzhen, Evgenii, Christophe Denis, Mohamed Hebiri, Luca Oneto, and Massimiliano Pontil. 2020. <span>“Fair Regression with Wasserstein Barycenters.”</span> <em>Advances in Neural Information Processing Systems</em> 33: 7321–31.
@@ -644,11 +534,14 @@ Denuit, Michel, Marie Michaelides, and Julien Trufin. 2026. <span>“Balance and
 <div id="ref-friedler2021possibility" class="csl-entry" role="listitem">
 Friedler, Sorelle A, Carlos Scheidegger, and Suresh Venkatasubramanian. 2021. <span>“The (Im) Possibility of Fairness: Different Value Systems Require Different Mechanisms for Fair Decision Making.”</span> <em>Communications of the ACM</em> 64 (4): 136–43.
 </div>
+<div id="ref-hu2023multitaskfairness" class="csl-entry" role="listitem">
+Hu, François, Philipp Ratz, and Arthur Charpentier. 2023. <span>“<span class="nocase">Fairness in Multi-Task Learning via Wasserstein Barycenters </span>.”</span> <em>ArXiv:2306.10155</em>.
+</div>
 <div id="ref-LindholmRichmanTsanakasWuthrich2021" class="csl-entry" role="listitem">
 Lindholm, Mathias, Ronald Richman, Andreas Tsanakas, and Mario V. Wüthrich. 2021. <span>“Discrimination-Free Insurance Pricing.”</span> <em>ASTIN Bulletin: The Journal of the International Actuarial Association</em> 52 (1): 55–89. <a href="https://doi.org/10.1017/asb.2021.23">https://doi.org/10.1017/asb.2021.23</a>.
 </div>
-<div id="ref-peyre2019computational" class="csl-entry" role="listitem">
-Peyré, Gabriel, and Marco Cuturi. 2019. <em>Computational Optimal Transport</em>. In <em>Foundations and Trends in Machine Learning</em>, vol. 11.
+<div id="ref-Lindholm2023multitaskDFIP" class="csl-entry" role="listitem">
+Lindholm, Mathias, Ronald Richman, Andreas Tsanakas, and Mario V. Wüthrich. 2023. <span>“A Multi-Task Network Approach for Calculating Discrimination-Free Insurance Prices.”</span> <em>European Actuarial Journal</em> 14 (2): 329–69. <a href="https://doi.org/10.1007/s13385-023-00367-z">https://doi.org/10.1007/s13385-023-00367-z</a>.
 </div>
 <div id="ref-RufBoutharouiteDetyniecki2020" class="csl-entry" role="listitem">
 Ruf, Boris, Chaouki Boutharouite, and Marcin Detyniecki. 2020. <span>“Getting Fairness Right: Towards a Toolbox for Practitioners.”</span> <em>Proceedings of the Fair and Responsible AI Workshop</em> (Honolulu, HI, USA), CHI 2020 workshops, April. <a href="https://fair-ai.academicwebsite.com/publications/1429-getting-fairness-right-towards-a-toolbox-for-practitioners">https://fair-ai.academicwebsite.com/publications/1429-getting-fairness-right-towards-a-toolbox-for-practitioners</a>.
@@ -665,13 +558,6 @@ Xi, Xiaoyin, and Zhe Yu. 2025. <span>“FairReweighing: Density Estimation-Based
 <div id="ref-yeom2021avoiding" class="csl-entry" role="listitem">
 Yeom, Samuel, and Michael Carl Tschantz. 2021. <span>“Avoiding Disparity Amplification Under Different Worldviews.”</span> <em>Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency</em>, 273–83.
 </div>
-</div>
-</section>
-<section id="thank-you" class="slide level2 center" data-background-color="#0f172a">
-<h2>Thank you!</h2>
-<div style="text-align:center; margin-top: 1em;">
-<p>Questions?</p>
-<p>Slides built with <a href="https://quarto.org">Quarto</a> + reveal.js</p>
 </div>
 
 </section></section>
