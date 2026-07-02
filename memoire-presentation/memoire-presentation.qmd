@@ -95,7 +95,7 @@ The paper above outlines ways to quantify the impact of each dimension.
 
 # Multiperil Pricing
 
-![The model in Spedicato & Richman paper](img/trf%20model.png)
+![The model in Spedicato & Richman paper](img/trf model.png)
 
 - Basically the model exploits the embeddings (especially the CLS token) to learn a shared latent information of cross-peril relationship.
 - We will use this as our pricing model.
@@ -210,9 +210,7 @@ The Wasserstein barycenter has many desirable properties:
 - The barycenter preserves the global balance property, i.e. the mean of the barycenter is the barycenter of means.
 - [@chzhen2020fair] proved in the univariate setting that: Amongst DP-fair adjustments, the barycenter is the optimal in terms of MSE. We will generalize this to the multivariate case.
 
-
-
-## Optimality Result
+## Some Optimality Result
 
 Formally, let $(X, S, Y) \in \mathbb R^d \times \mathcal S \times \mathbb R^p$ with $p_s = \mathbb P(S=s) > 0$ and $\mathbb E\|Y\|^2 < \infty$. Let
 
@@ -255,7 +253,70 @@ $$
 
 - Each iteration is a couple of matrix–vector products → **GPU-friendly** and **differentiable**, time complexity only $O(n^2)$.
 
-## Algorithm to find the barycenter - 
+- [@cuturi2014barycenter] proposes a Lloyd-like Fixed-point iteration algorithm on the barycenter's support points based on the above Sinkhorn distance.
+
+<!-- ```r
+INPUT:  measures (N sets of locations + weights)
+        X_init  (k support points, d dims)
+        b       (barycenter weights, default uniform)
+        p_s (importance per measure)
+
+X <- X_init    # Guess where the barycenter's points sit
+repeat until EXIT_CONDITION:   # Until barycenter stops moving / max iter reached
+    T_sum <- 0                       # (k × d)
+
+    for each measure s (locations Y_s, weights a_s, importance p_s):
+        M_s <- pairwise_distances(X, Y_i)
+        T_s <- Sinkhorn(b, a_i, M_i, reg)           # for each input measure, solve an OT problem between the current barycenter and that measure
+        T_sum <- T_sum + p_s * (1/b) * (T_s * Y_s)  # move each point to the weighted average of where its mass lands
+
+    X <- T_sum
+
+return X
+``` -->
+
+## Bottlenecks & Resolutions 
+
+The above algorithm still consumes a lot time and memory, which makes it intractable for large-scale problems (e.g. our experiments will have ~100K-1M observations).
+ 
+Solution: Sliced Wasserstein as a surrogate ~ $O(n\log n)$ time complexity
+
+$$
+SW_2^2(\mu, \nu) = \left(\int_{\theta \sim \mathcal U(\mathbb S^{d-1})} W_2^2(\theta_\#\mu, \theta_\#\nu) \, d\theta \right)^{1/2}
+$$
+
+Sliced Wasserstein Barycenter can also be computed easily.
+
+To-do: Theorem on suboptimality gap.
+
+## Generic framework for Barycenter Calculation
+
+Adapted from [@cuturi2014barycenter], we propose a particle-flow framework to find a barycenter
+
+```r
+ALGORITHM ParticleFlow(y0, {Z_s}, {p_s}, Oracle, n_iter, step):
+    # Stage 1 barycenter loop. Only `Oracle` differs between tracks.
+    y <- y0                                    # m particles, shared init
+    for t = 0 to n_iter-1:
+        disp <- 0
+        for each group s:
+            (d_s, cost_s) <- Oracle(y, Z_s)    # displacement toward mu_s + cost
+            disp <- disp + p_s * d_s
+        y <- y − step(t) * disp                # step(t)=1 for W2; decaying for SW
+    return y
+```
+
+We replace the `Oracle` with the corresponding ExactW2 / EntropicW2 / SlicedW2 displacement
+
+Then a transport map is to be learned, and then map from out-of-sample points to the barycenter. 
+
+
+## Synthetic Experiments
+
+![Experiment on synthetic data to demonstrate the workflow](img/fig_pipeline.png)
+
+- Will have to reframe the overview-theory-experiment to balance
+- Refer to the ETHZ Master's degree [@carassai2024neural] to look at how it is structured.
 
 ## Experimentals
 
@@ -266,6 +327,16 @@ We plan to experiment on two datasets:
 
 if possible, I ask Lindholm for access to another dataset (though confidential)
 - Auto insurance (3 dimension; race as sensitive variable - 5 categories)
+
+## Draft Overview
+
+- Executive Summary (Article-like overview)
+- Fairness and Discrimination (Literature Review) - OK
+- The Multiperil Insurance Pricing Problem (Review + Algorithm to be used) - OK
+- A Primer on Optimal Transport Theory (Wasserstein, Sliced Wasserstein) - OK
+- The Fairness Adjustment Framework (Algorithm, Theoretical guarantees) - 50%
+- Numerical Experiments (Synthetic + Real data) - TODO
+- Conclusion & Discussion
 
 ## References {.smaller}
 

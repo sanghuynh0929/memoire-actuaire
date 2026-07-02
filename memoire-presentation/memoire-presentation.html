@@ -6,11 +6,11 @@
 <script src="memoire-presentation_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="memoire-presentation_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="memoire-presentation_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="memoire-presentation_files/libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="memoire-presentation_files/libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Sang Huynh">
-  <meta name="dcterms.date" content="2026-07-01">
+  <meta name="dcterms.date" content="2026-07-02">
   <title>An Optimal Transport Framework to Fairness in Non-Life Multiperil Insurance</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -232,7 +232,7 @@ Sang Huynh
     </div>
 </div>
 
-  <p class="date">2026-07-01</p>
+  <p class="date">2026-07-02</p>
 </section>
 <section id="agenda" class="slide level2 smaller" data-background-color="#0f172a">
 <h2>Agenda</h2>
@@ -424,8 +424,8 @@ W_p(\mu, \nu) \;=\; \left( \inf_{\pi \in \Pi(\mu,\nu)} \int d(x,y)^p \, d\pi(x,y
 <li><span class="citation" data-cites="chzhen2020fair">(<a href="#/references" role="doc-biblioref" onclick="">Chzhen et al. 2020</a>)</span> proved in the univariate setting that: Amongst DP-fair adjustments, the barycenter is the optimal in terms of MSE. We will generalize this to the multivariate case.</li>
 </ul>
 </section>
-<section id="optimality-result" class="slide level2">
-<h2>Optimality Result</h2>
+<section id="some-optimality-result" class="slide level2">
+<h2>Some Optimality Result</h2>
 <p>Formally, let <span class="math inline">\((X, S, Y) \in \mathbb R^d \times \mathcal S \times \mathbb R^p\)</span> with <span class="math inline">\(p_s = \mathbb P(S=s) &gt; 0\)</span> and <span class="math inline">\(\mathbb E\|Y\|^2 &lt; \infty\)</span>. Let</p>
 <p><span class="math display">\[
 f^*(x, s) := \mathbb E[Y \mid X=x, S=s]
@@ -442,8 +442,8 @@ f^*_{DP}\in{\arg\min}_{f\in\mathcal F_{DP}} \mathbb E[\|f(X,S) - Y\|^2]
 \mathbb E[\|f^*_{DP}(X,S) - Y\|^2] - \mathbb E[\|f^*(X,S) - Y\|^2] = \sum_s p_s W_2^2(\mu_s, \nu)
 \]</span></p>
 </section>
-<section id="algorithm-to-find-the-barycenter" class="slide level2">
-<h2>Algorithm to find the barycenter</h2>
+<section id="algorithm-to-find-the-barycenter---the-regularization" class="slide level2">
+<h2>Algorithm to find the barycenter - the regularization</h2>
 <p>To relax the problem into a strictly convex problem, <span class="citation" data-cites="cuturi2013sinkhorn">(<a href="#/references" role="doc-biblioref" onclick="">Cuturi 2013</a>)</span> proposed adding an entropy penalty <span class="math inline">\(H(P) = -\sum_{ij} P_{ij}(\log P_{ij} - 1)\)</span> term:</p>
 <p><span class="math display">\[
 \min_{P \in \Pi(a,b)} \; \langle C, P \rangle \;-\; \varepsilon\, H(P)
@@ -456,53 +456,83 @@ f^*_{DP}\in{\arg\min}_{f\in\mathcal F_{DP}} \mathbb E[\|f(X,S) - Y\|^2]
 u \leftarrow \frac{a}{K v}, \qquad v \leftarrow \frac{b}{K^\top u}
 \]</span></p>
 <ul>
-<li>Each iteration is a couple of matrix–vector products → <strong>GPU-friendly</strong> and <strong>differentiable</strong>, time complexity only <span class="math inline">\(O(n^2)\)</span>.</li>
+<li><p>Each iteration is a couple of matrix–vector products → <strong>GPU-friendly</strong> and <strong>differentiable</strong>, time complexity only <span class="math inline">\(O(n^2)\)</span>.</p></li>
+<li><p><span class="citation" data-cites="cuturi2014barycenter">(<a href="#/references" role="doc-biblioref" onclick="">Cuturi and Doucet 2014</a>)</span> proposes a Lloyd-like Fixed-point iteration algorithm on the barycenter’s support points based on the above Sinkhorn distance.</p></li>
+</ul>
+<!-- ```r
+INPUT:  measures (N sets of locations + weights)
+        X_init  (k support points, d dims)
+        b       (barycenter weights, default uniform)
+        p_s (importance per measure)
+
+X <- X_init    # Guess where the barycenter's points sit
+repeat until EXIT_CONDITION:   # Until barycenter stops moving / max iter reached
+    T_sum <- 0                       # (k × d)
+
+    for each measure s (locations Y_s, weights a_s, importance p_s):
+        M_s <- pairwise_distances(X, Y_i)
+        T_s <- Sinkhorn(b, a_i, M_i, reg)           # for each input measure, solve an OT problem between the current barycenter and that measure
+        T_sum <- T_sum + p_s * (1/b) * (T_s * Y_s)  # move each point to the weighted average of where its mass lands
+
+    X <- T_sum
+
+return X
+``` -->
+</section>
+<section id="bottlenecks-resolutions" class="slide level2">
+<h2>Bottlenecks &amp; Resolutions</h2>
+<p>The above algorithm still consumes a lot time and memory, which makes it intractable for large-scale problems (e.g.&nbsp;our experiments will have ~100K-1M observations).</p>
+<p>Solution: Sliced Wasserstein as a surrogate ~ <span class="math inline">\(O(n\log n)\)</span> time complexity</p>
+<p><span class="math display">\[
+SW_2^2(\mu, \nu) = \left(\int_{\theta \sim \mathcal U(\mathbb S^{d-1})} W_2^2(\theta_\#\mu, \theta_\#\nu) \, d\theta \right)^{1/2}
+\]</span></p>
+<p>Sliced Wasserstein Barycenter can also be computed easily.</p>
+<p>To-do: Theorem on suboptimality gap.</p>
+</section>
+<section id="generic-framework-for-barycenter-calculation" class="slide level2">
+<h2>Generic framework for Barycenter Calculation</h2>
+<p>Adapted from <span class="citation" data-cites="cuturi2014barycenter">(<a href="#/references" role="doc-biblioref" onclick="">Cuturi and Doucet 2014</a>)</span>, we propose a particle-flow framework to find a barycenter</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>ALGORITHM <span class="fu">ParticleFlow</span>(y0, {Z_s}, {p_s}, Oracle, n_iter, step)<span class="sc">:</span></span>
+<span id="cb1-2"><a href=""></a>    <span class="co"># Stage 1 barycenter loop. Only `Oracle` differs between tracks.</span></span>
+<span id="cb1-3"><a href=""></a>    y <span class="ot">&lt;-</span> y0                                    <span class="co"># m particles, shared init</span></span>
+<span id="cb1-4"><a href=""></a>    <span class="cf">for</span> t <span class="ot">=</span> <span class="dv">0</span> to n_iter<span class="dv">-1</span><span class="sc">:</span></span>
+<span id="cb1-5"><a href=""></a>        disp <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1-6"><a href=""></a>        <span class="cf">for</span> each group s<span class="sc">:</span></span>
+<span id="cb1-7"><a href=""></a>            (d_s, cost_s) <span class="ot">&lt;-</span> <span class="fu">Oracle</span>(y, Z_s)    <span class="co"># displacement toward mu_s + cost</span></span>
+<span id="cb1-8"><a href=""></a>            disp <span class="ot">&lt;-</span> disp <span class="sc">+</span> p_s <span class="sc">*</span> d_s</span>
+<span id="cb1-9"><a href=""></a>        y <span class="ot">&lt;-</span> y − <span class="fu">step</span>(t) <span class="sc">*</span> disp                <span class="co"># step(t)=1 for W2; decaying for SW</span></span>
+<span id="cb1-10"><a href=""></a>    return y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We replace the <code>Oracle</code> with the corresponding ExactW2 / EntropicW2 / SlicedW2 displacement</p>
+<p>Then a transport map is to be learned, and then map from out-of-sample points to the barycenter.</p>
+</section>
+<section id="synthetic-experiments" class="slide level2">
+<h2>Synthetic Experiments</h2>
+
+<img data-src="img/fig_pipeline.png" class="r-stretch quarto-figure-center"><p class="caption">Experiment on synthetic data to demonstrate the workflow</p><ul>
+<li>Will have to reframe the overview-theory-experiment to balance</li>
+<li>Refer to the ETHZ Master’s degree <span class="citation" data-cites="carassai2024neural">(<a href="#/references" role="doc-biblioref" onclick="">Carassai 2024</a>)</span> to look at how it is structured.</li>
 </ul>
 </section>
-<section id="sinkhorn-in-10-lines" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Sinkhorn in ~10 lines</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-2|4-5|7-10|12"><pre class="sourceCode numberSource python number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode python hljs"><span id="cb1-1" class="hljs-ln-code"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2" class="hljs-ln-code"><a href=""></a></span>
-<span id="cb1-3" class="hljs-ln-code"><a href=""></a><span class="kw">def</span> sinkhorn(a, b, C, eps<span class="op">=</span><span class="fl">0.1</span>, n_iters<span class="op">=</span><span class="dv">200</span>):</span>
-<span id="cb1-4" class="hljs-ln-code"><a href=""></a>    K <span class="op">=</span> np.exp(<span class="op">-</span>C <span class="op">/</span> eps)          <span class="co"># Gibbs kernel</span></span>
-<span id="cb1-5" class="hljs-ln-code"><a href=""></a>    u <span class="op">=</span> np.ones_like(a)</span>
-<span id="cb1-6" class="hljs-ln-code"><a href=""></a></span>
-<span id="cb1-7" class="hljs-ln-code"><a href=""></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_iters):       <span class="co"># alternate the two marginal constraints</span></span>
-<span id="cb1-8" class="hljs-ln-code"><a href=""></a>        v <span class="op">=</span> b <span class="op">/</span> (K.T <span class="op">@</span> u)</span>
-<span id="cb1-9" class="hljs-ln-code"><a href=""></a>        u <span class="op">=</span> a <span class="op">/</span> (K <span class="op">@</span> v)</span>
-<span id="cb1-10" class="hljs-ln-code"><a href=""></a></span>
-<span id="cb1-11" class="hljs-ln-code"><a href=""></a>    <span class="cf">return</span> u[:, <span class="va">None</span>] <span class="op">*</span> K <span class="op">*</span> v[<span class="va">None</span>, :]   <span class="co"># the transport plan P</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="experimentals" class="slide level2">
+<h2>Experimentals</h2>
+<p>We plan to experiment on two datasets:</p>
+<ul>
+<li>Brazilian Auto insurance (2 dimension - collision &amp; other coverages; gender as sensitive variable)</li>
+<li>European Health insurance (8 coverages; gender as sensitive variable)</li>
+</ul>
+<p>if possible, I ask Lindholm for access to another dataset (though confidential) - Auto insurance (3 dimension; race as sensitive variable - 5 categories)</p>
 </section>
-<section id="try-it-two-point-clouds" class="slide level2 smaller">
-<h2>Try it: two point clouds</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href=""></a></span>
-<span id="cb2-3"><a href=""></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>)</span>
-<span id="cb2-4"><a href=""></a>X <span class="op">=</span> rng.normal(<span class="fl">0.0</span>, <span class="fl">1.0</span>, size<span class="op">=</span>(<span class="dv">50</span>, <span class="dv">2</span>))     <span class="co"># source samples</span></span>
-<span id="cb2-5"><a href=""></a>Y <span class="op">=</span> rng.normal(<span class="fl">3.0</span>, <span class="fl">1.0</span>, size<span class="op">=</span>(<span class="dv">50</span>, <span class="dv">2</span>))     <span class="co"># target samples</span></span>
-<span id="cb2-6"><a href=""></a></span>
-<span id="cb2-7"><a href=""></a>a <span class="op">=</span> np.full(<span class="dv">50</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">50</span>)                       <span class="co"># uniform weights</span></span>
-<span id="cb2-8"><a href=""></a>b <span class="op">=</span> np.full(<span class="dv">50</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">50</span>)</span>
-<span id="cb2-9"><a href=""></a></span>
-<span id="cb2-10"><a href=""></a><span class="co"># squared-Euclidean cost matrix</span></span>
-<span id="cb2-11"><a href=""></a>C <span class="op">=</span> ((X[:, <span class="va">None</span>, :] <span class="op">-</span> Y[<span class="va">None</span>, :, :])<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb2-12"><a href=""></a></span>
-<span id="cb2-13"><a href=""></a>P <span class="op">=</span> sinkhorn(a, b, C, eps<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb2-14"><a href=""></a><span class="bu">print</span>(<span class="st">"transported mass:"</span>, P.<span class="bu">sum</span>())         <span class="co"># ~ 1.0</span></span>
-<span id="cb2-15"><a href=""></a><span class="bu">print</span>(<span class="st">"approx W2^2:"</span>, (P <span class="op">*</span> C).<span class="bu">sum</span>())         <span class="co"># entropic OT cost</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>For production use, reach for the <strong>POT</strong> library (<code>pip install pot</code>): <code>ot.sinkhorn(a, b, C, reg=0.1)</code> — it handles log-domain stabilization for you.</p>
-</div>
-</div>
-</div>
+<section id="draft-overview" class="slide level2">
+<h2>Draft Overview</h2>
+<ul>
+<li>Executive Summary (Article-like overview)</li>
+<li>Fairness and Discrimination (Literature Review) - OK</li>
+<li>The Multiperil Insurance Pricing Problem (Review + Algorithm to be used) - OK</li>
+<li>A Primer on Optimal Transport Theory (Wasserstein, Sliced Wasserstein) - OK</li>
+<li>The Fairness Adjustment Framework (Algorithm, Theoretical guarantees) - 50%</li>
+<li>Numerical Experiments (Synthetic + Real data) - TODO</li>
+<li>Conclusion &amp; Discussion</li>
+</ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -516,6 +546,9 @@ Barocas, Solon, Moritz Hardt, and Arvind Narayanan. 2023. <em>Fairness and Machi
 <div id="ref-CIA2023BiasFairness" class="csl-entry" role="listitem">
 Canadian Institute of Actuaries. 2023. <em>Bias and Fairness in Pricing and Underwriting of Property and Casualty (p&amp;c) Risks</em>. Practice Resource Document. Canadian Institute of Actuaries. <a href="https://www.cia-ica.ca/publications/223056e/">https://www.cia-ica.ca/publications/223056e/</a>.
 </div>
+<div id="ref-carassai2024neural" class="csl-entry" role="listitem">
+Carassai, Giulio Vittorio. 2024. <span>“Neural Optimal Transport at Scale: Wasserstein Barycenters for Fair Insurance.”</span> Master's thesis, ETH Zürich. <a href="https://ethz.ch/content/dam/ethz/special-interest/math/risklab-dam/documents/walter-saxer-preis/ma-carassai.pdf">https://ethz.ch/content/dam/ethz/special-interest/math/risklab-dam/documents/walter-saxer-preis/ma-carassai.pdf</a>.
+</div>
 <div id="ref-charpentier2023mitigating" class="csl-entry" role="listitem">
 Charpentier, Arthur, François Hu, and Philipp Ratz. 2023. <span>“Mitigating Discrimination in Insurance with Wasserstein Barycenters.”</span> <em>Joint European Conference on Machine Learning and Knowledge Discovery in Databases</em>, 161–77.
 </div>
@@ -527,6 +560,9 @@ Côté, Olivier, Marie-Pier Côté, and Arthur Charpentier. 2025. <em>A Scalable
 </div>
 <div id="ref-cuturi2013sinkhorn" class="csl-entry" role="listitem">
 Cuturi, Marco. 2013. <span>“Sinkhorn Distances: Lightspeed Computation of Optimal Transport.”</span> <em>Advances in Neural Information Processing Systems (NeurIPS)</em>.
+</div>
+<div id="ref-cuturi2014barycenter" class="csl-entry" role="listitem">
+Cuturi, Marco, and Arnaud Doucet. 2014. <span>“Fast Computation of Wasserstein Barycenters.”</span> <em>International Conference on Machine Learning</em>, 685–93.
 </div>
 <div id="ref-denuit2026balance" class="csl-entry" role="listitem">
 Denuit, Michel, Marie Michaelides, and Julien Trufin. 2026. <span>“Balance and Fairness Through Multicalibration in Nonlife Insurance Pricing.”</span> <em>arXiv Preprint arXiv:2603.16317</em>.
