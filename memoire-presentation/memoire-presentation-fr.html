@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="memoire-presentation_files/libs/clipboard/clipboard.min.js"></script>
-<script src="memoire-presentation_files/libs/quarto-html/tabby.min.js"></script>
-<script src="memoire-presentation_files/libs/quarto-html/popper.min.js"></script>
-<script src="memoire-presentation_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="memoire-presentation_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="memoire-presentation_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="memoire-presentation_files/libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="memoire-presentation-fr_files/libs/clipboard/clipboard.min.js"></script>
+<script src="memoire-presentation-fr_files/libs/quarto-html/tabby.min.js"></script>
+<script src="memoire-presentation-fr_files/libs/quarto-html/popper.min.js"></script>
+<script src="memoire-presentation-fr_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="memoire-presentation-fr_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="memoire-presentation-fr_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="memoire-presentation-fr_files/libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Sang Huynh">
   <meta name="dcterms.date" content="2026-07-02">
-  <title>An Optimal Transport Framework to Fairness in Non-Life Multiperil Insurance</title>
+  <title>Un Cadre de Transport Optimal pour l’Équité en Assurance Non-Vie Multirisque</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="memoire-presentation_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="memoire-presentation_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="memoire-presentation-fr_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="memoire-presentation-fr_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,13 +118,13 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="memoire-presentation_files/libs/revealjs/dist/theme/quarto-17d022d60f2437c6820200a4c7bfbdf6.css">
-  <link href="memoire-presentation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="memoire-presentation_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="memoire-presentation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="memoire-presentation_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="memoire-presentation_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="memoire-presentation_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="memoire-presentation-fr_files/libs/revealjs/dist/theme/quarto-17d022d60f2437c6820200a4c7bfbdf6.css">
+  <link href="memoire-presentation-fr_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="memoire-presentation-fr_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="memoire-presentation-fr_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="memoire-presentation-fr_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="memoire-presentation-fr_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="memoire-presentation-fr_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -218,8 +218,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">An Optimal Transport Framework to Fairness in Non-Life Multiperil Insurance</h1>
-  <p class="subtitle">Presentation to the Institut des Actuaires</p>
+  <h1 class="title">Un Cadre de Transport Optimal pour l’Équité en Assurance Non-Vie Multirisque</h1>
+  <p class="subtitle">Présentation à l’Institut des Actuaires</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -234,115 +234,120 @@ Sang Huynh
 
   <p class="date">2026-07-02</p>
 </section>
-<section id="agenda" class="slide level2 smaller" data-background-color="#0f172a">
-<h2>Agenda</h2>
+<section id="sommaire" class="slide level2 smaller" data-background-color="#0f172a">
+<h2>Sommaire</h2>
 <ul>
-<li><strong>Discrimination and Fairness in Insurance</strong> — What are the aspects of discrimination and fairness in insurance?</li>
-<li><strong>The Dependent Risk Pricing Problem</strong> — Why are we interested in pricing dependent risks?</li>
-<li><strong>An Introduction to Optimal Transport</strong> — The tools we are using to solve the problem.</li>
-<li><strong>The Framework to Multivariate Fair Regression</strong> — How we use optimal transport to achieve DP-fairness in multiperil insurance.</li>
-<li><strong>Applications</strong> — Some case studies to illustrate the framework.</li>
+<li><strong>Discrimination et Équité en Assurance</strong> — Quels sont les aspects de la discrimination et de l’équité en assurance ?</li>
+<li><strong>Le Problème de Tarification des Risques Dépendants</strong> — Pourquoi nous intéressons-nous à la tarification des risques dépendants ?</li>
+<li><strong>Une Introduction au Transport Optimal</strong> — Les outils que nous utilisons pour résoudre le problème.</li>
+<li><strong>Le Cadre pour la Régression Équitable Multivariée</strong> — Comment nous utilisons le transport optimal pour atteindre l’équité DP en assurance multirisque.</li>
+<li><strong>Applications</strong> — Quelques études de cas pour illustrer le cadre.</li>
 </ul>
 </section>
-<section id="aspects-of-discrimination-and-fairness" class="title-slide slide level1 center">
-<h1>Aspects of Discrimination and Fairness</h1>
+<section id="aspects-de-la-discrimination-et-de-léquité" class="title-slide slide level1 center">
+<h1>Aspects de la Discrimination et de l’Équité</h1>
 <ul>
-<li>The business of insurance is the business of discrimination <span class="citation" data-cites="AvrahamLogueSchwarcz2014">(<a href="#/references" role="doc-biblioref" onclick="">Avraham et al. 2014</a>)</span>. Insurers discriminate between policyholders based on their risk characteristics to determine the premium.</li>
-<li>However, some characteristics are considered sensitive and are not allowed to be used for pricing, such as race, disability status, sexual orientation, etc. by human rights legislation in many jurisdictions</li>
-<li>An overview on the definitions of bias, discrimination and fairness <span class="citation" data-cites="CIA2023BiasFairness">(<a href="#/references" role="doc-biblioref" onclick="">Canadian Institute of Actuaries 2023</a>)</span>.</li>
-<li>Models can either be
+<li>Le métier de l’assurance est un métier de discrimination <span class="citation" data-cites="AvrahamLogueSchwarcz2014">(<a href="#/références" role="doc-biblioref" onclick="">Avraham et al. 2014</a>)</span>. Les assureurs discriminent entre les assurés en fonction de leurs caractéristiques de risque pour déterminer la prime.</li>
+<li>Cependant, certaines caractéristiques sont considérées comme sensibles et ne sont pas autorisées à être utilisées pour la tarification, telles que la race, le statut de handicap, l’orientation sexuelle, etc., en vertu de la législation sur les droits de l’homme dans de nombreuses juridictions</li>
+<li>Un aperçu des définitions du biais, de la discrimination et de l’équité <span class="citation" data-cites="CIA2023BiasFairness">(<a href="#/références" role="doc-biblioref" onclick="">Canadian Institute of Actuaries 2023</a>)</span>.</li>
+<li>Les modèles peuvent être
 <ul>
-<li><strong>directly discriminatory</strong>: when the sensitive characteristics are used directly in the model, or</li>
-<li><strong>indirectly discriminatory</strong>: when the sensitive characteristics are not used directly, but other features that are correlated with the sensitive characteristics are used in the model.</li>
+<li><strong>directement discriminatoires</strong> : lorsque les caractéristiques sensibles sont utilisées directement dans le modèle, ou</li>
+<li><strong>indirectement discriminatoires</strong> : lorsque les caractéristiques sensibles ne sont pas utilisées directement, mais que d’autres variables corrélées avec les caractéristiques sensibles sont utilisées dans le modèle.</li>
 </ul></li>
-<li>No one definition/measure of fairness exists. Fairness is dynamic and social and not a statistical issue.</li>
+<li>Il n’existe pas de définition/mesure unique de l’équité. L’équité est dynamique et sociale, et non une simple question statistique.</li>
 </ul>
 </section>
 
-<section id="the-worldviews---wysiwyg-vs-wae" class="title-slide slide level1 center">
-<h1>The Worldviews - WYSIWYG vs WAE</h1>
-<p><img data-src="img/worldviews%20and%20fairness.png"><br>
-The authors in <span class="citation" data-cites="RufBoutharouiteDetyniecki2020">(<a href="#/references" role="doc-biblioref" onclick="">Ruf et al. 2020</a>)</span> discussed two different worldviews in the context of fairness in machine learning and give a toolbox for auditing/mitigation in each step:</p>
+<section id="les-visions-du-monde---wysiwyg-vs-wae" class="title-slide slide level1 center">
+<h1>Les Visions du Monde - WYSIWYG vs WAE</h1>
+<p><img data-src="img/worldviews%20and%20fairness.png"> Les auteurs de <span class="citation" data-cites="RufBoutharouiteDetyniecki2020">(<a href="#/références" role="doc-biblioref" onclick="">Ruf et al. 2020</a>)</span> ont discuté de deux visions du monde différentes dans le contexte de l’équité en apprentissage automatique, et proposent une boîte à outils pour l’audit/l’atténuation à chaque étape :</p>
 <ul>
-<li><strong>Individual fairness</strong>: similar individuals should be treated similarly. This corresponds to the “What you see is what you get” worldview.</li>
-<li><strong>Group fairness</strong>: groups defined by sensitive characteristics should be treated similarly. This corresponds to the “We are equal” worldview.</li>
+<li><strong>Équité individuelle</strong> : des individus similaires doivent être traités de manière similaire. Cela correspond à la vision du monde « What you see is what you get » (ce que vous voyez est ce que vous obtenez).</li>
+<li><strong>Équité de groupe</strong> : les groupes définis par des caractéristiques sensibles doivent être traités de manière similaire. Cela correspond à la vision du monde « We are equal » (nous sommes égaux).</li>
 </ul>
-<p>Each worldview also carries inherent assumptions in terms of the Construct, Observed and Predicted space <span class="citation" data-cites="yeom2021avoiding">(<a href="#/references" role="doc-biblioref" onclick="">Yeom and Tschantz 2021</a>)</span>.</p>
+<p>Chaque vision du monde porte également des hypothèses inhérentes en termes d’espace de Construction, d’Observation et de Prédiction <span class="citation" data-cites="yeom2021avoiding">(<a href="#/références" role="doc-biblioref" onclick="">Yeom and Tschantz 2021</a>)</span>.</p>
 </section>
 
-<section id="the-notions-of-group-fairness" class="title-slide slide level1 center">
-<h1>The Notions of Group Fairness</h1>
-<p>Look further, we have three notions of group fairness commonly discussed in the ML literature:</p>
+<section id="les-notions-déquité-de-groupe" class="title-slide slide level1 center">
+<h1>Les Notions d’Équité de Groupe</h1>
+<p>En y regardant de plus près, on trouve trois notions d’équité de groupe couramment discutées dans la littérature de ML :</p>
 <ul>
-<li>Independence (or Demographic Parity): <span class="math inline">\(Y \perp S\)</span><br>
-</li>
-<li>Separation (or Equalized Odds): <span class="math inline">\(\hat Y \perp S \mid Y\)</span><br>
-</li>
-<li>Sufficiency (or Equal Opportunities): <span class="math inline">\(Y \perp S \mid \hat Y\)</span></li>
+<li>Indépendance (ou Parité Démographique) : <span class="math inline">\(Y \perp S\)</span></li>
+<li>Séparation (ou Égalité des Chances) : <span class="math inline">\(\hat Y \perp S \mid Y\)</span></li>
+<li>Suffisance (ou Égalité des Opportunités) : <span class="math inline">\(Y \perp S \mid \hat Y\)</span></li>
 </ul>
-<p>The impossibility of satisfying several notions of fairness are proven in <span class="citation" data-cites="BarocasHardtNarayanan2023">(<a href="#/references" role="doc-biblioref" onclick="">Barocas et al. 2023</a>)</span> and <span class="citation" data-cites="friedler2021possibility">(<a href="#/references" role="doc-biblioref" onclick="">Friedler et al. 2021</a>)</span>.</p>
+<p>L’impossibilité de satisfaire simultanément plusieurs notions d’équité est démontrée dans <span class="citation" data-cites="BarocasHardtNarayanan2023">(<a href="#/références" role="doc-biblioref" onclick="">Barocas et al. 2023</a>)</span> et <span class="citation" data-cites="friedler2021possibility">(<a href="#/références" role="doc-biblioref" onclick="">Friedler et al. 2021</a>)</span>.</p>
 </section>
 
-<section id="the-dimensions-of-fairness-in-actuarial-pricing" class="title-slide slide level1 center">
-<h1>The Dimensions of Fairness in Actuarial Pricing</h1>
+<section id="les-dimensions-de-léquité-en-tarification-actuarielle" class="title-slide slide level1 center">
+<h1>Les Dimensions de l’Équité en Tarification Actuarielle</h1>
+<p><span class="citation" data-cites="CoteCoteCharpentier2025ScalableToolbox">(<a href="#/références" role="doc-biblioref" onclick="">Côté et al. 2025</a>)</span> ont considéré le problème de l’équité en tarification actuarielle selon ces trois axes :</p>
 
-<img data-src="img/dimensions%20of%20fairness.png" class="r-stretch"><p><span class="citation" data-cites="CoteCoteCharpentier2025ScalableToolbox">(<a href="#/references" role="doc-biblioref" onclick="">Côté et al. 2025</a>)</span> considered the Fairness problem in Actuarial Pricing along these three axes:</p>
+<img data-src="img/dimensions_of_fairness.png" class="r-stretch quarto-figure-center"><p class="caption">Les trois axes de l’Équité et leurs characteristiques</p></section>
+
+<section id="les-trois-axes" class="title-slide slide level1 center">
+<h1>Les trois axes</h1>
 <ul>
-<li>Actuarial Fairness: this is what actuaries usually think about – the premium should “fairly” reflect the level of riskyness of the insured.</li>
-<li>Causality: this belongs to the “individual fairness”, and is discussed in <span class="citation" data-cites="LindholmRichmanTsanakasWuthrich2021">(<a href="#/references" role="doc-biblioref" onclick="">Lindholm et al. 2021</a>)</span>. Its aim is to modify the best-estimate price to be <span class="math display">\[
+<li>Équité actuarielle : c’est ce à quoi les actuaires pensent habituellement – la prime doit refléter « équitablement » le niveau de risque de l’assuré, i.e.&nbsp;le prime best-estimate : <span class="math display">\[
+\mu(\mathbf X, \mathbf D) = \mathbb E[Y \mid \mathbf X, \mathbf D]
+\]</span></li>
+<li>Causalité : cela relève de l’« équité individuelle », et est discuté dans <span class="citation" data-cites="LindholmRichmanTsanakasWuthrich2021">(<a href="#/références" role="doc-biblioref" onclick="">Lindholm et al. 2021</a>)</span>. L’objectif est de modifier le prix best-estimate pour qu’il devienne <span class="math display">\[
 \mu^*(\mathbf X) := \int_{\mathbf d} \mu(\mathbf X, \mathbf d) \, d\mathbb P^*(\mathbf d)
-\]</span> where the pricing distribution <span class="math inline">\(\mathbb P^*(\mathbf d)\)</span> has the same support as <span class="math inline">\(\mathbf D \sim \mathbb P(\mathbf d)\)</span></li>
-<li>Solidarity: this is the Independence property of “group fairness”.</li>
+\]</span> où la distribution de tarification <span class="math inline">\(\mathbb P^*(\mathbf d)\)</span> a le même support que <span class="math inline">\(\mathbf D \sim \mathbb P(\mathbf d)\)</span></li>
+<li>Solidarité : c’est la propriété d’Indépendance de l’« équité de groupe », obtenu via le transport optimal univarié: <span class="math display">\[
+\mu^*(\mathbf x, d) = \sum_{d'} \mathbb P(\mathbf D = d') F^{-1}_{d'}\big(F_d(\mu(\mathbf x, d))\big)
+\]</span></li>
 </ul>
-<p>The paper above outlines ways to quantify the impact of each dimension.</p>
 </section>
 
-<section id="the-multiperil-insurance-pricing-problem" class="title-slide slide level1 center">
-<h1>The Multiperil Insurance Pricing Problem</h1>
+<section id="le-problème-de-tarification-en-assurance-multirisque" class="title-slide slide level1 center">
+<h1>Le Problème de Tarification en Assurance Multirisque</h1>
 <ul>
-<li>Many common P&amp;C insurance policies, as well as health insurance policies, bundle multiple guarantees in a single contract.</li>
-<li>Examples:
+<li>De nombreux contrats d’assurance IARD courants, ainsi que les contrats d’assurance santé, regroupent plusieurs garanties dans un seul contrat.</li>
+<li>Exemples :
 <ul>
-<li>Auto (MTPL) insurance: property damages, bodily injuries</li>
-<li>Home insurance: fire, theft, water damage, liability, etc.</li>
-<li>Health insurance: hospitalization, outpatient care, dental care, vision care, etc.</li>
+<li>Assurance auto (RC obligatoire) : dommages matériels, dommages corporels</li>
+<li>Assurance habitation : incendie, vol, dégât des eaux, responsabilité civile, etc.</li>
+<li>Assurance santé : hospitalisation, soins courants, dentaires, optiques, etc.</li>
 </ul></li>
-<li>Current pricing methods are based on univariate regression models, which do not take into account the dependence structure between the different guarantees.</li>
-<li>Even pricing univariately still can result in dependence due to the use of common risk factors.</li>
-<li><span class="citation" data-cites="Spedicato2025Comparing">(<a href="#/references" role="doc-biblioref" onclick="">Spedicato and Richman 2025</a>)</span> have surveyed and compare between ML/DL models for this problem.</li>
+<li>Les méthodes de tarification actuelles reposent sur des modèles de régression univariés, qui ne prennent pas en compte la structure de dépendance entre les différentes garanties.</li>
+<li>Copules sont utilisées dans le domaine du travail par Frees &amp; Shi (<span class="citation" data-cites="frees2009actuarial">(<a href="#/références" role="doc-biblioref" onclick="">Frees et al. 2009</a>)</span>, <span class="citation" data-cites="yang2019multiperil">(<a href="#/références" role="doc-biblioref" onclick="">Yang and Shi 2019</a>)</span>)</li>
+<li>Même une tarification univariée peut encore entraîner de la dépendance en raison de l’utilisation de facteurs de risque communs.</li>
+<li><span class="citation" data-cites="Spedicato2025Comparing">(<a href="#/références" role="doc-biblioref" onclick="">Spedicato and Richman 2025</a>)</span> ont recensé et comparé les modèles ML/DL pour ce problème.</li>
 </ul>
 </section>
 
 <section>
-<section id="multiperil-pricing" class="title-slide slide level1 center">
-<h1>Multiperil Pricing</h1>
+<section id="tarification-multirisque" class="title-slide slide level1 center">
+<h1>Tarification Multirisque</h1>
 
-<img data-src="img/trf%20model.png" class="r-stretch quarto-figure-center"><p class="caption">The model in Spedicato &amp; Richman paper</p><ul>
-<li>Basically the model exploits the embeddings (especially the CLS token) to learn a shared latent information of cross-peril relationship.</li>
-<li>We will use this as our pricing model.</li>
+<img data-src="img/trf%20model.png" class="r-stretch quarto-figure-center"><p class="caption">Le modèle de l’article de Spedicato &amp; Richman</p><ul>
+<li>Le modèle exploite essentiellement les embeddings (en particulier le token CLS) pour apprendre une information latente partagée de la relation entre les risques.</li>
+<li>Étant donné que les modèles ML/DL font souvent l’objet d’un examen d’équité en raison de leur nature de boîte noire, nous les adopterons comme modèle de tarification de base dans nos expérimentations numériques.</li>
 </ul>
 </section>
-<section id="what-has-been-proposed-in-terms-of-fairness-mitigation" class="slide level2">
-<h2>What has been proposed in terms of fairness mitigation?</h2>
+<section id="quest-ce-qui-a-été-proposé-en-termes-datténuation-de-léquité" class="slide level2">
+<h2>Qu’est-ce qui a été proposé en termes d’atténuation de l’équité ?</h2>
 <ul>
-<li><span class="citation" data-cites="charpentier2023mitigating">(<a href="#/references" role="doc-biblioref" onclick="">Charpentier et al. 2023</a>)</span> based on the results of <span class="citation" data-cites="chzhen2020fair">(<a href="#/references" role="doc-biblioref" onclick="">Chzhen et al. 2020</a>)</span> to study Demographic Parity</li>
-<li><span class="citation" data-cites="denuit2026balance">(<a href="#/references" role="doc-biblioref" onclick="">Denuit et al. 2026</a>)</span> and <span class="citation" data-cites="xi2025fairreweighing">(<a href="#/references" role="doc-biblioref" onclick="">Xi and Yu 2025</a>)</span> has recently studied the notion of Sufficiency and Separation in the regression setting</li>
-<li><span class="citation" data-cites="Lindholm2023multitaskDFIP">(<a href="#/references" role="doc-biblioref" onclick="">Lindholm et al. 2023</a>)</span> has applied the multitask NN approach to the “Causal” axis to jointly estimate the best-estimate price and the probabilities <span class="math inline">\(\mathbb P\)</span>. Though applied in the univariate pricing problem, I believe it can be extensible to the multivariate due to the flexibility of the multitask neural network.</li>
-<li><span class="citation" data-cites="hu2023multitaskfairness">(<a href="#/references" role="doc-biblioref" onclick="">Hu et al. 2023</a>)</span> has studied the multitask learning problem, which is very close to our setup; however, it only tackles per-task fairness. In our problem, we will show why joint fairness is important since contracts might be modulable and dimension-wise fairness does not ensure joint fairness in different combinations.</li>
-<li>We wish to go one step further and apply it to the multiperil pricing problem, using theory from optimal transport.</li>
+<li><span class="citation" data-cites="charpentier2023mitigating">(<a href="#/références" role="doc-biblioref" onclick="">Charpentier et al. 2023</a>)</span> s’appuie sur les résultats de <span class="citation" data-cites="chzhen2020fair">(<a href="#/références" role="doc-biblioref" onclick="">Chzhen et al. 2020</a>)</span> pour étudier la Parité Démographique</li>
+<li><span class="citation" data-cites="denuit2026balance">(<a href="#/références" role="doc-biblioref" onclick="">Denuit et al. 2026</a>)</span> et <span class="citation" data-cites="xi2025fairreweighing">(<a href="#/références" role="doc-biblioref" onclick="">Xi and Yu 2025</a>)</span> ont récemment étudié la notion de Suffisance et de Séparation dans le cadre de la régression</li>
+<li><span class="citation" data-cites="Lindholm2023multitaskDFIP">(<a href="#/références" role="doc-biblioref" onclick="">Lindholm et al. 2023</a>)</span> a appliqué l’approche de réseau de neurones multitâche à l’axe « Causal » pour estimer conjointement le prix best-estimate et les probabilités <span class="math inline">\(\mathbb P\)</span>. Bien qu’appliqué au problème de tarification univarié, je pense que cela peut être étendu au cas multivarié grâce à la flexibilité du réseau de neurones multitâche.</li>
+<li><span class="citation" data-cites="hu2023multitaskfairness">(<a href="#/références" role="doc-biblioref" onclick="">Hu et al. 2023</a>)</span> a étudié le problème d’apprentissage multitâche, très proche de notre configuration ; cependant, il ne traite que l’équité par tâche. Dans notre problème, nous montrerons pourquoi l’équité conjointe est importante, car les contrats peuvent être modulables et l’équité dimension par dimension n’assure pas l’équité conjointe dans différentes combinaisons.</li>
+<li>Nous souhaitons aller plus loin et l’appliquer au problème de tarification multirisque, en utilisant la théorie du transport optimal.</li>
 </ul>
 </section></section>
 <section>
-<section id="a-primer-to-optimal-transport" class="title-slide slide level1 center">
-<h1>A Primer to Optimal Transport</h1>
-<p>You have a pile of sand shaped like distribution <span class="src"><span class="math inline">\(\mu\)</span></span>. You want to reshape it into <span class="tgt"><span class="math inline">\(\nu\)</span></span>.</p>
+<section id="une-introduction-au-transport-optimal" class="title-slide slide level1 center">
+<h1>Une Introduction au Transport Optimal</h1>
+<p>Vous avez un tas de sable ayant la forme de la distribution <span class="src"><span class="math inline">\(\mu\)</span></span>. Vous voulez le remodeler en <span class="tgt"><span class="math inline">\(\nu\)</span></span>.</p>
 <ul>
-<li>Moving a grain from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> costs <span class="math inline">\(c(x, y)\)</span> — often the squared distance <span class="math inline">\(\|x - y\|^2\)</span>.</li>
-<li>A <span class="plan"><strong>transport map</strong></span> says <em>how much</em> mass goes from each <span class="math inline">\(x\)</span> to each <span class="math inline">\(y\)</span>.</li>
-<li><strong>Optimal transport</strong> = the map with the lowest total cost.</li>
+<li>Déplacer un grain de <span class="math inline">\(x\)</span> à <span class="math inline">\(y\)</span> coûte <span class="math inline">\(c(x, y)\)</span> — souvent la distance au carré <span class="math inline">\(\|x - y\|^2\)</span>.</li>
+<li>Un <span class="plan"><strong>plan de transport</strong></span> indique <em>combien</em> de masse va de chaque <span class="math inline">\(x\)</span> vers chaque <span class="math inline">\(y\)</span>.</li>
+<li>Le <strong>transport optimal</strong> = le plan avec le coût total le plus faible.</li>
 </ul>
-<p>The total cost of the <em>best</em> plan is a meaningful <strong>distance</strong> between the two distributions.</p>
-<p>Formally, the Monge problem (1781) can be stated as follows: find a map <span class="math inline">\(T : X \to Y\)</span> that pushes <span class="src"><span class="math inline">\(\mu\)</span></span> onto <span class="tgt"><span class="math inline">\(\nu\)</span></span> (written <span class="math inline">\(T_\# \mu = \nu\)</span>) and minimizes the total cost:</p>
+<p>Le coût total du <em>meilleur</em> plan est une <strong>distance</strong> significative entre les deux distributions.</p>
+<p>Formellement, le problème de Monge (1781) peut s’énoncer ainsi : trouver une application <span class="math inline">\(T : X \to Y\)</span> qui transporte <span class="src"><span class="math inline">\(\mu\)</span></span> vers <span class="tgt"><span class="math inline">\(\nu\)</span></span> (noté <span class="math inline">\(T_\# \mu = \nu\)</span>) et qui minimise le coût total :</p>
 <p><span class="math display">\[
 \inf_{T \,:\, T_\#\mu = \nu} \; \int_X c\big(x,\, T(x)\big)\, d\mu(x)
 \]</span></p>
@@ -352,112 +357,112 @@ The authors in <span class="citation" data-cites="RufBoutharouiteDetyniecki2020"
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>The catch</strong></p>
+<p><strong>Le piège</strong></p>
 </div>
 <div class="callout-content">
-<p>A map sends <strong>each</strong> source point to a <strong>single</strong> destination. So you can never <em>split</em> mass. Transporting one grain (<span class="math inline">\(\delta_{x}\)</span>) onto two equal piles (<span class="math inline">\(\tfrac12\delta_{y_1} + \tfrac12\delta_{y_2}\)</span>) is <strong>impossible</strong> — no valid <span class="math inline">\(T\)</span> exists. The problem can be ill-posed.</p>
+<p>Une application envoie <strong>chaque</strong> point source vers une <strong>unique</strong> destination. On ne peut donc jamais <em>diviser</em> la masse. Transporter un grain (<span class="math inline">\(\delta_{x}\)</span>) vers deux tas égaux (<span class="math inline">\(\tfrac12\delta_{y_1} + \tfrac12\delta_{y_2}\)</span>) est <strong>impossible</strong> — aucune <span class="math inline">\(T\)</span> valide n’existe. Le problème peut être mal posé.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="kantorovich-relaxation-1942-transport-plans" class="slide level2 smaller">
-<h2>Kantorovich Relaxation (1942): transport <em>plans</em></h2>
-<p>Instead of a map, optimize over <strong>couplings</strong> — joint distributions <span class="math inline">\(\gamma\)</span> on <span class="math inline">\(X \times Y\)</span> whose marginals are <span class="src"><span class="math inline">\(\mu\)</span></span> and <span class="tgt"><span class="math inline">\(\nu\)</span></span>:</p>
+<section id="la-relaxation-de-kantorovich-1942-les-plans-de-transport" class="slide level2 smaller">
+<h2>La Relaxation de Kantorovich (1942) : les <em>plans</em> de transport</h2>
+<p>Au lieu d’une application, on optimise sur des <strong>couplages</strong> — des distributions jointes <span class="math inline">\(\gamma\)</span> sur <span class="math inline">\(X \times Y\)</span> dont les marginales sont <span class="src"><span class="math inline">\(\mu\)</span></span> et <span class="tgt"><span class="math inline">\(\nu\)</span></span> :</p>
 <p><span class="math display">\[
 \Gamma(\mu,\nu) = \Big\{ \gamma \ge 0 \;:\; \textstyle\int_Y d\gamma = \mu,\;\; \int_X d\gamma = \nu \Big\}
 \]</span></p>
-<p>The optimal transport cost becomes</p>
+<p>Le coût de transport optimal devient</p>
 <p><span class="math display">\[
 \mathcal{T}_c(\mu,\nu) \;=\; \inf_{\gamma \in \Gamma(\mu,\nu)} \int_{X\times Y} c(x,y)\, d\gamma(x,y)
 \]</span></p>
 <ul>
-<li>Mass <strong>can</strong> now split — <span class="math inline">\(\gamma(x,\cdot)\)</span> may spread over many destinations.</li>
-<li>The objective is <strong>linear</strong> in <span class="math inline">\(\gamma\)</span> over a <strong>convex</strong> set → a solution always exists.</li>
-<li>For nice costs, the Kantorovich optimum coincides with a Monge map <span class="citation" data-cites="villani2009optimal">(<a href="#/references" role="doc-biblioref" onclick="">Villani 2009</a>)</span>.</li>
+<li>La masse <strong>peut</strong> désormais se diviser — <span class="math inline">\(\gamma(x,\cdot)\)</span> peut se répartir sur plusieurs destinations.</li>
+<li>L’objectif est <strong>linéaire</strong> en <span class="math inline">\(\gamma\)</span> sur un ensemble <strong>convexe</strong> → une solution existe toujours.</li>
+<li>Pour des coûts réguliers, l’optimum de Kantorovich coïncide avec une application de Monge <span class="citation" data-cites="villani2009optimal">(<a href="#/références" role="doc-biblioref" onclick="">Villani 2009</a>)</span>.</li>
 </ul>
-<p>With empirical distributions <span class="math inline">\(\mu = \sum_{i=1}^n a_i \delta_{x_i}\)</span> and <span class="math inline">\(\nu = \sum_{j=1}^m b_j \delta_{y_j}\)</span>, a plan is a matrix <span class="math inline">\(P \in \mathbb{R}^{n \times m}_{+}\)</span> and the cost is <span class="math inline">\(C_{ij} = c(x_i, y_j)\)</span>:</p>
+<p>Avec des distributions empiriques <span class="math inline">\(\mu = \sum_{i=1}^n a_i \delta_{x_i}\)</span> et <span class="math inline">\(\nu = \sum_{j=1}^m b_j \delta_{y_j}\)</span>, un plan est une matrice <span class="math inline">\(P \in \mathbb{R}^{n \times m}_{+}\)</span> et le coût est <span class="math inline">\(C_{ij} = c(x_i, y_j)\)</span> :</p>
 <p><span class="math display">\[
 \min_{P \,\ge\, 0} \; \langle C, P \rangle
-\quad \text{subject to} \quad
+\quad \text{sous contrainte} \quad
 P \mathbf{1}_m = a, \;\; P^\top \mathbf{1}_n = b
 \]</span></p>
 <ul>
-<li><span class="math inline">\(\langle C, P\rangle = \sum_{ij} C_{ij} P_{ij}\)</span> is the total transport cost.</li>
-<li>The row sums must equal the source weights <span class="math inline">\(a\)</span>; column sums the target weights <span class="math inline">\(b\)</span>.</li>
-<li>Exactly solvable with the <strong>network simplex</strong> / Hungarian algorithm, time complexity <span class="math inline">\(O(n^3 \log n)\)</span>, intractable for large <span class="math inline">\(n\)</span>.</li>
+<li><span class="math inline">\(\langle C, P\rangle = \sum_{ij} C_{ij} P_{ij}\)</span> est le coût total de transport.</li>
+<li>Les sommes des lignes doivent être égales aux poids source <span class="math inline">\(a\)</span> ; les sommes des colonnes aux poids cible <span class="math inline">\(b\)</span>.</li>
+<li>Résoluble exactement avec l’algorithme du <strong>simplexe de réseau</strong> / l’algorithme hongrois, complexité temporelle <span class="math inline">\(O(n^3 \log n)\)</span>, intraitable pour de grands <span class="math inline">\(n\)</span>.</li>
 </ul>
 </section>
-<section id="transportation-on-the-real-line" class="slide level2">
-<h2>Transportation on the real line</h2>
-<p>Let <span class="math inline">\(\mu, \nu\)</span> be probability measures on <span class="math inline">\(\mathbb R\)</span> with finite p-th moment. Let <span class="math inline">\(c(x,y) = h(x-y)\)</span> where <span class="math inline">\(h: \mathbb R \to [0, \infty)\)</span> is convex.</p>
+<section id="le-transport-sur-la-droite-réelle" class="slide level2">
+<h2>Le transport sur la droite réelle</h2>
+<p>Soient <span class="math inline">\(\mu, \nu\)</span> des mesures de probabilité sur <span class="math inline">\(\mathbb R\)</span> ayant un moment d’ordre p fini. Soit <span class="math inline">\(c(x,y) = h(x-y)\)</span> où <span class="math inline">\(h: \mathbb R \to [0, \infty)\)</span> est convexe.</p>
 <ul>
-<li>If <span class="math inline">\(\mu\)</span> has no atom, i.e.&nbsp;its cdf is continuous, then <span class="math inline">\(F^{-1}_\nu \circ F_\mu\)</span> is an optimal transport map, and is unique if <span class="math inline">\(h\)</span> is strictly convex.</li>
-<li>We have <span class="math display">\[
+<li>Si <span class="math inline">\(\mu\)</span> n’a pas d’atome, c’est-à-dire que sa fonction de répartition est continue, alors <span class="math inline">\(F^{-1}_\nu \circ F_\mu\)</span> est une application de transport optimale, unique si <span class="math inline">\(h\)</span> est strictement convexe.</li>
+<li>On a <span class="math display">\[
 \min_{\gamma\in\Gamma(\mu,\nu)}\int_{\mathbb R^2}c(x,y)d\gamma(x,y) = \int_0^1 c(F_{\mu}^{-1}(s), F_{\nu}^{-1}(s)) ds
 \]</span></li>
 </ul>
-<p>This shows that 1D transportation is trivial, and numerically just takes <span class="math inline">\(O(n\log n)\)</span> to sort the atoms for empirical measures <span class="math inline">\(\mu, \nu\)</span>. This is the basis of the method that <span class="citation" data-cites="charpentier2023mitigating">(<a href="#/references" role="doc-biblioref" onclick="">Charpentier et al. 2023</a>)</span> and <span class="citation" data-cites="hu2023multitaskfairness">(<a href="#/references" role="doc-biblioref" onclick="">Hu et al. 2023</a>)</span> uses.</p>
+<p>Ceci montre que le transport en dimension 1 est trivial, et ne nécessite numériquement que <span class="math inline">\(O(n\log n)\)</span> pour trier les atomes des mesures empiriques <span class="math inline">\(\mu, \nu\)</span>. C’est la base de la méthode utilisée par <span class="citation" data-cites="charpentier2023mitigating">(<a href="#/références" role="doc-biblioref" onclick="">Charpentier et al. 2023</a>)</span> et <span class="citation" data-cites="hu2023multitaskfairness">(<a href="#/références" role="doc-biblioref" onclick="">Hu et al. 2023</a>)</span>.</p>
 </section>
-<section id="wasserstein-distance" class="slide level2">
-<h2>Wasserstein distance</h2>
-<p>Take the cost to be a distance to the power <span class="math inline">\(p\)</span>, i.e.&nbsp;<span class="math inline">\(c(x,y) = d(x,y)^p\)</span>:</p>
+<section id="la-distance-de-wasserstein" class="slide level2">
+<h2>La distance de Wasserstein</h2>
+<p>Prenons pour coût une distance élevée à la puissance <span class="math inline">\(p\)</span>, i.e.&nbsp;<span class="math inline">\(c(x,y) = d(x,y)^p\)</span> :</p>
 <p><span class="math display">\[
 W_p(\mu, \nu) \;=\; \left( \inf_{\pi \in \Pi(\mu,\nu)} \int d(x,y)^p \, d\pi(x,y) \right)^{1/p}
 \]</span></p>
 <ul>
-<li>It is a <strong>metric</strong> (symmetry, triangle inequality).</li>
-<li>It respects the <strong>geometry</strong> of the underlying space.</li>
-<li>It stays meaningful even when distributions have <strong>disjoint support</strong>, unlike KL divergence, which blows up.</li>
+<li>C’est une <strong>métrique</strong> (symétrie, inégalité triangulaire).</li>
+<li>Elle respecte la <strong>géométrie</strong> de l’espace sous-jacent.</li>
+<li>Elle reste significative même lorsque les distributions ont des <strong>supports disjoints</strong>, contrairement à la divergence KL, qui diverge.</li>
 </ul>
 </section>
-<section id="wasserstein-barycenter" class="slide level2">
-<h2>Wasserstein barycenter</h2>
-<p>Given <span class="math inline">\(\{\mu_s\}_{s \in \mathcal S}\)</span>. We seek to find the measure <span class="math inline">\(\nu^*\)</span> that minimizes <span class="math display">\[
+<section id="le-barycentre-de-wasserstein" class="slide level2">
+<h2>Le barycentre de Wasserstein</h2>
+<p>Soit <span class="math inline">\(\{\mu_s\}_{s \in \mathcal S}\)</span>. Nous cherchons à trouver la mesure <span class="math inline">\(\nu^*\)</span> qui minimise <span class="math display">\[
 \nu^* \in {\arg\min}_{\nu} \sum_{s\in\mathcal S}p_s W_2^2(\nu,\mu_s)
 \]</span></p>
-<p>In the fairness setting, let <span class="math inline">\(\mu_s\)</span> be the law of the predictions of group <span class="math inline">\(s\)</span>, and <span class="math inline">\(p_s = \mathbb P(S = s)\)</span>, the proportion of the population that belongs to group <span class="math inline">\(s\)</span>. We seek to find the transport map <span class="math inline">\(\mathcal T_s\)</span> for each group to the barycenter.</p>
+<p>Dans le cadre de l’équité, soit <span class="math inline">\(\mu_s\)</span> la loi des prédictions du groupe <span class="math inline">\(s\)</span>, et <span class="math inline">\(p_s = \mathbb P(S = s)\)</span>, la proportion de la population appartenant au groupe <span class="math inline">\(s\)</span>. Nous cherchons à trouver l’application de transport <span class="math inline">\(\mathcal T_s\)</span> de chaque groupe vers le barycentre.</p>
 
-<img data-src="img/barycenter%20vs%20arithmean.png" class="r-stretch"><p>The Wasserstein barycenter has many desirable properties:</p>
+<img data-src="img/barycenter%20vs%20arithmean.png" class="r-stretch"><p>Le barycentre de Wasserstein possède de nombreuses propriétés intéressantes :</p>
 <ul>
-<li>Over simple arithmetic mean: preservation of geometry - no multimodality problems, etc.</li>
-<li>The barycenter preserves the global balance property, i.e.&nbsp;the mean of the barycenter is the barycenter of means.</li>
-<li><span class="citation" data-cites="chzhen2020fair">(<a href="#/references" role="doc-biblioref" onclick="">Chzhen et al. 2020</a>)</span> proved in the univariate setting that: Amongst DP-fair adjustments, the barycenter is the optimal in terms of MSE. We will generalize this to the multivariate case.</li>
+<li>Par rapport à la simple moyenne arithmétique : préservation de la géométrie - pas de problèmes de multimodalité, etc.</li>
+<li>Le barycentre préserve la propriété d’équilibre global, c’est-à-dire que la moyenne du barycentre est le barycentre des moyennes.</li>
+<li><span class="citation" data-cites="chzhen2020fair">(<a href="#/références" role="doc-biblioref" onclick="">Chzhen et al. 2020</a>)</span> a démontré dans le cadre univarié que : parmi les ajustements DP-équitables, le barycentre est optimal en termes d’EQM (erreur quadratique moyenne). Nous généraliserons ce résultat au cas multivarié.</li>
 </ul>
 </section>
-<section id="some-optimality-result" class="slide level2">
-<h2>Some Optimality Result</h2>
-<p>Formally, let <span class="math inline">\((X, S, Y) \in \mathbb R^d \times \mathcal S \times \mathbb R^p\)</span> with <span class="math inline">\(p_s = \mathbb P(S=s) &gt; 0\)</span> and <span class="math inline">\(\mathbb E\|Y\|^2 &lt; \infty\)</span>. Let</p>
+<section id="un-résultat-doptimalité" class="slide level2">
+<h2>Un Résultat d’Optimalité</h2>
+<p>Formellement, soit <span class="math inline">\((X, S, Y) \in \mathbb R^d \times \mathcal S \times \mathbb R^p\)</span> avec <span class="math inline">\(p_s = \mathbb P(S=s) &gt; 0\)</span> et <span class="math inline">\(\mathbb E\|Y\|^2 &lt; \infty\)</span>. Soit</p>
 <p><span class="math display">\[
 f^*(x, s) := \mathbb E[Y \mid X=x, S=s]
 \]</span></p>
-<p>be the Bayes (unconstrained) regressor, and for each <span class="math inline">\(s\)</span> let</p>
+<p>le régresseur de Bayes (non contraint), et pour chaque <span class="math inline">\(s\)</span> soit</p>
 <p><span class="math display">\[
 \mu_s := \mathcal L(f^*(X, s)\mid S=s) \in\mathcal P_2(\mathbb R^p)
 \]</span></p>
-<p>Let <span class="math inline">\(\nu\)</span> be the <span class="math inline">\(W_2\)</span> barycenter of <span class="math inline">\(\{\mu_s\}\)</span> with weights <span class="math inline">\(\{p_s\}\)</span>, and let <span class="math inline">\(\mathcal T_s = \nabla \phi_s\)</span> be the optimal transport map pushing <span class="math inline">\(\mu_s\)</span> to <span class="math inline">\(\nu\)</span>. Then the regressor <span class="math inline">\(f^*_{DP}(x,s) = \mathcal T_s(f^*(x,s))\)</span> is DP fair (i.e.&nbsp;maps everything to the same law) and satisfies</p>
+<p>Soit <span class="math inline">\(\nu\)</span> le barycentre <span class="math inline">\(W_2\)</span> de <span class="math inline">\(\{\mu_s\}\)</span> avec poids <span class="math inline">\(\{p_s\}\)</span>, et soit <span class="math inline">\(\mathcal T_s = \nabla \phi_s\)</span> l’application de transport optimal poussant <span class="math inline">\(\mu_s\)</span> vers <span class="math inline">\(\nu\)</span>. Alors le régresseur <span class="math inline">\(f^*_{DP}(x,s) = \mathcal T_s(f^*(x,s))\)</span> est DP-équitable (c’est-à-dire qu’il transporte tout vers la même loi) et satisfait</p>
 <p><span class="math display">\[
 f^*_{DP}\in{\arg\min}_{f\in\mathcal F_{DP}} \mathbb E[\|f(X,S) - Y\|^2]
 \]</span></p>
-<p>with exact excess risk <span class="math display">\[
+<p>avec un excès de risque exact <span class="math display">\[
 \mathbb E[\|f^*_{DP}(X,S) - Y\|^2] - \mathbb E[\|f^*(X,S) - Y\|^2] = \sum_s p_s W_2^2(\mu_s, \nu)
 \]</span></p>
 </section>
-<section id="algorithm-to-find-the-barycenter---the-regularization" class="slide level2">
-<h2>Algorithm to find the barycenter - the regularization</h2>
-<p>To relax the problem into a strictly convex problem, <span class="citation" data-cites="cuturi2013sinkhorn">(<a href="#/references" role="doc-biblioref" onclick="">Cuturi 2013</a>)</span> proposed adding an entropy penalty <span class="math inline">\(H(P) = -\sum_{ij} P_{ij}(\log P_{ij} - 1)\)</span> term:</p>
+<section id="algorithme-pour-trouver-le-barycentre---la-régularisation" class="slide level2">
+<h2>Algorithme pour trouver le barycentre - la régularisation</h2>
+<p>Pour relâcher le problème en un problème strictement convexe, <span class="citation" data-cites="cuturi2013sinkhorn">(<a href="#/références" role="doc-biblioref" onclick="">Cuturi 2013</a>)</span> propose d’ajouter un terme de pénalité entropique <span class="math inline">\(H(P) = -\sum_{ij} P_{ij}(\log P_{ij} - 1)\)</span> :</p>
 <p><span class="math display">\[
 \min_{P \in \Pi(a,b)} \; \langle C, P \rangle \;-\; \varepsilon\, H(P)
 \]</span></p>
 <ul>
-<li>The unique solution has the form <span class="math inline">\(P^\star = \operatorname{diag}(u)\, K \, \operatorname{diag}(v)\)</span>, where <span class="math inline">\(K = e^{-C/\varepsilon}\)</span>.</li>
-<li>Finding <span class="math inline">\(u, v\)</span> reduces to <strong>alternating rescalings</strong> of rows and columns:</li>
+<li>La solution unique a la forme <span class="math inline">\(P^\star = \operatorname{diag}(u)\, K \, \operatorname{diag}(v)\)</span>, où <span class="math inline">\(K = e^{-C/\varepsilon}\)</span>.</li>
+<li>Trouver <span class="math inline">\(u, v\)</span> se ramène à des <strong>rééchelonnages alternés</strong> des lignes et des colonnes :</li>
 </ul>
 <p><span class="math display">\[
 u \leftarrow \frac{a}{K v}, \qquad v \leftarrow \frac{b}{K^\top u}
 \]</span></p>
 <ul>
-<li><p>Each iteration is a couple of matrix–vector products → <strong>GPU-friendly</strong> and <strong>differentiable</strong>, time complexity only <span class="math inline">\(O(n^2)\)</span>.</p></li>
-<li><p><span class="citation" data-cites="cuturi2014barycenter">(<a href="#/references" role="doc-biblioref" onclick="">Cuturi and Doucet 2014</a>)</span> proposes a Lloyd-like Fixed-point iteration algorithm on the barycenter’s support points based on the above Sinkhorn distance.</p></li>
+<li><p>Chaque itération est constituée de quelques produits matrice-vecteur → <strong>adapté au GPU</strong> et <strong>différentiable</strong>, complexité temporelle de seulement <span class="math inline">\(O(n^2)\)</span>.</p></li>
+<li><p><span class="citation" data-cites="cuturi2014barycenter">(<a href="#/références" role="doc-biblioref" onclick="">Cuturi and Doucet 2014</a>)</span> propose un algorithme d’itération à point fixe de type Lloyd sur les points de support du barycentre, basé sur la distance de Sinkhorn ci-dessus.</p></li>
 </ul>
 <!-- ```r
 INPUT:  measures (N sets of locations + weights)
@@ -479,63 +484,68 @@ repeat until EXIT_CONDITION:   # Until barycenter stops moving / max iter reache
 return X
 ``` -->
 </section>
-<section id="bottlenecks-resolutions" class="slide level2">
-<h2>Bottlenecks &amp; Resolutions</h2>
-<p>The above algorithm still consumes a lot time and memory, which makes it intractable for large-scale problems (e.g.&nbsp;our experiments will have ~100K-1M observations).</p>
-<p>Solution: Sliced Wasserstein as a surrogate ~ <span class="math inline">\(O(n\log n)\)</span> time complexity</p>
+<section id="goulots-détranglement-résolutions" class="slide level2">
+<h2>Goulots d’étranglement &amp; Résolutions</h2>
+<p>L’algorithme ci-dessus consomme encore beaucoup de temps et de mémoire, ce qui le rend intraitable pour des problèmes à grande échelle (par exemple, nos expériences porteront sur ~100K-1M observations).</p>
+<p>Solution : le Wasserstein tranché (Sliced Wasserstein) comme substitut ~ complexité temporelle <span class="math inline">\(O(n\log n)\)</span></p>
 <p><span class="math display">\[
 SW_2^2(\mu, \nu) = \left(\int_{\theta \sim \mathcal U(\mathbb S^{d-1})} W_2^2(\theta_\#\mu, \theta_\#\nu) \, d\theta \right)^{1/2}
 \]</span></p>
-<p>Sliced Wasserstein Barycenter can also be computed easily.</p>
-<p>To-do: Some theorems.</p>
+<p>Le barycentre de Wasserstein tranché peut également être calculé facilement.</p>
+<p>À faire : quelques théorèmes.</p>
 </section>
-<section id="generic-framework-for-barycenter-calculation" class="slide level2">
-<h2>Generic framework for Barycenter Calculation</h2>
-<p>Adapted from <span class="citation" data-cites="cuturi2014barycenter">(<a href="#/references" role="doc-biblioref" onclick="">Cuturi and Doucet 2014</a>)</span>, we propose a particle-flow framework to find a barycenter</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>ALGORITHM <span class="fu">ParticleFlow</span>(y0, {Z_s}, {p_s}, Oracle, n_iter, step)<span class="sc">:</span></span>
-<span id="cb1-2"><a href=""></a>    <span class="co"># Stage 1 barycenter loop. Only `Oracle` differs.</span></span>
-<span id="cb1-3"><a href=""></a>    y <span class="ot">&lt;-</span> y0                                    <span class="co"># m particles, shared init</span></span>
+<section id="cadre-générique-pour-le-calcul-du-barycentre" class="slide level2">
+<h2>Cadre générique pour le calcul du barycentre</h2>
+<p>Adapté de <span class="citation" data-cites="cuturi2014barycenter">(<a href="#/références" role="doc-biblioref" onclick="">Cuturi and Doucet 2014</a>)</span>, nous proposons un cadre de flux de particules pour trouver un barycentre</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>ALGORITHME <span class="fu">FluxDeParticules</span>(y0, {Z_s}, {p_s}, Oracle, n_iter, step)<span class="sc">:</span></span>
+<span id="cb1-2"><a href=""></a>    <span class="co"># Boucle du barycentre - étape 1. Seul `Oracle` diffère.</span></span>
+<span id="cb1-3"><a href=""></a>    y <span class="ot">&lt;-</span> y0                                    <span class="co"># m particules, initialisation partagée</span></span>
 <span id="cb1-4"><a href=""></a>    <span class="cf">for</span> t <span class="ot">=</span> <span class="dv">0</span> to n_iter<span class="dv">-1</span><span class="sc">:</span></span>
 <span id="cb1-5"><a href=""></a>        disp <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb1-6"><a href=""></a>        <span class="cf">for</span> each group s<span class="sc">:</span></span>
-<span id="cb1-7"><a href=""></a>            (d_s, cost_s) <span class="ot">&lt;-</span> <span class="fu">Oracle</span>(y, Z_s)    <span class="co"># displacement toward mu_s + cost</span></span>
+<span id="cb1-7"><a href=""></a>            (d_s, cost_s) <span class="ot">&lt;-</span> <span class="fu">Oracle</span>(y, Z_s)    <span class="co"># déplacement vers mu_s + coût</span></span>
 <span id="cb1-8"><a href=""></a>            disp <span class="ot">&lt;-</span> disp <span class="sc">+</span> p_s <span class="sc">*</span> d_s</span>
-<span id="cb1-9"><a href=""></a>        y <span class="ot">&lt;-</span> y − <span class="fu">step</span>(t) <span class="sc">*</span> disp                <span class="co"># step(t)=1 for W2; decaying for SW</span></span>
+<span id="cb1-9"><a href=""></a>        y <span class="ot">&lt;-</span> y − <span class="fu">step</span>(t) <span class="sc">*</span> disp                <span class="co"># step(t)=1 pour W2 ; décroissant pour SW</span></span>
 <span id="cb1-10"><a href=""></a>    return y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We replace the <code>Oracle</code> with the corresponding ExactW2 / EntropicW2 / SlicedW2 displacement</p>
-<p>Then a transport map can be obtained, and then map from out-of-sample points to the barycenter.</p>
+<p>Nous remplaçons l’<code>Oracle</code> par le déplacement correspondant ExactW2 / EntropicW2 / SlicedW2</p>
+<p>Une application de transport peut ensuite être obtenue, puis les points hors échantillon peuvent être transportés vers le barycentre.</p>
 </section>
-<section id="synthetic-experiments" class="slide level2">
-<h2>Synthetic Experiments</h2>
+<section id="expériences-synthétiques" class="slide level2">
+<h2>Expériences Synthétiques</h2>
 
-<img data-src="img/fig_pipeline.png" class="r-stretch quarto-figure-center"><p class="caption">Experiment on synthetic data to demonstrate the workflow</p><ul>
-<li>Will have to reframe the overview-theory-experiment to balance</li>
-<li>Refer to the ETHZ Master’s degree <span class="citation" data-cites="carassai2024neural">(<a href="#/references" role="doc-biblioref" onclick="">Carassai 2024</a>)</span> to look at how it is structured.</li>
+<img data-src="img/fig_pipeline.png" class="r-stretch quarto-figure-center"><p class="caption">Expérience sur des données synthétiques pour illustrer le déroulement</p><ul>
+<li>Il faudra reformuler l’articulation théorie-aperçu-expérience pour l’équilibrer</li>
+<li>Se référer au mémoire de Master de l’ETHZ <span class="citation" data-cites="carassai2024neural">(<a href="#/références" role="doc-biblioref" onclick="">Carassai 2024</a>)</span> pour voir comment il est structuré.</li>
 </ul>
 </section>
-<section id="experimentals" class="slide level2">
-<h2>Experimentals</h2>
-<p>We plan to experiment on two datasets:</p>
+<section id="expérimentations" class="slide level2">
+<h2>Expérimentations</h2>
+<p>Nous prévoyons d’expérimenter sur deux jeux de données :</p>
 <ul>
-<li>Brazilian Auto insurance (2 dimension - collision &amp; other coverages; gender as sensitive variable)</li>
-<li>European Health insurance (8 coverages; gender as sensitive variable)</li>
+<li>Assurance auto brésilienne (2 dimensions - collision &amp; autres garanties ; genre comme variable sensible)</li>
+<li>Assurance santé européenne (8 garanties ; genre comme variable sensible)</li>
 </ul>
-<p>if possible, I ask Lindholm for access to another dataset (though confidential) - Auto insurance (3 dimension; race as sensitive variable - 5 categories)</p>
+<p>Si possible, je demanderai à Lindholm l’accès à un autre jeu de données (bien que confidentiel) - Assurance auto (3 dimensions ; race comme variable sensible - 5 catégories)</p>
 </section>
-<section id="draft-overview" class="slide level2">
-<h2>Draft Overview</h2>
+<section id="aperçu-du-plan" class="slide level2">
+<h2>Aperçu du Plan</h2>
 <ul>
-<li>Executive Summary (Article-like overview)</li>
-<li>Fairness and Discrimination (Literature Review) - OK</li>
-<li>The Multiperil Insurance Pricing Problem (Review + Algorithm to be used) - OK</li>
-<li>A Primer on Optimal Transport Theory (Wasserstein, Sliced Wasserstein) - OK</li>
-<li>The Fairness Adjustment Framework (Algorithm, Theoretical guarantees) - 50%</li>
-<li>Numerical Experiments (Synthetic + Real data) - TODO</li>
-<li>Conclusion &amp; Discussion</li>
+<li>Résumé Exécutif (aperçu façon article)</li>
+<li>Discrimination et Équité (Revue de littérature) - OK</li>
+<li>Le Problème de Tarification en Assurance Multirisque (Revue + Algorithme utilisé) - OK</li>
+<li>Une Introduction à la Théorie du Transport Optimal (Wasserstein, Wasserstein tranché) - OK</li>
+<li>Le Cadre d’Ajustement de l’Équité (Algorithme, Garanties théoriques) - 50%</li>
+<li>Expériences Numériques (Données synthétiques + réelles) - À FAIRE</li>
+<li>Conclusion &amp; Discussion
+<ul>
+<li>Operationalizing the framework for audit…</li>
+</ul></li>
 </ul>
+<p>Perspective: Going to do further in the topic in the phd</p>
+<p>DIscussions : - Convince the jury how it could be applied in the future - Oversimplify the maths in the presentation</p>
 </section>
-<section id="references" class="slide level2 smaller scrollable">
-<h2>References</h2>
+<section id="références" class="slide level2 smaller scrollable">
+<h2>Références</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-AvrahamLogueSchwarcz2014" class="csl-entry" role="listitem">
 Avraham, Ronen, Kyle D. Logue, and Daniel Schwarcz. 2014. <span>“Understanding Insurance Antidiscrimination Laws.”</span> <em>Southern California Law Review</em> 87 (2): 195–274.
@@ -567,6 +577,9 @@ Cuturi, Marco, and Arnaud Doucet. 2014. <span>“Fast Computation of Wasserstein
 <div id="ref-denuit2026balance" class="csl-entry" role="listitem">
 Denuit, Michel, Marie Michaelides, and Julien Trufin. 2026. <span>“Balance and Fairness Through Multicalibration in Nonlife Insurance Pricing.”</span> <em>arXiv Preprint arXiv:2603.16317</em>.
 </div>
+<div id="ref-frees2009actuarial" class="csl-entry" role="listitem">
+Frees, Edward W, Peng Shi, and Emiliano A Valdez. 2009. <span>“Actuarial Applications of a Hierarchical Insurance Claims Model.”</span> <em>ASTIN Bulletin: The Journal of the IAA</em> 39 (1): 165–97.
+</div>
 <div id="ref-friedler2021possibility" class="csl-entry" role="listitem">
 Friedler, Sorelle A, Carlos Scheidegger, and Suresh Venkatasubramanian. 2021. <span>“The (Im) Possibility of Fairness: Different Value Systems Require Different Mechanisms for Fair Decision Making.”</span> <em>Communications of the ACM</em> 64 (4): 136–43.
 </div>
@@ -591,6 +604,9 @@ Villani, Cédric. 2009. <em>Optimal Transport: Old and New</em>. Vol. 338. Grund
 <div id="ref-xi2025fairreweighing" class="csl-entry" role="listitem">
 Xi, Xiaoyin, and Zhe Yu. 2025. <span>“FairReweighing: Density Estimation-Based Reweighing Framework for Improving Separation in Fair Regression.”</span> <em>arXiv Preprint arXiv:2511.11459</em>.
 </div>
+<div id="ref-yang2019multiperil" class="csl-entry" role="listitem">
+Yang, Lu, and Peng Shi. 2019. <span>“Multiperil Rate Making for Property Insurance Using Longitudinal Data.”</span> <em>Journal of the Royal Statistical Society Series A: Statistics in Society</em> 182 (2): 647–68. <a href="https://doi.org/10.1111/rssa.12419">https://doi.org/10.1111/rssa.12419</a>.
+</div>
 <div id="ref-yeom2021avoiding" class="csl-entry" role="listitem">
 Yeom, Samuel, and Michael Carl Tschantz. 2021. <span>“Avoiding Disparity Amplification Under Different Worldviews.”</span> <em>Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency</em>, 273–83.
 </div>
@@ -600,25 +616,25 @@ Yeom, Samuel, and Michael Carl Tschantz. 2021. <span>“Avoiding Disparity Ampli
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>From Optimal Transport to Insurance Fairness</p>
+<p>Du Transport Optimal à l’Équité en Assurance</p>
 </div>
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="memoire-presentation_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="memoire-presentation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="memoire-presentation_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="memoire-presentation_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="memoire-presentation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="memoire-presentation_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="memoire-presentation_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="memoire-presentation_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="memoire-presentation_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="memoire-presentation_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="memoire-presentation_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="memoire-presentation-fr_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

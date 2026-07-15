@@ -287,7 +287,7 @@ $$
 
 Sliced Wasserstein Barycenter can also be computed easily.
 
-To-do: Theorem on suboptimality gap.
+To-do: Some theorems.
 
 ## Generic framework for Barycenter Calculation
 
@@ -295,7 +295,7 @@ Adapted from [@cuturi2014barycenter], we propose a particle-flow framework to fi
 
 ```r
 ALGORITHM ParticleFlow(y0, {Z_s}, {p_s}, Oracle, n_iter, step):
-    # Stage 1 barycenter loop. Only `Oracle` differs between tracks.
+    # Stage 1 barycenter loop. Only `Oracle` differs.
     y <- y0                                    # m particles, shared init
     for t = 0 to n_iter-1:
         disp <- 0
@@ -308,7 +308,7 @@ ALGORITHM ParticleFlow(y0, {Z_s}, {p_s}, Oracle, n_iter, step):
 
 We replace the `Oracle` with the corresponding ExactW2 / EntropicW2 / SlicedW2 displacement
 
-Then a transport map is to be learned, and then map from out-of-sample points to the barycenter. 
+Then a transport map can be obtained, and then map from out-of-sample points to the barycenter. 
 
 
 ## Synthetic Experiments
