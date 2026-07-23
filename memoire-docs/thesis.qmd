@@ -1,0 +1,731 @@
+# Demographic Parity Fairness in Multiple-Guarantee Non-Life Insurance Pricing
+### An Optimal-Transport Framework
+
+**Author:** Sang Huynh
+**Year:** 2026
+
+> **Legend for placeholders used in this scaffold**
+> - **[TODO: …]** — content to be written.
+> - **[Note: …]** — guidance / intended purpose of the section (delete for final).
+> - Math is written in LaTeX (`$…$` inline, `$$…$$` display) so it renders in most Markdown viewers (VS Code, Obsidian, Typora, GitHub, Pandoc).
+
+---
+
+## Table of Contents
+
+- [Abstract (EN)](#abstract-en)
+- [Résumé (FR)](#résumé-fr)
+- [Extended Summary — Note de synthèse (EN)](#extended-summary--note-de-synthèse-en)
+- [Note de synthèse (FR)](#note-de-synthèse-fr)
+- [Acknowledgements](#acknowledgements)
+- [1. Fairness in Insurance Pricing](#1-fairness-in-insurance-pricing)
+- [2. Pricing Dependent Non-Life Risks](#2-pricing-dependent-non-life-risks)
+- [3. A Primer on Optimal Transport](#3-a-primer-on-optimal-transport)
+- [4. A Transport-Based Framework for Fair Insurance Pricing](#4-a-transport-based-framework-for-fair-insurance-pricing)
+- [5. Experimental Results](#5-experimental-results)
+- [6. Conclusion](#6-conclusion)
+- [Appendix A — Proofs and Additional Material](#appendix-a--proofs-and-additional-material)
+- [Appendix B — Implementation Details](#appendix-b--implementation-details)
+- [References](#references)
+
+---
+
+## Abstract
+
+*Target: ~1 page. Suggested arc — 2–3 short paragraphs.*
+
+> [Note: (1) Context and problem. Regulatory and ethical pressure for fairness in insurance pricing; the specific setting of multiple-guarantee non-life products where per-guarantee prices are statistically dependent through shared covariates. State the objective: enforce demographic parity (DP) with respect to a sensitive attribute while controlling the loss of predictive accuracy.]
+
+> [Note: (2) Approach. A transport-based post-processing framework built on Wasserstein barycenters; the Sliced-Wasserstein (SW) barycenter and its gradient-flow map are proposed as a scalable surrogate that also transports out-of-sample points. Base predictive model: the deep-learning multi-task pricer of Richman.]
+
+> [Note: (3) Contributions and findings. Coarse theoretical suboptimality bounds for the SW flow map as a DP post-processing procedure; empirical results on [TODO: dataset] quantifying the fairness–accuracy trade-off.]
+
+**Keywords:** demographic parity, fair regression, optimal transport, Wasserstein barycenter, sliced Wasserstein, non-life insurance pricing, multi-task learning.
+
+---
+
+## Résumé
+
+*Cible : ~1 page. Traduction fidèle de l'abstract anglais.*
+
+> [Note: (1) Contexte et problème. Pression réglementaire et éthique pour l'équité en tarification assurantielle ; le cas des produits non-vie à garanties multiples où les primes par garantie sont statistiquement dépendantes via des covariables partagées. Objectif : imposer la parité démographique (DP) vis-à-vis d'un attribut sensible tout en maîtrisant la perte de pouvoir prédictif.]
+
+> [Note: (2) Approche. Un cadre de post-traitement fondé sur le transport optimal et les barycentres de Wasserstein ; le barycentre Sliced-Wasserstein (SW) et son flot de gradient sont proposés comme substitut scalable, transportant aussi les points hors échantillon. Modèle de base : le tarificateur multi-tâches par apprentissage profond de Richman.]
+
+> [Note: (3) Contributions et résultats. Bornes de sous-optimalité (grossières) du flot SW comme procédure de post-traitement DP ; résultats empiriques sur [TODO: jeu de données] quantifiant le compromis équité–précision.]
+
+**Mots-clés :** parité démographique, régression équitable, transport optimal, barycentre de Wasserstein, sliced Wasserstein, tarification non-vie, apprentissage multi-tâches.
+
+---
+
+## Extended Summary
+
+*Target: 7–9 pages. **Write this LAST**: it is a condensed, self-contained academic paper summarizing the whole thesis (intro → method → theory → experiments). Keep equations minimal but present the key results.*
+
+### 1. Motivation and problem statement
+> [TODO: Fairness in insurance pricing; multiple-guarantee non-life setting; dependence of prices through shared covariates; demographic parity objective.]
+
+### 2. Background: fair regression and optimal transport
+> [TODO: Bayes regressor $\pi(X)=\mathbb{E}[Y\mid X]$; DP as equality of score distributions across sensitive groups; Wasserstein barycenter characterization (Chzhen et al.); optimality in 1D and its multivariate generalization.]
+
+### 3. Proposed transport-based framework
+> [TODO: Free-support Wasserstein barycenter (Cuturi–Doucet) and its cost; Sliced-Wasserstein barycenter as a scalable surrogate with a usable out-of-sample flow map.]
+
+### 4. Theoretical guarantees
+> [TODO: Coarse suboptimality decomposition: (i) SW₂ vs W₂ barycenter gap, (ii) flow-map vs optimal-transport-to-SW₂-barycenter gap.]
+
+### 5. Experiments
+> [TODO: Base model (Richman DL multi-task pricer); dataset; fairness–accuracy trade-off; comparison against baselines.]
+
+### 6. Conclusion and perspectives
+> [TODO: Summary of contributions; neural OT (Korotin et al.) as a promising but out-of-scope direction.]
+
+---
+
+## Note de synthèse
+
+*Cible : 7–9 pages. **À rédiger en dernier** : version condensée et autonome de tout le mémoire. Structurer comme un court article autonome.*
+
+### 1. Motivation et problématique
+> [TODO: Équité en tarification ; cadre non-vie à garanties multiples ; dépendance des primes via covariables partagées ; objectif de parité démographique.]
+
+### 2. Contexte : régression équitable et transport optimal
+> [TODO: Régresseur de Bayes $\pi(X)=\mathbb{E}[Y\mid X]$ ; DP comme égalité des distributions de scores entre groupes ; caractérisation par barycentre de Wasserstein (Chzhen et al.) ; optimalité en 1D et généralisation multivariée.]
+
+### 3. Cadre proposé fondé sur le transport
+> [TODO: Barycentre de Wasserstein à support libre (Cuturi–Doucet) et son coût ; barycentre Sliced-Wasserstein comme substitut scalable avec flot hors échantillon.]
+
+### 4. Garanties théoriques
+> [TODO: Décomposition (grossière) de la sous-optimalité : (i) écart barycentre SW₂ vs W₂, (ii) écart flot vs transport optimal vers le barycentre SW₂.]
+
+### 5. Expériences
+> [TODO: Modèle de base (tarificateur DL multi-tâches de Richman) ; jeu de données ; compromis équité–précision ; comparaison aux références.]
+
+### 6. Conclusion et perspectives
+> [TODO: Contributions ; transport optimal neuronal (Korotin et al.) comme piste prometteuse mais hors périmètre.]
+
+---
+
+## Acknowledgements
+
+> [TODO: Optional. Thank supervisors, host company, colleagues, family.]
+
+---
+
+# 1. Introduction
+ 
+## 1.1 Fairness and discrimination in insurance pricing
+ 
+Insurance is, at its core, a business of classification. An insurer prices risk by partitioning
+a heterogeneous population into cells that are as homogeneous as possible with respect to
+expected loss, and by charging each cell a premium commensurate with its risk. This logic of
+*differentiation* is what makes private risk transfer actuarially sound and financially
+sustainable, but it is also what places insurance permanently at the centre of the debate on
+algorithmic fairness. The very practice that makes premiums "actuarially fair" — charging each
+policyholder in proportion to their expected cost — can simultaneously be experienced as
+*unfair* in a social or legal sense when the risk factors used, or their statistical proxies,
+track legally protected characteristics such as sex, race, ethnicity, disability, or age
+(Barry and Charpentier, 2023; Charpentier, 2024). This tension between actuarial fairness and
+social or anti-discrimination fairness is not new, but the
+migration from generalized linear models to high-dimensional, data-intensive
+predictive algorithms has sharply amplified it, because complex models can reconstruct
+protected information from seemingly innocuous covariates far more effectively than a human
+underwriter ever could.
+ 
+It is useful to distinguish two senses in which insurance pricing may be said to
+"discriminate." The first is *direct discrimination*, in which a protected
+attribute enters the rating model explicitly and policyholders are treated differently purely on
+its basis. The second, and the one that is far more difficult to detect and to remedy, is
+*indirect discrimination*: even when the protected attribute is excluded from
+the model, other legitimate risk factors that are correlated with it act as proxies, so that the
+protected attribute continues to influence premiums implicitly (Phelps, 1972; Arrow, 1973). A
+classic example is the use of geographic or vehicle information that correlates with ethnicity,
+or of credit history that correlates with income and, through it, with race. Because statistical
+discrimination operates through correlation rather than through explicit use, the naive remedy of
+simply dropping the protected variable, sometimes called *fairness through unawareness* — is
+demonstrably ineffective (Lindholm et al., 2022; Charpentier et al., 2023).
+ 
+Regulators have responded along two broadly different lines, and the contrast between them
+frames the technical problem of this thesis. The first line **prohibits the sensitive attribute directly.** The paradigmatic case is the European Union's Gender Directive (Council Directive 2004/113/EC). Following the ruling of the Court of Justice of the European Union in the *Test-Achats* case (C-236/09, 2011), the derogation that had allowed insurers to charge sex-differentiated premiums was invalidated, and since 21 December 2012 European insurers have been required to apply gender-neutral pricing across all lines. The second line **prohibits the proxy itself.** Here the exemplar is the Canadian province of Ontario, whose Regulation 664 under the *Insurance Act* forbids automobile insurers from using a policyholder's
+credit history or credit rating — together with income, employment history, and related
+financial variables — as risk-classification factors, precisely because such variables are
+suspected of encoding socioeconomic and demographic disadvantage. The United States exhibits a
+patchwork of both approaches: California's Proposition 103 restricts the use of credit-based
+insurance scores in automobile rating, several states constrain the use of gender or ZIP code,
+and more recently Colorado's Senate Bill 21-169 has introduced a governance regime for the use of
+external consumer data and predictive algorithms in insurance, aimed explicitly at unfair
+proxy discrimination.
+
+Regulation of algorithmic discrimination in insurance is fragmented and fast-moving. In U.S. anti-discrimination law more broadly, *disparate impact* doctrine and heuristics such as the **four-fifths rule** (a selection-rate ratio below 0.8 flags potential adverse impact) shape how proxy discrimination is assessed; key operational concerns are identifying proxies for race, detecting bias in the underlying data, and governing the use of third-party data. 
+
+This comes down to the two worldviews on fairness: What You See Is What You Get (WYSIWYG) and We Are Equal (WAE) corresponding to the individual fairness versus group fairness. Individual fairness aims to ..., where Dwork et al laid the grounds for that.
+
+whereas Group Fairness ... In them, there are even different, competing notions, 
+Independence (or Demographic Parity), Sufficiency (or Equalized Odds), and Completeness...
+Impossibility theorem
+
+These regulatory philosophies map onto differing mathematical notions of fairness. The *actuarial fairness* aspect  
+*Discrimination-free pricing* in the sense of Lindholm et al. (2022), focuses on the causal and individualist aspect on fairness, that aims to remove proxy effect entirely. 
+*Demographic parity* is a demanding, and in some respects controversial, target: enforcing exact independence between price and protected attribute necessarily discards some genuinely predictive information
+and therefore trades off against actuarial accuracy and the balance property of the tariff
+(Lindholm et al., 2024). It is nonetheless the notion most closely aligned with proxy-prohibiting regulation, and it is the one adopted throughout this thesis. Our object of study is therefore the following: given a fitted, potentially unfair pricing model, how can premiums be adjusted so as to satisfy demographic parity with respect to a protected attribute while distorting the original risk assessment as little as possible?
+
+## 1.2 The multi-peril pricing problem
+
+Denote $(\Omega, \mathcal F, \mathbb P)$ the underlying portfolio space with physical probability measure $\mathbb P$. For a given portfolio of insurance policies, let $\mathbf D$ denote the vector of discriminatory covariates, $\mathbf X$ denote the vector of nondiscriminatory covariates and $\mathbf Y$ the vector of a policyholder claim in several perils.
+
+The fairness question above is usually posed for a *single* premium — one number per
+policyholder. Real consumer insurance contracts are rarely so simple. Most personal-lines
+products are **multi-peril**: a motor policy bundles third-party liability, own-damage,
+theft, glass, and bodily injury; a homeowner's policy bundles fire, water damage, weather,
+theft, and liability. Each peril generates its own claims process, and the natural output of a rating exercise is therefore not a scalar but a *vector* of coverage-level premiums whose sum is the contract premium.
+ 
+Actuarial practice, however, still overwhelmingly prices these perils **univariately**. Each coverage is rated in isolation, using only the claims experience of that coverage, and the contract premium is obtained by summing the independently estimated peril premiums. This coverage-by-coverage convention is convenient and interpretable; however, especially for lines with sparse claim experience, information across coverages could be informative to price them. Perils differ enormously in claim frequency: a coverage such as theft or bodily injury may be so sparse that its own historical experience is insufficient to support a stable, well-calibrated predictive model, whereas a high-frequency coverage such as own-damage yields abundant data.
+
+Because claims across perils are dependent, driven by shared latent policyholder
+characteristics, common exposure, and ambiguous claim classification (Frees et al., 2010) —
+the experience of a data-rich peril carries genuine information about the risk of a data-poor one. Univariate pricing throws this information away. A *joint* or *multivariate* treatment of
+the coverage vector allows information to be borrowed across perils, stabilizing the rating of
+sparse coverages in much the same way that credibility and multi-task learning borrow strength
+across related tasks.
+ 
+Despite its practical ubiquity, joint multi-peril pricing remains comparatively understudied in
+the actuarial literature (Section 1.3), and — to our knowledge — the *fairness* of multi-peril
+tariffs has not been addressed at all. This is a consequential gap. Enforcing demographic parity
+peril-by-peril does **not** guarantee that the *contract* premium, or the joint distribution of
+the coverage vector, is independent of the protected attribute; marginal fairness on each
+coordinate is a strictly weaker condition than joint fairness on the vector. Conversely, a joint
+fairness intervention must respect the dependence structure across perils rather than treating
+them as separable problems. The combination of these two features — the need to price the peril
+vector jointly, and the need to make that vector jointly fair — is the specific problem this
+thesis sets out to address.
+ 
+## 1.3 Related work
+ 
+Our contribution sits at the intersection of two literatures that have so far developed largely in parallel.
+ 
+**Multi-peril and dependent-risk pricing.** The idea of modelling insurance coverages jointly
+rather than in isolation is most closely associated with Frees and co-authors. Frees et al.
+(2009) introduced a hierarchical claims model separating occurrence and severity with dependence
+components; Frees et al. (2010) proposed dependent multi-peril ratemaking models under the
+individual risk model, using multivariate binary regression and Gaussian copulas to capture
+dependence in claim occurrence across coverages; and Frees et al. (2016) extended this to the
+collective risk model, modelling multivariate frequencies and severities with copulas. Related
+strands use copula-based multivariate Tweedie models (Shi, 2016), longitudinal multi-peril
+ratemaking for property insurance (Yang and Shi, 2019), multilevel copula models (Shi et al.,
+2016), and cross-product credibility that links, for example, home and motor insurance at the
+household level (Pechon et al., 2021). Across this body of work the recurring message is that
+perils are dependent and that jointly modelling them improves both experience rating and risk
+margins relative to the univariate convention. None of these works, however, considers fairness
+or the presence of protected attributes.
+ 
+**Fairness in pricing and optimal-transport methods.** Within actuarial science, Lindholm et
+al. (2022) introduced *discrimination-free* pricing, a procedure that first fits a model on all
+information and then averages out the direct effect of the protected attribute; subsequent work
+clarified the relationship between proxy discrimination and demographic disparities and the
+attendant loss of the balance property (Lindholm et al., 2024). A complementary and, for our
+purposes, more directly relevant line uses **optimal transport** to enforce demographic parity.
+In the machine-learning literature, Gordaliza et al. (2019) used optimal transport to repair
+data, and Chzhen et al. (2020) and Le Gouic et al. (2020) established the key characterization
+that the demographic-parity-optimal predictor under squared loss is obtained by pushing each
+group-conditional score distribution onto their **Wasserstein-2 barycenter**. Charpentier, Hu
+and Ratz (2023) brought this technique into insurance, replacing the crude re-scaling of premiums
+with a Wasserstein-barycenter post-processing step that achieves strong demographic parity while
+minimizing distortion of the original tariff. The multi-task extension of Hu et al. (2023), which
+connects fairness across several simultaneous tasks to *multi-marginal* Wasserstein barycenters,
+is the closest existing work to the multi-peril setting, and recent work on
+sliced-Wasserstein barycenters for *marginal* fairness (Nguyen and Ho, 2024) points toward
+scalable solutions in higher dimensions. What is missing is a treatment tailored to the
+multi-peril actuarial problem, where the object to be made fair is a dependent vector of
+coverage premiums and where the intervention must be both theoretically grounded and
+computationally tractable at portfolio scale.
+ 
+## 1.4 Contributions
+ 
+This thesis develops a **post-processing framework** for mitigating demographic-parity
+unfairness in multi-peril nonlife insurance pricing based on Wasserstein and sliced Wasserstein
+barycenters. Post-processing is deliberate: it acts on the outputs of any already-fitted pricing
+model, whatever its functional form, and therefore integrates with existing actuarial pipelines
+without requiring them to be re-estimated under fairness constraints.
+ 
+The starting point is the observation that the single-peril case is, in a sense, already solved.
+When the premium is a scalar, the Wasserstein-2 barycenter of the group-conditional premium
+distributions admits a **closed form**: its quantile function is simply the (group-weighted)
+average of the group-specific quantile functions, so achieving demographic parity reduces to an
+inexpensive quantile-based recalibration (Agueh and Carlier, 2011; Chzhen et al., 2020;
+Charpentier et al., 2023). The multi-peril case is fundamentally harder. Once the premium is a
+*vector*, the one-dimensional quantile machinery no longer applies, no closed-form barycenter
+exists in general, and computing the free-support Wasserstein barycenter of the empirical
+group distributions requires solving a large linear program — a problem that scales poorly with
+portfolio size and with the number of perils.
+ 
+Against this background the thesis makes the following contributions.
+ 
+First, we **formulate** the fair multi-peril pricing problem: we state demographic parity for a
+vector of coverage premiums, distinguish it from coordinate-wise (marginal) parity, and cast the
+fairness intervention as the projection of each group's joint premium distribution onto their
+multivariate Wasserstein barycenter.
+ 
+Second, we give the **theoretical argument** for the barycenter as the correct target — that,
+among all demographic-parity-satisfying adjustments, mapping each group to the group-weighted
+Wasserstein barycenter is optimal in the sense of minimizing the aggregate transport cost, and
+hence the loss of predictive information, incurred in achieving fairness — extending the
+one-dimensional characterization to the multivariate, multi-peril setting.
+ 
+Third, because the exact multivariate barycenter is computationally intractable at realistic
+scale, we develop a **tractable surrogate** based on the *sliced* Wasserstein barycenter, which
+replaces the intractable multivariate optimal-transport problem with an aggregate of
+one-dimensional problems along random projections, each of which enjoys the closed-form quantile
+solution. This restores computational feasibility while retaining a principled connection to the
+exact barycenter.
+ 
+Finally, in keeping with the goal of providing a *framework* rather than a single algorithm, we
+situate our proposal among **alternatives** — including entropic (Sinkhorn) regularization of
+the exact barycenter, the Gaussian-barycenter special case, and multi-marginal formulations —
+and discuss **future directions**, among them the extension to more than two protected groups
+and to continuous sensitive attributes, the interaction between joint fairness and the balance
+property of the tariff, and the trade-off between marginal and joint parity in multi-peril
+products.
+ 
+The remainder of the thesis is organized as follows. [To be completed — e.g.: Chapter 2 reviews
+the necessary background on optimal transport, Wasserstein distances and barycenters, and on
+demographic parity. Chapter 3 formalizes the multi-peril pricing problem and states the fair
+barycenter target. Chapter 4 develops the sliced-Wasserstein surrogate and its algorithm.
+Chapter 5 reports numerical experiments on real multi-peril data. Chapter 6 discusses
+alternatives, limitations and directions for future work.]
+
+
+# 1. Fairness in Insurance Pricing
+
+Insurance is, in a precise and unembarrassed sense, "in the business of discrimination" (Avraham, Logue & Schwarcz, 2014). Risk classification — the segmentation of policyholders into rating cells that are charged different premiums according to their expected cost — is not an incidental feature of the industry but its actuarial core. It allows premiums to track expected losses, discourages adverse selection, and gives policyholders an incentive to reduce risk. Yet the same mechanism, applied to certain characteristics, becomes socially and legally intolerable: pricing on race, and in many jurisdictions on sex or ethnicity, is prohibited even where such variables would be statistically predictive. The central tension of this thesis lives in that gap between what is *predictive* and what is *permissible*. This chapter surveys how the actuarial, legal, philosophical and machine-learning literatures have framed that tension, fixes the vocabulary used throughout the thesis, and motivates the specific object of study: demographic-parity fairness for multiple-guarantee non-life pricing.
+
+## 1.1 Discrimination, statistical discrimination, and the actuarial mandate
+
+Two senses of "discrimination" must be separated at the outset. In ordinary and legal usage, discrimination is the wrongful, disadvantageous treatment of individuals on the basis of membership in a protected group. In actuarial usage, "to discriminate" means merely to distinguish risks, and *statistical discrimination* -- charging an individual according to the average outcome of a group to which they belong -- is the very method of insurance (Avraham, 2017). The friction arises because these two senses overlap: a statistically sound rating variable may function as a stand-in for a protected characteristic, or may impose systematically higher prices on an already-disadvantaged group.
+
+The law does not resolve this friction with a single rule. Avraham, Logue & Schwarcz (2014), reviewing insurer risk-classification law across all fifty-one U.S. jurisdictions, find that anti-discrimination provisions vary enormously in substance, intensity and coverage across lines of business, characteristics and states — and, strikingly, that many jurisdictions impose no restriction at all on classification by race, national origin or religion. The permissibility of a rating variable is thus a normative and jurisdictional question layered on top of a statistical one. Against this backdrop, a countervailing principle organizes much of European and mutualist practice: *solidarity*, the deliberate pooling of unequal risks so that the collective, rather than the individual, bears the burden of chance (Charpentier, 2026). Solidarity contracts -- for instance the French *contrat responsable et solidaire* in health insurance, which forbids premium differentiation on health status -- are the institutional expression of the view that certain risks should be mutualised rather than priced.
+
+The recent actuarial literature has taken up this problem directly. Xin & Huang (2024) provide a comprehensive overview of antidiscrimination insurance pricing, cataloguing the regulations, the fairness criteria imported from machine learning, and the pricing models that operationalize them; they emphasize the regulatory "grey area" in which direct use of protected attributes is prohibited but indirect use through proxies and opaque algorithms is left unspecified. It is precisely this grey area that modern fairness methodology attempts to fill.
+
+## 1.2 Fairness in machine learning: group and individual notions
+
+The machine-learning literature offers two broad families of fairness notions. **Individual fairness** asks that similar individuals receive similar treatment, formalized by Dwork et al. (2012) through a task-specific similarity metric and a Lipschitz condition on the decision rule; the same work draws the now-standard connection between fairness and differential privacy. **Group fairness** instead asks for parity of some statistical quantity across protected groups.
+
+Let $S$ denote a (binary or categorical) sensitive attribute, $X$ the vector of admissible covariates, $Y$ the outcome (a claim or loss), and $\hat{Y}$ or the score $\pi(X)$ the model's prediction. Following the taxonomy of Barocas, Hardt & Narayanan (*Fairness and Machine Learning*), the principal group criteria are:
+
+- **Independence (demographic parity, DP):** $\pi(X) \perp S$ — the distribution of the price does not depend on the protected attribute.
+- **Separation (equalized odds):** $\pi(X) \perp S \mid Y$ — predictions are independent of $S$ conditional on the true outcome.
+- **Sufficiency (calibration):** $Y \perp S \mid \pi(X)$ — the outcome is independent of $S$ given the prediction.
+
+Each criterion has an actuarial counterpart and an active methodological literature. Sufficiency is closely tied to calibration and multicalibration, recently studied for non-life pricing under the heading of balance ("Balance and Fairness through Multicalibration in Nonlife Insurance Pricing", 2026). Separation has been comparatively underexplored for regression targets, but recent work extends mutual-information-based separation metrics and pre-processing reweighting to continuous outcomes and continuous sensitive attributes (the *FairReweighing* algorithm, 2025), which is directly relevant to premium regression. This thesis takes **demographic parity** as its target, both because it is the criterion most closely aligned with the solidarity principle (Section 1.7) and because it admits a clean optimal-transport characterization (Chapters 3–4).
+
+A recurring temptation is *fairness through unawareness* — simply omitting $S$ from the model. This is insufficient: when admissible covariates $X$ are correlated with $S$, the model can and will reconstruct the protected attribute implicitly, producing **proxy (indirect) discrimination** (Xin & Huang, 2024). Removing the variable removes neither the information nor its effect on prices.
+
+## 1.3 Impossibility results and the two worldviews
+
+The group criteria of Section 1.2 cannot in general be satisfied simultaneously. Kleinberg, Mullainathan & Raghavan (2017) and Chouldechova (2017) show that, except in degenerate cases (perfect prediction or equal base rates), calibration and equalized odds are mutually incompatible; more broadly, independence, separation and sufficiency cannot all hold at once (Barocas, Hardt & Narayanan). Fairness is therefore not a property one simply "adds" to a model — it requires a *choice* among mutually exclusive criteria.
+
+Friedler, Scheidegger & Venkatasubramanian (2016; published as "The (Im)possibility of Fairness", CACM 2021) give this choice a conceptual foundation by distinguishing a *construct space* (the unobservable qualities we care about, such as true risk) from the *observed space* (the measured covariates). Two "worldviews" then correspond to different assumptions about the map between them:
+
+- **WYSIWYG** ("what you see is what you get"): the observed features faithfully reflect the construct, so accurate, individually-tailored decisions are also fair. This worldview underwrites *individual* and *causal* notions of fairness.
+- **WAE** ("we're all equal"): groups are equal in the construct space, so any observed group disparity reflects structural bias in measurement and should be removed. This worldview underwrites *demographic parity*.
+
+Yeom & Tschantz (2018) sharpen this by showing formally which worldviews, combined with a desire to avoid *disparity amplification*, motivate demographic parity versus equalized odds, and argue that calibration and predictive parity are inadequate safeguards against amplifying existing disparities. The upshot — echoed in the practitioner-facing "toolbox" of Ruf, Boutharouite & Detyniecki (2020) and the "no-free-fairness" trade-off results ("No-Free-Fairness", 2026) — is that the correct fairness criterion is not a mathematical fact but a value judgement about the data-generating world, to be made explicitly and defended.
+
+## 1.4 The three pillars of insurance fairness and the proxy question
+
+Within insurance specifically, three normative "pillars" recur: **actuarial fairness** (price equals expected cost, the WYSIWYG-aligned ideal of individual equivalence), **solidarity** (deliberate mutualisation, aligned with demographic parity and the WAE worldview), and **causal fairness** (removing the *causal* effect of the protected attribute while retaining legitimate risk factors) (see the CAS/SOA "Scalable Toolbox for Exposing Indirect Discrimination", 2026).
+
+A crucial and often-conflated point is that **demographic parity is not the same as removing proxy discrimination**. Lindholm, Richman, Tsanakas & Wüthrich (2024) give a technical definition of proxy discrimination and prove *incompatibility results*: avoiding proxy discrimination does not imply satisfying group fairness, and satisfying demographic parity does not imply avoiding proxy discrimination. The two concepts are materially different objects. Moreover, since both input pre-processing and output post-processing methods for demographic parity induce transformations that *explicitly depend on the protected attribute*, it becomes ambiguous whether such methods "avoid" direct and indirect discrimination in the legal sense at all. This thesis does not claim that demographic parity removes proxy effects; it adopts DP as a *solidarity* objective (Section 1.7), a stance that must be argued rather than assumed.
+
+## 1.5 Approaches to mitigation and fairness testing
+
+Mitigation methods are conventionally grouped by where they intervene in the modelling pipeline. **Pre-processing** transforms the data before training (e.g. reweighting or repairing features); **in-processing** modifies the learning objective or constraints during training; and **post-processing** transforms the fitted model's outputs. The optimal-transport framework developed in this thesis is a *post-processing* procedure: it takes the scores of an arbitrary base pricing model and transports the group-conditional score distributions onto a common target (the Wasserstein barycenter), thereby enforcing demographic parity while, as later chapters show, minimizing the resulting loss of accuracy. Post-processing is attractive in an actuarial setting because it is model-agnostic and auditable, and because — as we will argue in Chapter 3 — it can be shown to dominate pre-processing in the accuracy–fairness trade-off.
+
+Detecting and quantifying unfairness is itself a growing practice area. The CAS "Practical Application of Bias Measurement" reports (Parts 1 and 2, 2025) develop, respectively, simple and advanced statistical tests for disparate treatment and disparate impact in insurance models, while regulatory guidance increasingly expects insurers to run such tests and document the results (Section 1.6).
+
+## 1.6 Regulatory landscape
+
+In insurance specifically, jurisdictions differ sharply. Schraub et al. (2024), comparing the United States, European Union, China and Canada, document a decentralized, state-led U.S. system — with Colorado's SB21-169 and the NAIC AI Model Bulletin as leading instruments — against the EU's centralized, cross-industry approach, in which the **EU AI Act** explicitly classifies life- and health-insurance risk assessment and pricing as *high-risk* AI (Article 6). Canada (AIDA, OSFI's EDGE principles, Quebec's Law 25) and China (NFRA oversight under overarching generative-AI rules) occupy intermediate and distinct positions. A companion strand of CAS work surveys regulators' evolving perspectives on algorithmic bias and unfair discrimination ("Regulatory Perspectives on Algorithmic Bias and Unfair Discrimination", 2024). The common thread across regimes is a move from prohibiting *named* attributes toward requiring *testing, documentation and governance* of models — precisely the setting in which a principled, auditable post-processing method is valuable, even as the debate over which attributes to prohibit remains unsettled.
+
+## 1.7 Why focus on solidarity?
+
+If the only goal were to strip out the proxy effect of a protected attribute, causal or *discrimination-free pricing* (DFP) — which removes the influence of $S$ while retaining legitimate risk factors — might seem the more principled route. This thesis nonetheless argues, in the language of the two worldviews (Section 1.3), for demographic parity as an expression of solidarity, and it is worth stating the argument plainly rather than treating the choice as automatic.
+
+Discrimination-free pricing adheres to the WYSIWYG worldview: it accepts observed non-protected risk factors as legitimate and prices on them faithfully. The difficulty is that such factors are frequently *structurally skewed* — correlated with disadvantage through mechanisms outside the individual's control. In such cases DFP will faithfully pass the resulting penalty onto the disadvantaged group. Put bluntly, discrimination-free pricing effectively says: *"we charge you more because you are poor, and being poor genuinely increases risk — not because your poverty is a proxy for race."* From the standpoint of the person paying the premium, the distinction between a "proxy" and a "legitimate but structurally skewed factor" is a distinction without a difference. Demographic parity, aligned with the WAE worldview and with the mutualist tradition of insurance, refuses to draw that line and instead mutualises the disparity. This is not a claim that DP is *correct* in some absolute sense — the impossibility and incompatibility results forbid any such claim — but a defense of the solidarity worldview as an appropriate objective for the products this thesis studies. As Charpentier (2026) argues, the shift in language from *premium* (an individual price) to *contribution* (a share in a common) captures exactly what solidarity-based pricing is meant to preserve.
+
+## 1.8 Scope and contributions
+
+This thesis studies **demographic-parity fairness for non-life insurance pricing with multiple guarantees**, a setting in which a single contract bundles several coverages whose prices are produced together and are statistically dependent through shared covariates (Chapter 2). This is an underresearched area in actuarial pricing, but can be of great importance in the near future due to the rise of Big Data and large-scale machine learning system. Furthermore, when contracts are highly customizable, e.g. people can choose the level of guarantee they want, then it is even more important to audit joint fairness of pricing models rather than fairness per-guarantee.
+
+We adopt an **optimal-transport post-processing** approach: given the scores of an arbitrary base pricing model, we transport the group-conditional price distributions onto their Wasserstein barycenter to enforce demographic parity with minimal accuracy loss (Chapter 3). The core contributions are methodological and theoretical (Chapter 4): we propose a **Sliced-Wasserstein barycenter** surrogate that is computationally cheap and, unlike the exact free-support Wasserstein barycenter, admits a usable out-of-sample transport map via a gradient-flow construction; and we provide *coarse* suboptimality guarantees bounding the excess risk of the Sliced-Wasserstein flow map relative to the optimal **Wasserstein barycenter-type** post-processing. The framework is validated empirically (Chapter 5) via both synthetic point clouds, synthetic insurance dataset and real datasets. We discuss operationalizing aspects and future prospects of fairness in Chapter 6. Throughout, the normative stance is the solidarity worldview argued for in Section 1.7; we do not claim that the method removes proxy discrimination, only that it realizes demographic parity efficiently.
+
+# 2. Pricing Dependent Non-Life Risks
+
+<!-- > [Note: Goal — pose the dependent-risk pricing problem, formalize single- vs multiple-guarantee pricing, argue that per-guarantee prices are dependent through shared covariates, and survey proposed methods, ending by selecting Richman's DL model as the experimental base model.]
+
+> **Notation for this chapter.** We reserve $\eta$ for the *true* (oracle) pure premium and $\pi$ for a *model* that estimates it. Optimal-transport plans (couplings) are denoted $\gamma$ throughout the thesis. The sensitive attribute $S$ is written explicitly as an argument of the pricing function whenever the base model is allowed to use it; fairness will always be assessed with respect to $S$. -->
+
+## 2.1 The pricing problem and the unobservable pure premium
+
+<!-- We follow the probabilistic setting of Carassai (2024) and of the fair-regression literature (Chzhen et al., 2020; Le Gouic, Loubes & Rigollet, 2020).  -->
+
+Let us fix a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ on which is defined a random triple
+$$
+(X, S, Y) \sim \mu_{X,S,Y}, \qquad X \in \mathcal{X} \subseteq \mathbb{R}^{n}, \quad S \in \mathcal{S} = \{s_1, \dots, s_{|\mathcal{S}|}\}, \quad Y \in \mathcal{Y} \subseteq \mathbb{R}^p,
+$$
+where $X$ collects the admissible (non-protected) covariates, $S$ is a discrete, finite sensitive attribute with $\mathbb{P}(S=s) > 0$ for every $s$, and $Y$ is the total loss incurred by the policy over the reference period. If premiums are set on expected loss alone (ignoring loadings and expenses), the correct price for a risk profile $(x,s)$ is the conditional expectation, which we call the **pure premium**.
+
+**Definition 2.1 (Pure premium / Bayes regressor).** The pure premium is the regression function
+$$
+\eta(x,s) \;=\; \mathbb{E}\!\left[Y \mid X = x,\, S = s\right].
+$$
+By the tower property it is *balanced* in aggregate, $\mathbb{E}[\eta(X,S)] = \mathbb{E}[Y]$, and among all Borel-measurable functions $g:\mathcal{X}\times\mathcal{S}\to\mathcal{Y}$ it is the unique minimizer of the quadratic risk
+$$
+R(g) \;=\; \mathbb{E}\!\left[\left(Y - g(X,S)\right)^2\right], \qquad \eta \;=\; \operatorname*{arg\,min}_{g}\, R(g).
+$$
+
+The subtlety at the heart of insurance pricing, and the reason the problem is genuinely harder than a textbook regression, is that **$\eta$ is not observable.** We never see the conditional expectation $\mathbb{E}[Y\mid X,S]$; we see only realized losses $Y$, which for most policies are zero and, when positive, are heavy-tailed realizations of a rare event. All we can do is *estimate* $\eta$ by a model.
+
+**Definition 2.2 (Pricing model).** A pricing model is a measurable function $\pi : \mathcal{X}\times\mathcal{S} \to \mathcal{Y}$ fitted from data so as to approximate the pure premium, $\pi(X,S) \approx \eta(X,S)$. A model is said to satisfy the **balance property** if 
+
+$$
+\mathbb{E}[\pi(X,S)] = \mathbb{E}[Y]
+$$.
+
+Two consequences follow immediately and organize the rest of the thesis. First, because $\eta$ is unobservable, any fairness statement or accuracy guarantee must ultimately be phrased in terms of the *fitted* $\pi$ (which we can compute and audit) even though the object of interest is $\eta$; we return to this gap when we bound excess risk. Second, the loss $Y$ is typically decomposed into a frequency component (whether a claim occurs) and a severity component (its size), and $\pi$ is built accordingly — but this internal structure does not change the formal target, the conditional mean $\eta$.
+
+## 2.2 Demographic parity and the fair-regression problem
+
+Imposing a fairness constraint restricts the admissible model class $\mathcal{G} \subseteq \mathcal{B}(\mathcal{X}\times\mathcal{S}, \mathcal{Y})$ and therefore can only increase the attainable risk. Following Carassai (2024), we measure the price paid for fairness by the **excess risk**
+$$
+\mathcal{E}(\mathcal{G}) \;=\; \min_{g\in\mathcal{G}} R(g) \;-\; R\!\left(\mathcal{B}(\mathcal{X}\times\mathcal{S}, \mathcal{Y})\right) \;\ge\; 0,
+$$
+the increase over the unconstrained (Bayes) optimum $R(\eta)$. Among the group-fairness criteria of Chapter 1 we target **demographic parity (DP)**: the price should have the same distribution in every sensitive group.
+
+**Definition 2.3 (Demographic parity).** A model $\pi:\mathcal{X}\times\mathcal{S}\to\mathcal{Y}$ is DP-fair if the *conditional law* of its output does not depend on $S$, or equivalently
+$$
+\sup_{A \in \mathbb{R}^p}\left|\mathbb{P}\!\left(\pi(X,S)\in A \mid S=s\right) - \mathbb{P}\!\left(\pi(X,S)\in A \mid S=s'\right)\right| \quad \text{for all } s, s' \in \mathcal{S},
+$$
+
+In the unidimensional case $p=1$, this condition means that the Kolmogorov–Smirnov distance between any two group-conditional distributions of the price is zero, equivalently $\pi(X,S) \perp S$. Writing $\mathcal{G}_{\mathrm{DP}}=\{\,g : g \text{ is DP-fair}\,\}$, the **multivariate fair regression problem** is
+
+$$
+\mathcal{E}(\mathcal{G}_{\mathrm{DP}}) \;=\; \min_{g\in\mathcal{G}_{\mathrm{DP}}} \mathbb{E}\!\left[\left(Y - g(X,S)\right)^2\right] \;-\; R(\eta).
+$$
+
+
+
+A minimizer exists and retains the balance property (Chzhen et al., 2020; Le Gouic, Loubes & Rigollet, 2020). This is the object post-processed via optimal transport in Chapter 3; there the group-conditional laws $\mu_{\eta\mid S=s}$ are mapped onto their Wasserstein barycenter, and the optimal transport plans realizing that mapping are the couplings $\gamma$ referred to above.
+
+For a single guarantee, the setting above is complete: $Y$ is the (scalar) annual loss on that coverage, $\eta(x,s)=\mathbb{E}[Y\mid x,s]$ is the scalar pure premium, and $\pi$ is a scalar pricer (a GLM, GBM, or neural network fitted through a frequency–severity decomposition). DP-fairness is a statement about a one-dimensional score, which is exactly the case in which optimal transport to the Wasserstein barycenter admits a closed form via quantile functions (Section 3.2). This one-dimensional tractability is what the multiple-guarantee case will complicate.
+
+Modern non-life contracts rarely cover a single peril. A motor policy bundles third-party liability, own-damage, theft, glass and assistance; French modular health contracts and microinsurance products let the policyholder choose coverage levels guarantee by guarantee. With $K$ guarantees the loss becomes a vector
+$$
+\mathbf{Y} = (Y_1, \dots, Y_K) \in \mathbb{R}^K, \qquad \boldsymbol{\eta}(x,s) = \big(\mathbb{E}[Y_1\mid x,s], \dots, \mathbb{E}[Y_K\mid x,s]\big),
+$$
+and the pricing model is vector-valued, $\boldsymbol{\pi}:\mathcal{X}\times\mathcal{S}\to\mathbb{R}^K$. This is precisely a **multi-task learning** problem: $K$ regression tasks sharing a common covariate representation.
+
+However, current actuarial practice rarely consider this aspect, but each guarantee is generally priced separately due to constraints on explanability. In other words, pricing models are built with respect to only the experience on each distinct coverage. This could be unbeneficial in case we are pricing coverages with sparse claim experience, where it is harder to build robust predictive models for rating purposes. 
+
+
+## 2.3 Dependence of prices through shared covariates
+
+A subtle but central point is that the per-guarantee prices are generally dependent *even if each guarantee is modelled by a separate, independent regressor.* Suppose we fit $K$ models $\pi_k(X,S)=\mathbb{E}[Y_k\mid X,S]$ one at a time, ignoring any cross-guarantee correlation in the losses. The resulting price vector $\boldsymbol{\pi}(X,S)=(\pi_1(X,S),\dots,\pi_K(X,S))$ is still a deterministic function of the *same* random covariates $(X,S)$; hence its components are statistically dependent through their common input, with, for instance,
+$$
+\operatorname{Cov}\!\big(\pi_j(X,S), \pi_k(X,S)\big) \neq 0 \quad \text{in general,}
+$$
+driven entirely by the shared covariate distribution. This covariate-induced dependence is distinct from, and additional to, the *residual* dependence in the losses $\mathbf{Y}$ (the conditional copula of $(Y_1,\dots,Y_K)$ given $(X,S)$) that hierarchical and copula models are designed to capture (Section 2.4). For the fairness problem the distinction matters: demographic parity constrains the joint law of the *price vector* $\boldsymbol{\pi}(X,S)$, so covariate-induced dependence alone already forces us out of the one-dimensional regime, regardless of whether we additionally model residual loss dependence. When the base model is a shared-representation network that deliberately exploits the residual dependence (Section 2.4.2), the joint price distribution becomes even richer, and the multivariate treatment of Chapters 3–4 becomes unavoidable.
+
+## 2.4 Survey of proposed methods
+
+One approach, taken by Frees, Shi, and Valdez (2009), considered integrating copulas within a classical generalized linear model (GLM) framework. Meanwhile, the past decade has seen the rise of various machine learning (ML) techniques.
+
+As the paper aims to propose method for unfairness mitigation in the context of the rise of large machine learning model, we would choose the Deep Learning model of Spedicato & Richman as the reference model.
+
+# 3. A Primer on Optimal Transport
+
+
+This section provides the background needed on optimal transportation theory, a field that has undergone major theoretical and computational breakthroughs over the past decade, driven in large part by its applicability in machine learning. Optimal transport has emerged as a crucial tool in algorithmic fairness discussions, offering a principled way to compare and align distributions across groups. Further applications of OT beyond fairness, particularly in actuarial science, are summarized in the lecture notes by Charpentier (2026).
+ 
+## 3.1 Elements of optimal transport theory
+ 
+### 3.1.1 The Monge problem
+ 
+Optimal transport studies the problem of moving mass from one probability distribution $\mu$ to another, $\nu$, as efficiently as possible. The classical formulation, due to Monge, seeks a deterministic *map* $T$ that pushes $\mu$ onto $\nu$ while minimizing a given transportation cost.
+ 
+Formally, a measurable map $T: \mathcal X \to \mathcal Y$ is admissible for the Monge problem from $\mu$ to $\nu$ if $\nu(B) = \mu(T^{-1}(B))$ for every measurable set $B \subset \mathcal Y$ — or equivalently, if $X \sim \mu$ implies $T(X) \sim \nu$. In this case we write $T_\#\mu = \nu$, and say that $T$ *pushes forward* $\mu$ to $\nu$.
+ 
+Given a ground cost $c: \mathcal X \times \mathcal Y \to \mathbb R \cup \{+\infty\}$, the Monge problem is
+ 
+$$
+OT_c(\mu, \nu) = \inf \left\{\int_{\mathcal X} c(x, T(x)) \, d\mu(x) : T_\#\mu = \nu \right\},
+$$
+ 
+with the convention that the infimum is $+\infty$ if no admissible map exists.
+ 
+This raises a natural question: when does an admissible map actually exist? The answer turns out to hinge on whether transportation ever requires *splitting* mass. If $\mu = \delta_{x_0}$ is a Dirac mass at a single point but $\nu = \tfrac12 \delta_{y_1} + \tfrac12 \delta_{y_2}$ places mass on two distinct points, no map $T$ can satisfy $T_\#\mu = \nu$: a map sends $x_0$ to one destination, whereas realizing $\nu$ would require sending half the mass to $y_1$ and half to $y_2$. More generally, the Monge problem is ill-posed whenever $\mu$ carries atoms that $\nu$ does not — precisely the situations in which mass must be divided rather than simply relocated. This structural limitation, together with the fact that the constraint set $\{T : T_\#\mu = \nu\}$ is non-convex and can even be empty, motivates a relaxation of the problem that allows mass at a point to be distributed fractionally across several destinations.
+ 
+### 3.1.2 The Kantorovich formulation
+ 
+Kantorovich's relaxation replaces the search for a deterministic map with a search over *joint distributions*, or **couplings**, of $\mu$ and $\nu$. A coupling $\gamma$ is a probability measure on the product space $\mathcal X \times \mathcal Y$ whose marginals recover $\mu$ and $\nu$:
+ 
+$$
+\Pi(\mu,\nu) = \left\{ \gamma \in \mathcal P(\mathcal X \times \mathcal Y) : \gamma(A \times \mathcal Y) = \mu(A), \ \gamma(\mathcal X \times B) = \nu(B) \ \ \forall A, B \right\}.
+$$
+ 
+Intuitively, $\gamma(x, y)$ describes how much of the mass originally located at $x$ is sent to $y$; unlike a transport map, a coupling is free to split this mass across multiple values of $y$. The Kantorovich problem is then
+ 
+$$
+OT_c(\mu,\nu) = \inf_{\gamma \in \Pi(\mu,\nu)} \int_{\mathcal X \times \mathcal Y} c(x,y) \, d\gamma(x,y).
+$$
+ 
+This relaxation resolves the pathologies of the Monge formulation in two important ways. First, $\Pi(\mu,\nu)$ is never empty — it always contains at least the independent coupling $\mu \otimes \nu$ — so the infimum is never vacuously infinite. Second, the objective is *linear* in $\gamma$, and under mild regularity conditions $\Pi(\mu,\nu)$ is convex and weakly compact, so the infimum is actually attained by some optimal coupling $\gamma^\star$. When $\gamma^\star$ happens to be concentrated on the graph of a map, i.e. $\gamma^\star = (\mathrm{id}, T)_\#\mu$, the Kantorovich and Monge problems coincide, and the original transport map is recovered as a byproduct.
+ 
+Because it is a linear program (in infinite dimensions), the Kantorovich problem also admits a dual formulation. Under mild conditions,
+ 
+$$
+OT_c(\mu,\nu) = \sup \left\{ \int_{\mathcal X} \varphi \, d\mu + \int_{\mathcal Y} \psi \, d\nu \ : \ \varphi(x) + \psi(y) \le c(x,y) \ \ \forall (x,y) \right\},
+$$
+ 
+where the supremum ranges over integrable function pairs $(\varphi, \psi)$ known as **Kantorovich potentials**. This dual view recasts optimal transport as a search for two functions satisfying a conjugacy-type constraint, and it underlies much of the modern machinery built on top of OT — from entropic regularization and Sinkhorn's algorithm to the fairness constructions discussed later in this survey.
+ 
+### 3.1.3 Transporting probability measures
+ 
+Underlying both formulations is the notion of **pushforward**, which makes precise what it means for a map to transport one distribution to another. Given a measurable map $T: \mathcal X \to \mathcal Y$ and a probability measure $\mu$ on $\mathcal X$, the pushforward $T_\#\mu$ is defined by
+ 
+$$
+T_\#\mu(B) = \mu(T^{-1}(B)) \qquad \text{for every measurable } B \subset \mathcal Y,
+$$
+ 
+or equivalently, for any bounded measurable $f: \mathcal Y \to \mathbb R$,
+ 
+$$
+\int_{\mathcal Y} f(y) \, d(T_\#\mu)(y) = \int_{\mathcal X} f(T(x)) \, d\mu(x).
+$$
+ 
+Probabilistically, if $X \sim \mu$ then $T(X) \sim T_\#\mu$: the pushforward is simply the law of the transformed random variable. This is exactly the admissibility condition invoked in the Monge problem above.
+ 
+Couplings generalize this idea from deterministic transport to joint randomness. A coupling of $\mu$ and $\nu$ can be viewed as a pair of random variables $(X, Y)$ on a common probability space, marginally distributed as $X \sim \mu$ and $Y \sim \nu$, but otherwise free to exhibit an arbitrary dependence structure. The independent coupling — where $X$ and $Y$ are drawn independently, so that $\gamma = \mu \otimes \nu$ — is always available but rarely optimal. Optimal transport instead seeks the coupling minimizing expected cost, $\inf_{(X,Y)} \mathbb E[c(X,Y)]$, which is simply the Kantorovich problem restated in probabilistic language. Every deterministic map $T$ corresponds to a degenerate coupling of this kind, with $Y = T(X)$ almost surely; this is precisely why the Kantorovich problem is a genuine relaxation of Monge's, recovering it as a special case whenever the optimal coupling happens to be deterministic.
+ 
+### 3.1.4 The Wasserstein distance
+ 
+When the cost is a power of a distance on a shared ground space — $c(x,y) = \lVert x-y \rVert^p$ with $\mathcal X = \mathcal Y = \mathbb R^d$, or more generally a Polish space equipped with a metric — the optimal transport cost defines a genuine distance between probability measures, known as the **Wasserstein distance** of order $p \ge 1$:
+ 
+$$
+\mathcal{W}_p^p(\mu,\nu) \;=\; \inf_{\gamma \in \Pi(\mu,\nu)} \int \lVert x-y \rVert^p \, d\gamma(x,y).
+$$
+ 
+Provided $\mu$ and $\nu$ have finite $p$-th moments, $\mathcal W_p$ satisfies the axioms of a metric on the space $\mathcal P_p(\mathbb R^d)$ of probability measures with finite $p$-th moment. It is non-negative and vanishes if and only if $\mu = \nu$; it is symmetric, since $\Pi(\mu,\nu) = \Pi(\nu,\mu)$ up to relabeling coordinates; and it satisfies the triangle inequality $\mathcal W_p(\mu,\rho) \le \mathcal W_p(\mu,\nu) + \mathcal W_p(\nu,\rho)$, established via a gluing lemma that stitches together an optimal coupling of $(\mu,\nu)$ with one of $(\nu,\rho)$ through the shared marginal $\nu$.
+ 
+What makes $\mathcal W_p$ especially attractive for applications is that, unlike divergences such as Kullback–Leibler, it remains well-defined and finite even between measures with disjoint supports, and it metrizes weak convergence on $\mathcal P_p$: $\mathcal W_p(\mu_n, \mu) \to 0$ if and only if $\mu_n \rightharpoonup \mu$ weakly and the corresponding $p$-th moments converge. These properties make $\mathcal W_p$ especially well suited to comparing empirical distributions, generative models, and — of particular relevance here — outcome distributions across demographic groups in fairness applications.
+ 
+Among all orders, the case $p = 2$ plays a distinguished role. On $\mathbb R^d$, Brenier's theorem guarantees that whenever $\mu$ is absolutely continuous with respect to Lebesgue measure, the optimal coupling for the quadratic cost is induced by a *unique* map $T = \nabla \phi$ for some convex function $\phi$ — so the Monge and Kantorovich problems coincide, and the optimal transport map is characterized explicitly as the gradient of a convex potential. This endows $\mathcal W_2$ with a rich, Riemannian-like geometric structure: geodesics in $(\mathcal P_2, \mathcal W_2)$ correspond to McCann's displacement interpolation,
+ 
+$$
+\mu_t = \big((1-t)\,\mathrm{id} + t\,T\big)_\#\mu,
+$$
+ 
+which behaves like a straight line connecting two distributions. Combined with the closed-form expressions available for $\mathcal W_2$ between Gaussian distributions, this geometric structure is what makes $\mathcal W_2$ the metric of choice throughout most machine learning and fairness applications — including the barycenter and repair methods discussed in later sections.
+
+## 3.2 The fair regression problem
+
+
+
+Hu, Ratz & Charpentier (2023) formalize fairness in exactly this multi-task setting, extending *strong demographic parity* to vector-valued outputs and showing that the optimal fair multi-task predictor is characterized by a Wasserstein barycenter of the group-conditional *joint* distributions of $\boldsymbol{\eta}$, with a closed-form (post-processing) solution covering both regression and binary-classification tasks. The crucial change from Section 2.2.1 is dimensional: DP is now a constraint on the *joint* $K$-dimensional law of the price vector across groups, and the one-dimensional quantile trick no longer applies — the barycenter and its transport plans $\gamma$ live in $\mathbb{R}^K$, which is what motivates the scalable Sliced-Wasserstein surrogate of Chapter 4.
+
+
+### 3.2.1 OT as a post-processing procedure for demographic parity
+> [TODO: Map group-conditional score distributions to a common target so that the score becomes independent of the sensitive attribute (DP).]
+
+### 3.2.2 The 1D optimal result (Chzhen et al.)
+> [TODO: State the result — the DP-optimal fair predictor is obtained by transporting each group distribution to the Wasserstein barycenter; closed form in 1D via quantile coupling. Cite [Chzhen et al. 2020].]
+
+### 3.2.3 Generalization to multiple dimensions
+> [TODO: Multivariate case; loss of closed form; barycenter characterization persists. Cite [Le Gouic et al. 2020].]
+
+### 3.2.4 Suboptimality of pre-processing
+> [TODO: Argue why pre-processing is suboptimal relative to post-processing. Cite Carassai's thesis.]
+
+## 3.3 Wasserstein and Sliced-Wasserstein barycenters
+
+### 3.3.1 Definition and existence
+
+$$
+\mathrm{Bar}(\mu_1,\dots,\mu_K) \;=\; \arg\min_{\nu} \sum_{k=1}^{K} \lambda_k \, \mathcal{W}_2^2(\mu_k,\nu).
+$$
+
+> [TODO: Agueh–Carlier existence/uniqueness; the SW barycenter analogue.]
+
+### 3.3.2 Balance / mean-consistency property
+> [TODO: Show that the mean of the barycenter equals the barycenter of the means (useful for interpreting the fair price). Same property for SW.]
+
+### 3.3.3 Optimality of the Wasserstein barycenter
+> [TODO: Why the $\mathcal{W}_2$ barycenter is the DP-optimal target (minimal total transport cost = minimal accuracy loss).]
+
+### 3.3.4 Computational procedures and the advantage of SW
+> [TODO: Cost of $\mathcal{W}_2$ barycenters; contrast with the cheap 1D projections underlying Sliced-Wasserstein. Motivates the SW surrogate developed in Chapter 4. Cite [Peyré & Cuturi 2019; Bonneel et al. 2015].]
+
+---
+
+# 4. A Transport-Based Framework for Fair Insurance Pricing
+
+> [Note: Goal — this is the core methodological + theoretical chapter. State the requirements, present the W₂ barycenter algorithm, propose the SW barycenter surrogate, prove coarse suboptimality bounds, and discuss neural OT as an out-of-scope alternative.]
+
+## 4.1 Requirements
+> [TODO: Two requirements the method must satisfy: (i) fast computation of the barycenter (hard in the $\mathcal{W}_2$ case), and (ii) a transport map for out-of-sample points (not evident in the $\mathcal{SW}_2$ case). Frame the rest of the chapter as meeting both.]
+
+## 4.2 Free-support Wasserstein barycenters (Cuturi & Doucet)
+> [TODO: Present the free-support barycenter algorithm as implemented in the POT library. Cite [Cuturi & Doucet 2014].]
+
+### 4.2.1 Per-iteration cost
+> [TODO: State that each iteration requires an $\mathcal{O}(n^3 \log n)$ $\mathcal{W}_2$ computation; discuss scalability limits.]
+
+### 4.2.2 Gradient-descent perspective
+> [TODO: Interpret the algorithm as a gradient-descent scheme on the barycenter functional.]
+
+## 4.3 Sliced-Wasserstein barycenter as a surrogate
+> [TODO: Propose the SW barycenter as a scalable replacement.]
+
+### 4.3.1 Gradient flow formulation
+> [TODO: SW barycenter via a gradient flow / particle scheme.]
+
+### 4.3.2 Connection with the continuity equation
+> [TODO: Relate the flow to the continuity equation; this yields the flow map used to transport out-of-sample points.]
+
+## 4.4 Theoretical guarantees
+> [TODO: Main theoretical contribution — bound the suboptimality of the SW flow map as a DP-fair post-processing procedure, decomposed into two gaps.]
+
+**Proposition 4.1 (Suboptimality decomposition — coarse bound).**
+> [TODO: State the coarse bound. Informally:]
+
+$$
+\underbrace{(\text{excess risk of SW flow map})}_{} \;\lesssim\; \underbrace{\Delta_{\text{bary}}}_{\substack{\text{gap: } \mathcal{SW}_2 \text{ vs } \mathcal{W}_2 \\ \text{barycenter}}} \;+\; \underbrace{\Delta_{\text{map}}}_{\substack{\text{gap: flow map vs OT} \\ \text{to the } \mathcal{SW}_2 \text{ barycenter}}}.
+$$
+
+> [TODO: Proof sketch / full proof. Keep the bound intentionally coarse but insightful.]
+
+### 4.4.1 Gap 1: SW₂ vs W₂ barycenter
+> [TODO: Bound the discrepancy between the $\mathcal{SW}_2$ and $\mathcal{W}_2$ barycenters.]
+
+### 4.4.2 Gap 2: flow map vs optimal transport to the SW₂ barycenter
+> [TODO: Bound the suboptimality of the flow map relative to the true OT map onto the $\mathcal{SW}_2$ barycenter.]
+
+## 4.5 Other approaches: neural optimal transport
+> [TODO: Discuss neural-network approaches that learn the barycenter and yield an explicit transport map $T$ easily (but with expensive training). Cite [Korotin et al. 2021, 2022; Fan et al. 2023; Li et al. 2020]. State clearly: out of scope here (the thesis proposes a *framework*), but a promising direction.]
+
+---
+
+# 5. Experimental Results
+
+> [Note: Goal — empirically validate the framework. Fill in the outline as experiments are finalized.]
+
+## 5.1 Data and setup
+> [TODO: Dataset description (portfolio, guarantees, sensitive attribute, covariates); train/test split; preprocessing.]
+
+## 5.2 Base model
+> [TODO: Richman DL multi-task pricer — architecture, training, calibration on the data. This produces the unfair scores to be post-processed.]
+
+## 5.3 Fair post-processing procedures
+> [TODO: Implement (a) $\mathcal{W}_2$ free-support barycenter (Cuturi–Doucet, POT), (b) proposed SW barycenter flow map. Baselines for comparison.]
+
+## 5.4 Evaluation metrics
+> [TODO: Accuracy metrics (deviance, RMSE); DP fairness metrics (e.g. distance between group score distributions); runtime.]
+
+## 5.5 Results
+> [TODO: Fairness–accuracy trade-off curves; W₂ vs SW comparison; runtime comparison; qualitative analysis of transported prices.]
+
+## 5.6 Discussion
+> [TODO: Interpretation; when SW is a good surrogate; empirical corroboration of the theoretical bounds; limitations.]
+
+---
+
+# 6. Conclusion
+
+## 6.1 Summary of contributions
+> [TODO: Recap — the transport-based DP-fair framework; the SW surrogate; the coarse theoretical guarantees; the empirical findings.]
+
+## 6.2 Limitations
+> [TODO: Coarseness of the bounds; scope limited to demographic parity; framework (not a single turnkey method); data limitations.]
+
+Due to the nature of the insurance pricing problem and ethical problem, it is very difficult to obtain real dataset with more complex sensitive attributes while being a multiple guarantee pricing problem. We have to resort to synthetic and public dataset, although the synthetic dataset give us valuable insight as we can directly hypothesize the pure premium functional $\eta$ and simulate from it. 
+
+One real dataset that could be of much value to the study of this problem is that of Lindholm in his Multi-task Discrimination Free Pricing, where the premium are ... 
+
+## 6.3 Perspectives
+
+The paper gives much room for further research on the problem of fair multiple guarantee insurance pricing. The first obvious direction is the application of recent neural optimal transport methods for large-scale computation of Wasserstein barycenter. As in Carassai's Master's Thesis and the series of paper by Korotin, (Partial) Input Convex Neural Network are used as a tool to model Kantorovich potentials due to the Brenier's theorem on the convexity of potential. However, we deem that the method is too complex and for demonstrability of the problem in the insurance setting, we opt for a much more naive surrogate that can work on large-scale problems. 
+
+Secondly, one could wish to extend to study the Causal aspect of multiple guarantee pricing, which would be a simple extension of the Multi-task Discrimination Free Pricing paper to the multiple guarantee case. With that, we would have a more complete toolbox to inspect the three pillar of fairness with respect to Côté, Côté, Charpentier in the multivariate problem. 
+
+Finally, there are many considerations for operationalizing fairness. Huang has sketched out a framework for fairness mitigation and auditing. In our framework for mitigation, ...
+ 
+# Appendix A — Proofs and Additional Material
+> [TODO: Deferred proofs (e.g. full proof of Proposition 4.1), technical lemmas.]
+
+# Appendix B — Implementation Details
+> [TODO: Hyperparameters, POT / SW implementation notes, reproducibility, compute.]
+
+---
+
+# References
+
+*Details (pages, volumes, years) to be verified against the original sources before submission. Entries marked **[VERIFY]** most need confirmation.*
+
+**Fairness in insurance / actuarial science**
+- Avraham, R., Logue, K. D., & Schwarcz, D. (2014). Understanding Insurance Anti-Discrimination Laws. *Southern California Law Review,* 87(2), 195–274. [umich repository](https://repository.law.umich.edu/facarticles/1734/)
+- Avraham, R. (2017). Discrimination and Insurance. In K. Lippert-Rasmussen (Ed.), *The Routledge Handbook of the Ethics of Discrimination* (Ch. 28, pp. 335–347). Routledge. [Taylor & Francis](https://www.taylorfrancis.com/chapters/edit/10.4324/9781315681634-33/discrimination-insurance-ronen-avraham)
+- Xin, X., & Huang, F. (2024). Antidiscrimination Insurance Pricing: Regulations, Fairness Criteria, and Models. *North American Actuarial Journal,* 28(2), 285–319. doi:10.1080/10920277.2023.2190528
+- Lindholm, M., Richman, R., Tsanakas, A., & Wüthrich, M. V. (2024). What is Fair? Proxy Discrimination vs. Demographic Disparities in Insurance Pricing. *Scandinavian Actuarial Journal,* 2024(9), 935–970. doi:10.1080/03461238.2024.2364741
+- Charpentier, A. (2024). *Insurance, Biases, Discrimination and Fairness.* Springer Actuarial.
+- Charpentier, A. (2026, Feb 6). *From Premium to Contribution: Recovering Solidarity.* Freakonometrics. doi:10.58079/15n8z [link](https://freakonometrics.hypotheses.org/88267)
+- Charpentier, A. (2024). *Optimal Transport: Lecture Notes.* **[VERIFY exact title / venue / year]**
+
+**Insurance fairness — actuarial-society reports & recent methods**
+- Society of Actuaries Research Institute / CAS (2024). *Comparison of Regulatory Framework for Non-Discriminatory AI Usage in Insurance* (D. Schraub, J. Lang, Z. Zhang, M. A. Sayre). [PDF](https://www.casact.org/sites/default/files/2024-08/Comparison-of-Regulatory-Framework-for-Non-Discriminatory-AI-usage-in-Insurance.pdf)
+- CAS/SOA (2024). *Regulatory Perspectives on Algorithmic Bias and Unfair Discrimination.* [PDF](https://www.casact.org/sites/default/files/2024-08/Regulatory_Perspectives_on_Algorithmic_Bias_and_Unfair_Discrimination.pdf)
+- CAS (2025). *Practical Application of Bias Measurement, Part 1.* [PDF](https://www.casact.org/sites/default/files/2025-01/Practical_Application_of_Bias_Measurement_Part_1.pdf)
+- CAS (2025). *Practical Application of Bias Measurement, Part 2.* [PDF](https://www.casact.org/sites/default/files/2025-01/Practical_Application_of_Bias_Measurement_Part_2.pdf)
+- CAS (2026). *A Scalable Toolbox for Exposing Indirect Discrimination.* [PDF](https://www.casact.org/sites/default/files/2026-03/Scalable_Toolbox_for_Exposing_Indirect_Discrimination_Research_Paper.pdf) **[VERIFY authors/title]**
+- *Balance and Fairness through Multicalibration in Nonlife Insurance Pricing* (2026). arXiv:2603.16317. **[VERIFY authors]**
+
+**Fairness in machine learning — foundations**
+- Dwork, C., Hardt, M., Pitassi, T., Reingold, O., & Zemel, R. (2012). Fairness Through Awareness. *ITCS 2012.* arXiv:1104.3913
+- Barocas, S., Hardt, M., & Narayanan, A. *Fairness and Machine Learning: Limitations and Opportunities.* fairmlbook.org (MIT Press, 2023). [PDF](https://fairmlbook.org/pdf/fairmlbook.pdf)
+- Friedler, S. A., Scheidegger, C., & Venkatasubramanian, S. (2016). On the (Im)possibility of Fairness. arXiv:1609.07236. Published as: The (Im)possibility of Fairness. *Communications of the ACM,* 64(4), 2021.
+- Yeom, S., & Tschantz, M. C. (2018). Avoiding Disparity Amplification under Different Worldviews. arXiv:1808.08619.
+- Ruf, B., Boutharouite, C., & Detyniecki, M. (2020). Getting Fairness Right: Towards a Toolbox for Practitioners. arXiv:2003.06920.
+- *FairReweighing: Density-Estimation-Based Pre-Processing for Separation in Regression* (2025). arXiv:2511.11459. **[VERIFY authors/exact title]**
+- *No-Free-Fairness: Fundamental Limits and Trade-offs in Learning Systems* (2026). arXiv:2606.17810. **[VERIFY authors]**
+
+**Fair regression via optimal transport**
+- Chzhen, E., Denis, C., Hebiri, M., Oneto, L., & Pontil, M. (2020). Fair Regression with Wasserstein Barycenters. *NeurIPS 33.*
+- Le Gouic, T., Loubes, J.-M., & Rigollet, P. (2020). Projection to Fairness in Statistical Learning. *arXiv:2005.11720.* **[VERIFY]**
+- Hu, F., Ratz, P., & Charpentier, A. (2023). Fairness in Multi-Task Learning via Wasserstein Barycenters. *ECML PKDD 2023,* Springer LNCS. arXiv:2306.10155. doi:10.1007/978-3-031-43415-0_18
+- Carassai, G. V. (2024). *Neural Optimal Transport at Scale: Wasserstein Barycenters for Fair Insurance.* Master's thesis, RiskLab / ETH Zürich (supervisors P. Cheridito, G. Visentin). [PDF](https://ethz.ch/content/dam/ethz/special-interest/math/risklab-dam/documents/walter-saxer-preis/ma-carassai.pdf)
+
+**Impossibility theorems / group fairness**
+- Kleinberg, J., Mullainathan, S., & Raghavan, M. (2017). Inherent Trade-Offs in the Fair Determination of Risk Scores. *ITCS.*
+- Chouldechova, A. (2017). Fair Prediction with Disparate Impact. *Big Data,* 5(2), 153–163.
+
+**Dependent non-life pricing**
+- Spedicato, G. A., & Richman, R. (2018). *[Exact title of the dependent-risk pricing paper].* Variance. **[VERIFY title, year, volume]**
+- Frees, E. W., Shi, P., & Valdez, E. A. (2009). Actuarial Applications of a Hierarchical Insurance Claims Model. *ASTIN Bulletin,* 39(1), 165–197.
+- Shi, P., & Frees, E. W. (2011). Dependent Loss Reserving Using Copulas. *ASTIN Bulletin,* 41(2), 449–486.
+- Richman, R. (2021). AI in Actuarial Science — A Review of Recent Advances. *Annals of Actuarial Science.* **[VERIFY; add the specific multi-task DL pricing paper used as base model]**
+
+**Optimal transport — foundations**
+- Villani, C. (2009). *Optimal Transport: Old and New.* Springer, Grundlehren 338.
+- Agueh, M., & Carlier, G. (2011). Barycenters in the Wasserstein Space. *SIAM J. Math. Anal.,* 43(2), 904–924.
+- Peyré, G., & Cuturi, M. (2019). Computational Optimal Transport. *Foundations and Trends in ML,* 11(5–6), 355–607.
+
+**Wasserstein & Sliced-Wasserstein barycenters**
+- Cuturi, M., & Doucet, A. (2014). Fast Computation of Wasserstein Barycenters. *ICML.*
+- Bonneel, N., Rabin, J., Peyré, G., & Pfister, H. (2015). Sliced and Radon Wasserstein Barycenters of Measures. *J. Math. Imaging Vis.,* 51(1), 22–45.
+
+**Neural optimal transport (out of scope, perspectives)**
+- Korotin, A., Li, L., Genevay, A., Solomon, J., Filippov, A., & Burnaev, E. (2021). Do Neural OT Solvers Work? A Continuous Wasserstein-2 Benchmark. *NeurIPS.* **[VERIFY]**
+- Korotin, A., Egiazarian, V., Li, L., & Burnaev, E. (2022). Wasserstein Iterative Networks for Barycenter Estimation. *NeurIPS.* **[VERIFY]**
+- Korotin, A., Selikhanovych, D., & Burnaev, E. (2023). Neural Optimal Transport. *ICLR.* **[VERIFY]**
+- Fan, J., Liu, S., Ma, S., Zhou, H., & Chen, Y. (2023). Neural Monge Map Estimation and Its Applications. *TMLR.* **[VERIFY]**
+- Li, L., Genevay, A., Yurochkin, M., & Solomon, J. (2020). Continuous Regularized Wasserstein Barycenters. *NeurIPS.* **[VERIFY]**

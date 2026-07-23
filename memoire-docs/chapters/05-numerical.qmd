@@ -1,0 +1,50 @@
+# Numerical Experiments
+
+## Datasets & Setup
+
+### Brazilian Auto
+
+### Healthcare
+
+### Preprocessing
+
+## Evaluation
+
+### Neural Network, shared information
+
+## Post-processing Towards the Barycenter
+
+### The 1-dimensional case
+
+### Scaling
+
+## The cost of fairness
+
+
+
+## Exemple de tableau
+
+```{=latex}
+\begin{table}[htb!]
+\small
+\caption{Un tableau}
+\begin{tabular}{r|c|c|c}
+\sigle{Temps} & \sigle{Date} & \sigle{Entreprise} & \sigle{Université} \\
+\hline
+& avril & & début du stage \\
+\hline
+\multirow{2}{*}{2 mois} & \multirow{2}{*}{\textbf{27 mai}} & & envoi du \red{titre} et du \red{résumé} \\
+& & & sur mycourse \\
+\hline
+& \multirow{2}{*}{3 juin} & & \red{nom du tuteur} académique \\
+& & & communiqué sur mycourse \\
+\hline
+\multirow{2}{*}{3 mois} & \multirow{2}{*}{\textbf{24 juin}} & & envoi du \red{plan} sur mycourse \\
+& & & \\
+\hline
+\multirow{2}{*}{6 mois} & \multirow{2}{*}{\textbf{7 octobre}} & & dépôt \red{pdf} du mémoire \\
+& & & version \red{papier} dans la semaine \\
+\hline
+\end{tabular}
+\end{table}
+```

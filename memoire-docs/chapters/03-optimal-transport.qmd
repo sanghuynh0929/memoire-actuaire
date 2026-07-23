@@ -1,0 +1,192 @@
+# Tools from Optimal Transport
+
+In this chapter, we review the background needed on optimal transport (OT) and Wasserstein barycenters. We go through the definitions of the optimal transport problem, then define the Wasserstein metric and barycenter and their Sliced counterparts, and then discuss computational algorithms for them. We refer the interested readers to [Computational OT] and [Introduction to Sliced OT] for a more in-depth treatment of the subject, and to [Arthur Charpentier] for a review on the possible applications of OT to actuarial science.
+
+## The Optimal Transport Problem
+
+Optimal transport originates with a very concrete question posed by Gaspard Monge in 1781: given a pile of soil (the *déblais*) and a hole to be filled (the *remblais*) of the same total volume, how should one move the earth so as to minimize the total effort? Two centuries later this question, suitably abstracted, has become a way of comparing probability distributions by measuring the least "work" needed to morph one into the other.
+
+### The Monge problem
+
+Let $\mu$ and $\nu$ be two probability measures on spaces $\mathcal{X}$ and $\mathcal{Y}$ (most often $\mathcal{X} = \mathcal{Y} = \mathbb{R}^d$). We think of $\mu$ as describing where the mass currently sits and of $\nu$ as describing where we want it to end up. A **cost function** $c : \mathcal{X} \times \mathcal{Y} \to [0, \infty)$ specifies the cost $c(x, y)$ of moving a unit of mass from $x$ to $y$.
+
+Monge's idea is to describe the transport by a **map** $T : \mathcal{X} \to \mathcal{Y}$, which sends every source location $x$ to a single destination $T(x)$. For this map to actually rearrange $\mu$ into $\nu$, it must satisfy the *pushforward* (or *mass conservation*) constraint
+$$
+T_\# \mu = \nu, \qquad \text{i.e.} \qquad \nu(B) = \mu\big(T^{-1}(B)\big) \quad \text{for all measurable } B \subseteq \mathcal{Y},
+$$
+which says that the mass landing in any region $B$ is exactly the mass that started in its preimage. The Monge problem is then to find the cheapest such map:
+$$
+\inf_{T \,:\, T_\# \mu = \nu} \; \int_{\mathcal{X}} c\big(x, T(x)\big) \, \mathrm{d}\mu(x).
+$$
+
+The intuition is exactly Monge's sandpile: each grain of sand at $x$ is assigned a unique final position $T(x)$, and we pay per grain according to how far it travels. However, this formulation has two inconveniences:
+
+- **The feasible set may be empty.** Suppose $\mu = \delta_{x_0}$ is a single point mass while $\nu = \tfrac12 \delta_{y_1} + \tfrac12 \delta_{y_2}$ is spread over two points. A map must send $x_0$ to one destination, so it can never split its mass between $y_1$ and $y_2$; no admissible $T$ exists at all. In general, a deterministic map cannot break mass apart.
+- **The problem is non-convex.** The constraint $T_\# \mu = \nu$ is nonlinear in $T$, and the set of admissible maps is not convex: a convex combination of two valid maps is generally not itself a valid map. This makes both the analysis of existence and the design of algorithms delicate.
+
+### The Kantorovich relaxation
+
+In 1942, Leonid Kantorovich proposed a relaxation that resolves both difficulties. The key idea is to allow the mass located at a point $x$ to be split and transport to several destinations. Instead of a map, the transport is now described by a **coupling** (or **transport plan**) $\pi$, a joint probability measure $\gamma \in \Gamma(\mathcal{X} \times \mathcal{Y})$. The interpretation is that $\mathrm{d}\gamma(x, y)$ is the amount of mass moved from $x$ to $y$. For $\gamma$ to be consistent with our source and target, its marginals must be $\mu$ and $\nu$:
+$$
+\Gamma(\mu, \nu) = \Big\{ \gamma \in \mathcal{P}(\mathcal{X} \times \mathcal{Y}) \; : \; \gamma(A \times \mathcal{Y}) = \mu(A), \;\; \gamma(\mathcal{X} \times B) = \nu(B) \Big\}.
+$$
+The Kantorovich problem is then the linear program
+$$
+\inf_{\gamma \in \Gamma(\mu, \nu)} \; \int_{\mathcal{X} \times \mathcal{Y}} c(x, y) \, \mathrm{d}\gamma(x, y).
+$$
+
+Allowing mass to split repairs the pathology above: the product measure $\mu \otimes \nu$ is always a valid coupling, so $\Gamma(\mu, \nu)$ is *never empty*. Whereas the Monge problem is inherently asymmetric, the Kantorovich relaxation is symmetric.
+
+This formulation is much more well-behaved. The feasible set $\Gamma(\mu, \nu)$ is *convex*, since any convex combination of couplings is again a coupling; and, under mild assumptions (for instance $c$ lower semicontinuous and the spaces compact, or the cost coercive), it is weakly compact, so a minimizer exists by the direct method of the calculus of variations. Moreover the objective is *linear* in $\pi$ and the marginal constraints are linear, so the Kantorovich problem is a genuine linear program, which opens the door both to a rich duality theory [Computational OT] and to the numerical schemes we discuss below.
+
+Furthermore, the Kantorovich problem is a *relaxation* of Monge's: any admissible map $T$ induces an admissible coupling
+$$
+\gamma_T = (\mathrm{Id}, T)_\# \mu,
+$$
+which places all of its mass on the graph $\{(x, T(x)) : x \in \mathcal{X}\}$ and has exactly the same cost, since $\int c \, \mathrm{d}\gamma_T = \int c(x, T(x)) \, \mathrm{d}\mu(x)$. Consequently the Kantorovich optimum is always a lower bound for the Monge optimum. A Monge map corresponds to the special case of a plan that is *deterministic*, one that concentrates on a graph rather than genuinely splitting mass.
+
+
+Brenier's theorem bridge the gap between the two formulations as follow: for $c(x, y) = \tfrac12 \|x - y\|^2$ on $\mathbb{R}^d$, if $\mu$ is absolutely continuous with respect to the Lebesgue measure, then the optimal coupling is unique and is induced by a map that is the gradient of a convex function $T = \nabla \varphi$. In that case the Kantorovich relaxation is *tight*: it recovers a genuine Monge map, and the two problems share the same value. 
+
+The proof can be found in [Santambrogio 2015].
+
+Computationally, suppose we have empirical measures $\mu = \sum_{i=1}^n a_i \delta_{\mathbf x_i}$ and $\nu = \sum_{j=1}^n b_j \delta_{\mathbf y_j}$. Let the cost matrix be $\mathbf C := [C_{ij}]$ with $C_{ij} = \|\mathbf x_i - \mathbf y_j\|^2$ and $\mathbf P$ be the coupling on the transport polytope $U(a,b) = \{\mathbf P \in \mathbb R^{n\times m}_+ : \mathbf P\mathbf 1_{m} = \mathbf a, \mathbf P^T \mathbf 1_n = \mathbf b\}$. Then the Wasserstein distance between the two measures will be
+
+$$
+\mathbb W_2^2(\mu,\nu) = \min_{\mathbf P \in U(\mathbf {a,b})} \braket{\mathbf {C, P}}
+$$
+
+
+The classical algorithm to calculate the transport plan $\gamma$ is the network flow algorithm, which aims to solve the LP problem in $\mathcal O(n^3\log n)$ [Computational OT]. With entropic regularization, i.e. solve the following (strictly) convex programming problem:
+
+$$
+\mathbb W_{2, \varepsilon}^2(\mu,\nu) = \min_{\mathbf P \in U(\mathbf {a,b})} \braket{\mathbf {C, P}} - \varepsilon H(\mathbf P), \qquad H(\mathbf P) = -\sum_{i,j}P_{ij}(\log P_{ij}- 1)
+$$
+
+setting $\varepsilon \propto \delta/\log n$, the time complexity of $\delta$-approximation to the unregularized OT cost reduces to $\mathcal O(n^2 / \delta^3)$. 
+
+It is also crucial to note that there also exists an approximation of the transport map based on the dual of the entropic regularized problem [Pooladian & Niles-Weed], which is crucial for transporting out-of-sample points.
+
+One special case of the OT problem is when $d=1$, i.e. the measures are supported on the real line. Then we can recover the Wasserstein distance by
+$$
+\mathbb W_2^2(\mu, \nu) = \int_0^1 \left(F_\mu^{-1}(t) - F_\nu^{-1}(t)\right) \, \mathrm dt
+$$
+
+Computationally, for empirical measures this costs $\mathcal O(n\log n)$, which is the cost of sorting support positions. 
+
+
+## The Wasserstein Distance and Barycenter
+
+Let $\mathcal X = \mathcal Y = \mathbb R^d$. The Wasserstein distance is defined as the optimal transport problem:
+
+$$
+\mathbb W_2^2(\mu,\nu) = \inf_{\gamma \in\Gamma(\mu,\nu)} \int_{\mathbb R^d\times \mathbb R^d} \|x-y\|^2\, \mathrm d\gamma  (x, y)
+$$
+
+The desirable thing about the Wasserstein distance is that it is a metric on the space of probability measures with finite p-moments, as it satisfies the properties of a metric space:
+
+- $\mathbb W_2(\mu, \nu) \ge 0$ and $\mathbb W_2(\mu, \nu) = 0 \iff \mu = \nu$
+- $\mathbb W_2(\mu, \nu) = \mathbb W_2(\nu,\mu)$
+- $\mathbb W_2(\mu, \nu) \le \mathbb W_2(\mu,\eta) + \mathbb W_2(\eta, \nu)$
+
+As a natural consequence of defining metrics between probability measures, it becomes possible to define barycenter of measures. 
+
+Definition (Wasserstein barycenter). Given a set of weights $\{\lambda_s\}_{s \in \mathcal S}$ and a set of distributions $\{\mu_s \in \mathcal P(\mathbb R^d)\}_{s \in \mathcal S}$, the Wasserstein barycenter is 
+
+$$
+\nu^* := \argmin_{\nu\in\mathcal P(\mathbb R^d)} \mathcal F(\nu) = \argmin_{\nu\in\mathcal P(\mathbb R^d)} \sum_{s\in\mathcal S}\lambda_s \mathbb W_2^2(\nu, \mu_s)
+$$
+
+Uniqueness of the Wasserstein barycenter is proven in [Agueh & Carlier]...
+
+A computational algorithm based on [Cuturi & Doucet], [Alvarez-Esteban] is 
+
+- Initialize $\nu^{(0)}$ supported on $\{\mathbf x_i^{(0)}\}$ with uniform weights
+- For $t = 0$ to $T$ (i.e. until convergence)
+  - Compute an optimal transport plan $\gamma_s$ from $\nu^{(t)}$ to each $\mu_s$
+  - Approximate the barycentric projection to get the map: 
+    $$
+    \bar T_s(\mathbf x_i) = \frac{1}{N}\sum_j [\gamma_s]_{ij} \mathbf y^s_j = \mathbb E_{\gamma_s}[y \mid \mathbf x_i]
+    $$
+  - Move every atom to the $\lambda$-weighted average of its image: 
+    $$
+    \mathbf x_i^{(t+1)} = \sum_{s\in\mathcal S}\lambda_s \bar T_s(\mathbf x_i^{(t)})
+    $$
+
+This has a strong connection to the Gradient Descent scheme: on Wasserstein space, the functional $\mu \mapsto \frac12 \mathbb W_2^2(\mu, \nu)$ has Wasserstein gradient equal to the tangent field $(\mathrm{Id} - T^{\nu}_\mu)$. Hence, 
+
+$$
+\nabla_{\mathbb W_2}\mathcal F(\mu) = \sum_{s\in\mathcal S}\lambda_s(\mathrm{Id} - T^{\nu}_s)
+$$
+
+A Wasserstein gradient descent step is a push-forward along minus this field:
+$$
+\nu^{(t+1)} = \left(\mathrm{Id} - \tau \nabla_{\mathbb W_2}\mathcal F(\nu^{(t)})\right)_\#\nu^{(t)}= \left(\mathrm{Id} - \tau \sum_{s\in\mathcal S}\lambda_s (\mathrm{Id} - T_k)\right)_\#\nu^{(t)} \stackrel{\tau=1}= \left(\sum_{s\in\mathcal S}\lambda_s T_k\right)_\#\nu^{(t)}
+$$
+which is exactly the fixed-point update above. 
+
+
+<!-- This scheme is a discretization of the Lagrangian particle scheme to the continuity equation
+$$
+\partial_t \nu_t + \nabla\cdot (\mu_t v_t) = 0, \qquad v_t = \sum_{s\in\mathcal S}\lambda_s (T^\nu_s - \mathrm{Id})
+$$ 
+
+-->
+
+
+## The Sliced Wasserstein Surrogate
+
+The algorithm to calculate the Wasserstein barycenter is still computationally intractable as it is for $n \sim 10^6$ particles, which is the number of observations in a typical dataset, thus prompting us to find a method that can even be more tractable. Methods that rely on the closed form of the 1D optimal transport 
+
+Definition (Sliced Wasserstein): The Sliced Wasserstein is defined as
+
+$$
+\mathbb{SW}_2^2(\mu,\nu) = \int_{\mathbb S^{d-1}} \mathbb W_2^2(\theta_\#\mu, \theta_\#\nu) \, \mathrm d\sigma(\theta)
+$$
+
+where $\theta_\#$ denotes the pushforward operation induced by $x\mapsto \braket{\theta, x}$, and $\sigma$ denotes the uniform measure on the $n$-dimensional unit sphere.
+
+Intuitively, the procedure is
+- Pick a direction $\theta$ on the unit sphere
+- Projecting every point in both distributions onto that direction
+- Compute the 1D Wasserstein distance between these projections
+- Average over all possible directions, uniformly over the sphere.
+
+It can be verified that this is also a metric on $\mathcal P(\mathbb R^d)$, thus prompting us for a notion of the Sliced Wasserstein barycenter, which is defined synonymously:
+
+$$
+\nu^\star := \argmin_{\nu\in\mathcal P(\mathbb R^d)} \mathcal J(\nu) = \argmin_{\nu\in\mathcal P(\mathbb R^d)}\sum_{s\in\mathcal S} \lambda_s \mathbb{SW}_2^2(\nu,\mu_s)
+$$
+
+
+Its continuity equation reads
+$$
+\partial_t\nu_t + \nabla\cdot(\nu_t v_t) = 0, \qquad v_t = -\sum_{s\in\mathcal S}\lambda_s \int_{\mathbb S^{d-1}}\big(\braket{\theta, x} - T_{\theta, s}(\braket{\theta, x})\big) \theta \, \mathrm d\sigma(\theta)
+$$
+where $T_{\theta,s}$ is the 1D optimal map between $\theta_\#\nu$ and $\theta_\#\mu_s$.
+
+Building upon the previous framework, we can construct a similar scheme for finding the barycenter [Bonneel 2015]:
+
+- Initialize $\nu^{(0)} =  \sum_{i=1}^N \frac 1N \delta_{x_i}$ 
+- For $t = 0$ to $T$ (until convergence):
+  - Draw $\theta_1,...,\theta_L\sim \mathcal U(\mathbb S^{d-1})$ 
+  - For each direction $\theta_\ell$ and target $\mu_s$:
+    - Project $(\theta_\ell)_\#\mu_s$ 
+    - Compute the 1D transport map $T_{\ell, s}: \mathbb R\to\mathbb R$ from $\nu^{(t)} by sorting
+  - For each particle $i$, let $p_i = \langle\theta_\ell, x_i\rangle$: 
+  $$
+  v_i = \frac 1L \sum_{\ell=1}^L \sum_{s\in\mathcal S} \lambda_s \big(T_{\ell, s}(p_i) - p_i\big) \theta_\ell
+  $$
+
+  - Update particles: $x_i^{(t+1)} \leftarrow x_i^{(t)} + \eta v_i$ to obtain $\nu^{(t+1)}$
+
+
+Looking at the scheme via this point of view allow us to have a method to obtain a "transport map", which is not inherent to the Sliced Wasserstein, by flowing the points through the velocity field. This allows us to obtain transport maps to even out-of-sample points. Drawbacks of the flow map is in [Cozzi, Santambrogio]: convergence is not guaranteed and is conjectured to hold under some mild assumptions.
+
+A review on Sliced Optimal Transport can be found in [Khai Nguyen].
+
+
+With these tools available, we can make the connection to the fair regression problem in the following chapter.
+
+
+

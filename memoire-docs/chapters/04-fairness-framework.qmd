@@ -1,0 +1,276 @@
+# The Fair Regression Problem
+
+Let $(\Omega, \mathcal F, \mathbb P)$ be a probability space, on which we define a random triple $(X, S, Y) \sim \mu_{X, S, Y}$ taking values in $\mathcal X\times \mathcal S \times \mathcal Y$, with $\mathcal X = \mathbb R^p$, $|\mathcal S| < \infty$ and $\mathcal Y = \mathbb R^d_+$. 
+
+In the single-peril case $d = 1$, we have the classical regression problem with the pure premium functional be
+
+$$
+\eta(\mathbf{X, S}) = \mathbb E[Y \mid \mathbf{X, S}]
+$$
+
+assuming that $\mathbf{X, S}$ captures all information of the insured. This pure premium function is unobservable, that is, we can only estimate it using a pricing functional $\pi$.
+
+A model $\pi: \mathcal X\times \mathcal S \to \mathcal Y$, used to predict the pure premium function $\eta$, satisfies the (global) balance property if:
+
+$$
+\mathbb E[\pi(\mathbf{X, S})] = \mathbb E[Y]
+$$
+
+
+We would most like to measure the model $\pi$ with the mean squared risk w.r.t. $\eta$, i.e. $\mathbb E\Big[\big(\pi(\mathbf{X, S})-\eta(\mathbf{X, S})\big)^2\Big]$; however, since $\eta$ is unobservable, but it is the best estimate of $Y$ on the information set of $\mathbf{X, S}$, then equivalently (using Pythagoras' theorem) we can measure with the mean squared risk
+
+$$
+\mathcal R(\pi) = \mathbb E\Big[\big(Y - \pi(\mathbf{X, S})\big)^2\Big]
+$$
+
+and the Bayes' regressor $\eta$ is the function that minimizes this risk.
+
+For the case $d > 1$, a multivariate regressor $\boldsymbol \pi(\mathbf{X, S})$ is evaluated using
+
+
+$$
+\mathcal R(\boldsymbol\pi) = \mathbb E\Big[\big\|\mathbf Y - \boldsymbol\pi(\mathbf{X, S})\big\|^2\Big]
+$$
+
+Definition (Demographic Parity): A predictor $\mathbf \pi$ is said to be Demographic Parity-fair w.r.t. the sensitive attribute $S$ if it is statistically independent to $S$. Equivalently, 
+
+$$
+\mathbb P\big(\boldsymbol \pi(\mathbf{X, S})\in A\mid S = s\big) = P\big(\boldsymbol \pi(\mathbf{X, S})\in A\mid S = s'\big) \qquad \forall \,A \subset \mathcal Y, \,  s, s'\in \mathcal S
+$$
+
+Intuitively, satisfying DP requires that the outcomes of a model are equally distributed across
+different demographic groups, for this reason it is one definition of fairness in the group fairness sense.
+
+## Fair Regression with Wasserstein Barycenter
+
+Our discussion about the Wasserstein barycenter problem relate to the fair regression problem through the following theorem:
+
+Theorem [Chzhen, Le Gouic Projection to Fairness]: Let $\mathcal G$ be the set of (possibly random) predictors $\boldsymbol\pi$, and $\mathcal G_{\perp\!\!\perp}\subset \mathcal G$ the subclass of DP-fair predictors. 
+
+Here's a simplified but complete version of the theorem. I kept your opening and filled in the statement so the barycenter connection and the closed form both appear.
+quartoOur discussion about the Wasserstein barycenter problem relates to the fair
+regression problem through the following theorem in the case $d=1$.
+
+Throughout, write $f^\star(X,S)=\mathbb E[Y\mid X,S]$ for the unconstrained
+optimal predictor, let $\nu_s=\mathcal L\!\big(f^\star(X,S)\mid S=s\big)$ be its
+prediction distribution inside group $s$, with $p_s=\mathbb P(S=s)$ and CDF
+$F_s$. The risk is $\mathcal R(\boldsymbol\pi)=\mathbb E\big[(\boldsymbol\pi(X,S)-Y)^2\big]$.
+
+**Theorem (Chzhen–Le Gouic, Projection to Fairness; $d=1$).**
+Let $\mathcal G$ be the set of (possibly random) predictors $\boldsymbol\pi$, and
+$\mathcal G_{\perp\!\!\perp}\subset\mathcal G$ the DP-fair subclass. Then, for every fair $\boldsymbol\pi\in\mathcal G_{\perp\!\!\perp}$,
+
+$$
+\mathcal R(\boldsymbol\pi)-\mathcal R(\boldsymbol\eta)
+=\mathbb E\big[(\boldsymbol\pi(X,S)-\boldsymbol\eta(X,S))^2\big],
+$$
+
+so minimizing the risk over fair predictors is exactly the $L^2$-projection of
+$\eta$ onto $\mathcal G_{\perp\!\!\perp}$.
+
+That projection cost equals the weighted Wasserstein-2 barycenter cost of the group distributions:
+$$
+\min_{\boldsymbol\pi\in\mathcal G_{\perp\!\!\perp}}\mathcal R(\boldsymbol\pi)
+=\mathcal R(\boldsymbol\eta)
++\min_{\nu\in\mathcal P_2(\mathbb R)}\ \sum_{s\in\mathcal S}\lambda_s\,W_2^2(\mu_s,\nu),
+$$
+
+and the minimizing $\nu^*$ is the $W_2$-barycenter of $(\mu_s)_{s}$ with weights $(\lambda_s)_s$.
+
+Let $T_s$ be the optimal transport map from $\mu_s$ to $\nu$, then the optimal fair regressor $\boldsymbol\pi^\star$ is
+
+$$
+\boldsymbol \pi^\star(\mathbf X, s) = (T_s\circ \boldsymbol\eta)(\mathbf{X}, s)
+$$
+
+
+**Theorem.** Write $\mathcal R(\boldsymbol\pi)=\mathbb E\big[(Y-\boldsymbol\pi(\mathbf X,S))^2\big]$ and let $\boldsymbol\eta(\mathbf X,S)=\mathbb E[Y\mid \mathbf X,S]$ be the (unconstrained) Bayes regressor. For $s\in\mathcal S$ set the group weight $\lambda_s=\mathbb P(S=s)$ and the group score distribution
+$$
+\mu_s \;=\; \operatorname{Law}\!\big(\boldsymbol\eta(\mathbf X,S)\mid S=s\big),
+$$
+i.e. the law of $\boldsymbol\eta(\mathbf X,s)$ when $\mathbf X\sim \mathbb P_{\mathbf X\mid S=s}$. A (possibly randomized[^randomized]) predictor is *DP-fair*, $\boldsymbol\pi\in\mathcal G_{\perp\!\!\perp}$, iff $\boldsymbol\pi(\mathbf X,S)\perp\!\!\!\perp S$, that is, the output law $\operatorname{Law}(\boldsymbol\pi(\mathbf X,s)\mid S=s)$ is the **same** measure for every $s$. 
+
+[^randomized]: For randomized $\boldsymbol\pi(\mathbf X,S,U)$ randomized by the source of randomness $U$, we assume, as usual, that it is independent of $(\mathbf{X,S,Y})$.
+
+Proof 
+Insert $\boldsymbol\eta$ inside the square:
+$$
+Y-\boldsymbol\pi=(Y-\boldsymbol\eta)+(\boldsymbol\eta-\boldsymbol\pi),
+$$
+so that
+
+$$
+\mathcal R(\boldsymbol\pi)=\underbrace{\mathbb E[(Y-\boldsymbol\eta)^2]}_{=\ \mathcal R(\boldsymbol\eta)}+2\,\mathbb E\big[(Y-\boldsymbol\eta)(\boldsymbol\eta-\boldsymbol\pi)\big]+\mathbb E\big[(\boldsymbol\eta-\boldsymbol\pi)^2\big].
+$$
+Condition the cross term on $(\mathbf X,S)$. There $\boldsymbol\eta-\boldsymbol\pi$ is fixed, and since $U\perp\!\!\!\perp Y\mid(\mathbf X,S)$,
+
+$$
+\mathbb E\big[Y-\boldsymbol\eta\mid \mathbf X,S,U\big]=\mathbb E\big[Y-\boldsymbol\eta\mid \mathbf X,S\big]=\boldsymbol\eta-\boldsymbol\eta=0 .
+$$
+Hence the cross term vanishes and, for **every** $\boldsymbol\pi$ (fair or not),
+$$
+\boxed{\;\mathcal R(\boldsymbol\pi)-\mathcal R(\boldsymbol\eta)=\mathbb E\big[(\boldsymbol\pi(\mathbf X,S)-\boldsymbol\eta(\mathbf X,S))^2\big].\;}
+$$
+Minimizing $\mathcal R$ over $\mathcal G_{\perp\!\!\perp}$ therefore *is* the $L^2$-projection of $\boldsymbol\eta$ onto the fair class $\mathcal G_{\perp\!\!\perp}$. This proves the first display.
+
+Tower rule over $S$ gives
+$$
+\mathbb E\big[(\boldsymbol\pi-\boldsymbol\eta)^2\big]
+=\sum_{s\in\mathcal S}\lambda_s\,\mathbb E\big[(\boldsymbol\pi(\mathbf X,s)-\boldsymbol\eta(\mathbf X,s))^2\mid S=s\big].
+$$
+Fairness means there is a single output law $\nu\in\mathcal P_2(\mathbb R)$ with
+$$
+\operatorname{Law}\!\big(\boldsymbol\pi(\mathbf X,s)\mid S=s\big)=\nu\qquad\text{for all }s .
+$$
+
+Fix a fair $\boldsymbol\pi$ with output law $\nu$. Within group $s$, the pair $\big(\boldsymbol\eta(\mathbf X,s),\,\boldsymbol\pi(\mathbf X,s)\big)$ (under $\mathbf X\sim\mathbb P_{\mathbf X\mid S=s}$ and the randomization) is a coupling $\gamma_s$ whose first marginal is $\mu_s$ and second marginal is $\nu$. By definition of the squared Wasserstein-2 distance as the cheapest such coupling,
+$$
+\mathbb E\big[(\boldsymbol\pi(\mathbf X,s)-\boldsymbol\eta(\mathbf X,s))^2\mid S=s\big]
+=\!\int (b-a)^2\,d\gamma_s(a,b)\ \ge\ \inf_{\gamma\in\Pi(\mu_s,\nu)}\!\int (b-a)^2\,d\gamma
+=W_2^2(\mu_s,\nu).
+$$
+Summing with weights and then minimizing over the free choice of $\nu$,
+$$
+\mathcal R(\boldsymbol\pi)-\mathcal R(\boldsymbol\eta)\ \ge\ \sum_{s}\lambda_s\,W_2^2(\mu_s,\nu)\ \ge\ \min_{\nu\in\mathcal P_2(\mathbb R)}\sum_{s}\lambda_s\,W_2^2(\mu_s,\nu).
+$$
+Since this holds for every fair $\boldsymbol\pi$,
+$$
+\min_{\boldsymbol\pi\in\mathcal G_{\perp\!\!\perp}}\mathcal R(\boldsymbol\pi)-\mathcal R(\boldsymbol\eta)\ \ge\ \min_{\nu\in\mathcal P_2(\mathbb R)}\sum_{s}\lambda_s\,W_2^2(\mu_s,\nu). \tag{$\ge$}
+$$
+
+
+The map $\nu\mapsto\sum_s\lambda_s W_2^2(\mu_s,\nu)$ is exactly the weighted Wasserstein barycenter functional; on $\mathbb R$ its minimizer $\nu^\star$ exists (and is unique whenever some $\mu_s$ is non-atomic). Assume each $\mu_s$ is non-atomic, so the one-dimensional optimal transport map
+$$
+T_s=F_{\nu^\star}^{-1}\circ F_{\mu_s}
+$$
+from $\mu_s$ to $\nu^\star$ is well defined and monotone (Brenier / monotone rearrangement), and $(T_s)_\#\mu_s=\nu^\star$ with
+$$
+\int (T_s(a)-a)^2\,d\mu_s(a)=W_2^2(\mu_s,\nu^\star). \tag{$\ast$}
+$$
+Define the candidate predictor
+$$
+\boldsymbol\pi^\star(\mathbf X,s)=(T_s\circ\boldsymbol\eta)(\mathbf X,s).
+$$
+
+*Feasibility.* For $\mathbf X\sim\mathbb P_{\mathbf X\mid S=s}$ we have $\boldsymbol\eta(\mathbf X,s)\sim\mu_s$, hence $\boldsymbol\pi^\star(\mathbf X,s)\sim(T_s)_\#\mu_s=\nu^\star$, **the same law for every $s$**. Thus $\boldsymbol\pi^\star(\mathbf X,S)\perp\!\!\!\perp S$, i.e. $\boldsymbol\pi^\star\in\mathcal G_{\perp\!\!\perp}$.
+
+*Cost.* Using Step 1 and then $(\ast)$,
+$$
+\mathcal R(\boldsymbol\pi^\star)-\mathcal R(\boldsymbol\eta)
+=\sum_s\lambda_s\,\mathbb E\big[(T_s(\boldsymbol\eta(\mathbf X,s))-\boldsymbol\eta(\mathbf X,s))^2\mid S=s\big]
+=\sum_s\lambda_s\,W_2^2(\mu_s,\nu^\star)
+=\min_{\nu}\sum_s\lambda_s\,W_2^2(\mu_s,\nu). \tag{$\le$}
+$$
+
+Combining $(\ge)$ and $(\le)$, the feasible $\boldsymbol\pi^\star$ meets the lower bound, so it is optimal and
+$$
+\min_{\boldsymbol\pi\in\mathcal G_{\perp\!\!\perp}}\mathcal R(\boldsymbol\pi)
+=\mathcal R(\boldsymbol\eta)+\min_{\nu\in\mathcal P_2(\mathbb R)}\sum_{s\in\mathcal S}\lambda_s\,W_2^2(\mu_s,\nu),
+$$
+the minimizing $\nu^\star$ is the $W_2$-barycenter of $(\mu_s)_s$ with weights $(\lambda_s)_s$, and the optimal fair regressor is $\boldsymbol\pi^\star(\mathbf X,s)=(T_s\circ\boldsymbol\eta)(\mathbf X,s)$ where $T_s$ transports $\mu_s$ to $\nu^\star$. $\qquad\blacksquare$
+
+
+
+
+In the special case $d=1$, the barycenter's quantile function is the
+weighted average of the group quantile functions,
+$$
+Q(t)=\sum_{s\in\mathcal S}\lambda_s\,F_s^{-1}(t),\qquad t\in(0,1),
+$$
+and the optimal fair predictor is deterministic (no randomization is needed when
+$d=1$):
+
+$$
+\boldsymbol\pi^\star(x,s)
+= (Q\circ F_s)(\boldsymbol\eta(x,s))
+=\sum_{s'\in\mathcal S}\lambda_{s'} \big(F_{s'}^{-1}\circ F_s\big)\big(\boldsymbol\eta(x,s)\big).
+$$
+
+
+We see that in the case $d\ne 1$, the problem becomes much harder due to the fact there is no closed form solution for the transport map. Another source of difficulty comes from the fact that not only we need to learn a barycenter, but we would need a way to transport out-of-sample points (as it is expected that the predictions on the test set would not lie on the support of the training predictions), thus relying purely on Kantorovich approach requires either a randomized approach (which is not so well-appreciated in insurance), or a barycentric projection.
+
+A desirable property of this post-processing scheme is its preservation of the balance property:
+
+Theorem: Let $(\mu_s)_s$ have mean $m_s = \int z\mathrm d\mu_s(z)$, and let $(\lambda_s)_s$ be weights that sum to 1. Let 
+
+$$
+\nu^* := \argmin_{\nu \in \mathcal P_2(\mathbb R^d)} \mathcal F(\nu) = \argmin_{\nu \in \mathcal P_2(\mathbb R^d)} \sum_{s\in\mathcal S}\lambda_s \mathbb W_2^2(\mu_s, \nu)
+$$
+
+be the Wasserstein-2 barycenter. Then its mean is the weighted mean of group means:
+$$
+\int z\mathrm d\nu^*(z) = \sum_{s\in\mathcal S}\lambda_s m_s
+$$
+
+Lemma: For $\mu, \nu\in\mathcal P_2(\mathbb R^d)$ with mean $m_\mu, m_\nu$, let $\bar\mu = (\cdot - m_\mu)_\#\mu$ and $\bar\nu = (\cdot - m_\nu)_\#\nu$ be the centered measures. Then
+$$
+\mathbb W_2^2(\mu,\nu) = \|m_\mu - m_\nu\|^2 + \mathbb W_2^2(\bar\mu, \bar\nu)
+$$
+
+Therefore, the barycenter functional can be rewritten as follows:
+
+$$
+\mathcal F(\nu) = \sum_{s\in\mathcal S}\lambda_s \|m_s - m\|^2 + \sum_{s\in\mathcal S}\lambda_s \mathbb W_2^2(\bar\mu_s, \bar\nu)
+$$
+
+The location term is minimized at $m^* = \sum_s \lambda_s m_s$, and this optimal location is the same regardless of the shape $\bar \nu$. 
+
+It is evident in the case $d=1$, using the closed form formula of the transport map, that this balance property holds.
+
+
+
+There is also the method of pre-processing to fairness, i.e. dataset repair. We will show, by the following counterexample, why post-processing would prevail as more optimal:
+
+$$
+\min_{\tilde {\boldsymbol\pi} \in \mathcal G_{\perp\!\!\perp}}\mathbb E\Big[\|\mathbf Y - \tilde {\boldsymbol\pi} (\mathbf{X, S})\|^2\Big] < \min_{\boldsymbol\pi \in \mathcal G_{\mathcal X}}\mathbb E\Big[\|\mathbf Y - \boldsymbol\pi (\mathbf{\hat X})\|^2\Big]
+$$
+
+for a repaired dataset $\hat{\mathbf{X}}$ by Wasserstein barycenter.
+
+Example: Assume $X \perp\!\!\perp S$, respectively distributed as $X \sim\mu_X = \text{Unif}([0,1])$ and $S\sim \mu_S = \text{Bernoulli}(1/2)$. By construction, $(X, S)$ is DP-fair, and therefore $\mu_X$ doesn't need any repair. 
+
+Let $Y:= X \mathbb 1_{S=1} + (1-X)\mathbb 1_{S=0}$. Then the optimal Bayes regressor is
+
+$$
+\eta(X, S) = \mathbb E[Y \mid X, S] = Y
+$$
+
+$Y$ is fair since $Y\mid S \sim U([0, 1])$, but cannot be written as the function of solely $X$.
+
+
+In practice, pre-processing for fairness is still a very sound approach due to the fact that obtaining a perfect Bayes regressor is impossible, and modern ML/DL models can extract enough residual predictive signal from the repaired features $\hat{\mathbf X}$ to approach the achievable risk while still preserving the demographic-parity constraint *by construction*. The strictness of the inequality above rests on the idealization that it presumes access to the exact $\boldsymbol\eta$; the post-processed optimum is $\boldsymbol\pi^\star = T_s\circ\boldsymbol\eta$, so any estimation error in $\boldsymbol\eta$ propagates directly into both the risk and the fairness of the resulting predictor. This opens up both pre-processing and post-processing approaches for the fair regression problem. 
+
+## Sliced Wasserstein Barycenter Surrogate
+
+As discussed in chapter 2, the Sliced Wasserstein barycenter is desirable due to its tractability. However, to obtain the transport map one must integrate through the velocity field $v_t(x)$ to obtain $(T_s^\dagger)_\#\mu_s$. With this, the excess risk over the optimal Wasserstein case is:
+
+$$
+\mathcal R_{SW} - \mathcal R_W = [\mathcal R_{SW} - \sum_{s} \lambda_s W_2^2(\nu, \mu_s)] + 
+$$
+
+... (do some analysis)
+
+Although we sacrifice some optimality, we still obtain a DP-fair post-processing scheme. More importantly, this would still largely keep the geometry of the "barycenter" and even maintain the global balance property as in the Wasserstein case:
+
+Lemma: 
+
+$$
+\mathbb{SW}_2^2(\mu,\nu) = \frac 1d \|m_\mu-m_\nu\|^2 + \mathbb{SW}_2^2(\bar\mu,\bar\nu)
+$$
+
+Proof of lemma: using the fact that centering commutes with projection ($\overline{\theta_\#\mu} = \theta_\#\bar\mu$),
+
+$$
+\mathbb W_2^2 (\theta_\#\mu, \theta_\#\nu) = |\langle\theta,m_\mu\rangle- \langle\theta,m_\nu\rangle|^2 + \mathbb W_2^2(\overline{\theta_\#\mu}, \overline{\theta_\#\nu}) = \langle\theta, m_\mu-m_\nu\rangle^2 + \mathbb W_2^2(\theta_\#\bar\mu, \theta_\#\bar\nu)
+$$
+
+Integrating over $\theta\sim\sigma$, the shape part integrates to the $\mathbb SW$ by definition, and for the location part, isotropy of $\sigma$ gives $\int_{\mathbb S^{d-1}}\theta\theta^T\,\mathrm d\sigma = \frac 1d I$.
+
+Using the same argument as above, we recover the balance property.
+
+
+## Out-of-sample transport
+
+A requirement for fair regression to work in our context is that it must work with out-of-sample data. With our ..., 
+
+

@@ -1,0 +1,162 @@
+# Introduction
+
+## Defining Discrimination and Fairness
+
+When we talk about discrimination, we usually refer to the "Treatment or
+consideration based on class or category, such as race or gender, rather than
+individual merit; partiality or prejudice" [@americanheritage], which inherently
+carries a negative connotation. However, the term can also carry a more neutral
+meaning: "the act, practice, or an instance of separating or distinguishing
+categorically rather than individually" [@merriamwebster].
+
+In the insurance context, the term "discrimination", or sometimes referred to as
+risk classification, is the practice by which insurers categorize policyholders
+into distinct risk pools based on observable differences in their risk profiles,
+in order to charge premiums that reflect each group's level of risk. Insurance
+discrimination serves two primary economic justifications: it enables accurate
+pricing by aligning premiums with actual risk levels, and it incentivizes
+insureds to adopt risk-reducing behaviors in exchange for lower premiums.
+
+However, what is unique in insurance is that even statistical discrimination,
+which by definition is absent of any malicious intent, can pose moral and legal
+challenges [@avraham2017].
+
+Following @freeshwang2021, we use the term in a neutral manner.
+
+## Regulatory Landscape
+
+As a well-known example of antidiscrimination legislation, the EU "Gender
+Directive" [@genderdirective] serves as the prime example of the prohibition of
+the use of a protected variable.
+
+In the U.S., insurers can be restricted in the use of a protected variable. If
+this variable is an important rating factor and allowed to be used, regulators
+can limit its impact on compressing total premium ranges between the high-risk
+group and the low-risk group. [Certifying and Removing Disparate Impact]
+
+## The Pillars of Fairness
+
+
+
+
+### Actuarial Fairness
+
+### Group Fairness
+
+### Individual Fairness
+
+## Mitigation and Testing
+
+Mitigating discrimination is usually seen as paradoxical, because in order to
+avoid discrimination, we must create another discrimination — the point of the
+"reverse discrimination objection".
+
+### Pre-processing
+
+### In-processing
+
+### Post-processing
+
+## Two Worldviews
+
+See @fig-effort.
+
+```{=latex}
+\begin{figure}[htbp]
+\centering
+\IfFileExists{img/effort.png}{\includegraphics[width=0.7\textwidth]{img/effort.png}}{\fbox{\rule{0pt}{4cm}\rule{0.6\textwidth}{0pt} placeholder figure}}
+\caption{Une figure}
+\label{fig-effort}
+\end{figure}
+```
+
+
+## 1.3 Related work
+ 
+Our contribution sits at the intersection of two literatures that have so far developed largely in parallel.
+ 
+**Multi-peril and dependent-risk pricing.** The idea of modelling insurance coverages jointly
+rather than in isolation is most closely associated with Frees and co-authors. Frees et al.
+(2009) introduced a hierarchical claims model separating occurrence and severity with dependence
+components; Frees et al. (2010) proposed dependent multi-peril ratemaking models under the
+individual risk model, using multivariate binary regression and Gaussian copulas to capture
+dependence in claim occurrence across coverages; and Frees et al. (2016) extended this to the
+collective risk model, modelling multivariate frequencies and severities with copulas. Related
+strands use copula-based multivariate Tweedie models (Shi, 2016), longitudinal multi-peril
+ratemaking for property insurance (Yang and Shi, 2019), multilevel copula models (Shi et al.,
+2016), and cross-product credibility that links, for example, home and motor insurance at the
+household level (Pechon et al., 2021). Across this body of work the recurring message is that
+perils are dependent and that jointly modelling them improves both experience rating and risk
+margins relative to the univariate convention. None of these works, however, considers fairness
+or the presence of protected attributes.
+ 
+**Fairness in pricing and optimal-transport methods.** Within actuarial science, Lindholm et
+al. (2022) introduced *discrimination-free* pricing, a procedure that first fits a model on all
+information and then averages out the direct effect of the protected attribute; subsequent work
+clarified the relationship between proxy discrimination and demographic disparities and the
+attendant loss of the balance property (Lindholm et al., 2024). A complementary and, for our
+purposes, more directly relevant line uses **optimal transport** to enforce demographic parity.
+In the machine-learning literature, Gordaliza et al. (2019) used optimal transport to repair
+data, and Chzhen et al. (2020) and Le Gouic et al. (2020) established the key characterization
+that the demographic-parity-optimal predictor under squared loss is obtained by pushing each
+group-conditional score distribution onto their **Wasserstein-2 barycenter**. Charpentier, Hu
+and Ratz (2023) brought this technique into insurance, replacing the crude re-scaling of premiums
+with a Wasserstein-barycenter post-processing step that achieves strong demographic parity while
+minimizing distortion of the original tariff. The multi-task extension of Hu et al. (2023), which
+connects fairness across several simultaneous tasks to *multi-marginal* Wasserstein barycenters,
+is the closest existing work to the multi-peril setting, and recent work on
+sliced-Wasserstein barycenters for *marginal* fairness (Nguyen and Ho, 2024) points toward
+scalable solutions in higher dimensions. What is missing is a treatment tailored to the
+multi-peril actuarial problem, where the object to be made fair is a dependent vector of
+coverage premiums and where the intervention must be both theoretically grounded and
+computationally tractable at portfolio scale.
+ 
+## 1.4 Contributions
+ 
+This thesis develops a **post-processing framework** for mitigating demographic-parity
+unfairness in multi-peril nonlife insurance pricing based on Wasserstein and sliced Wasserstein
+barycenters. Post-processing is deliberate: it acts on the outputs of any already-fitted pricing
+model, whatever its functional form, and therefore integrates with existing actuarial pipelines
+without requiring them to be re-estimated under fairness constraints.
+ 
+The starting point is the observation that the single-peril case is, in a sense, already solved.
+When the premium is a scalar, the Wasserstein-2 barycenter of the group-conditional premium
+distributions admits a **closed form**: its quantile function is simply the (group-weighted)
+average of the group-specific quantile functions, so achieving demographic parity reduces to an
+inexpensive quantile-based recalibration (Agueh and Carlier, 2011; Chzhen et al., 2020;
+Charpentier et al., 2023). The multi-peril case is fundamentally harder. Once the premium is a
+*vector*, the one-dimensional quantile machinery no longer applies, no closed-form barycenter
+exists in general, and computing the free-support Wasserstein barycenter of the empirical
+group distributions requires solving a large linear program — a problem that scales poorly with
+portfolio size and with the number of perils.
+ 
+Against this background the thesis makes the following contributions.
+ 
+First, we **formulate** the fair multi-peril pricing problem: we state demographic parity for a
+vector of coverage premiums, distinguish it from coordinate-wise (marginal) parity, and cast the
+fairness intervention as the projection of each group's joint premium distribution onto their
+multivariate Wasserstein barycenter.
+ 
+Second, we give the **theoretical argument** for the barycenter as the correct target — that,
+among all demographic-parity-satisfying adjustments, mapping each group to the group-weighted
+Wasserstein barycenter is optimal in the sense of minimizing the aggregate transport cost, and
+hence the loss of predictive information, incurred in achieving fairness — extending the
+one-dimensional characterization to the multivariate, multi-peril setting.
+ 
+Third, because the exact multivariate barycenter is computationally intractable at realistic
+scale, we develop a **tractable surrogate** based on the *sliced* Wasserstein barycenter, which
+replaces the intractable multivariate optimal-transport problem with an aggregate of
+one-dimensional problems along random projections, each of which enjoys the closed-form quantile
+solution. This restores computational feasibility while retaining a principled connection to the
+exact barycenter.
+ 
+Finally, in keeping with the goal of providing a *framework* rather than a single algorithm, we
+situate our proposal among **alternatives** — including entropic (Sinkhorn) regularization of
+the exact barycenter, the Gaussian-barycenter special case, and multi-marginal formulations —
+and discuss **future directions**, among them the extension to more than two protected groups
+and to continuous sensitive attributes, the interaction between joint fairness and the balance
+property of the tariff, and the trade-off between marginal and joint parity in multi-peril
+products.
+ 
+The remainder of the thesis is organized as follows. Chapter 2 introduces the multiperil pricing problem. Chapter 3 reviews
+the necessary background on optimal transport, Wasserstein distances and barycenters. Chapter 4 formalizes the fair regression problem in an insurance context. Chapter 5 develops the transport-based framework its algorithm based on the Sliced Wasserstein barycenter surrogate. Chapter 6 reports numerical experiments on synthetic and real insurance data. Finally, Chapter 7 discusses alternatives, limitations and directions for future work.

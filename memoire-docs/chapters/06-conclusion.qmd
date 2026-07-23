@@ -1,0 +1,13 @@
+# Discussion and Conclusion
+
+## Summary of Contributions
+
+## Back to Worldviews
+
+## Limitations and Future Works
+
+The work limits only to the simplest notions in optimal transport, where algorithms are fairly easy to follow. Ideas in Neural Optimal Transport, i.e. solving the transport problem via an (often structured) Artificial Neural Network, are very valuable. The most relevant application is [Carassai ETHZ], and many others who have proposed algorithms for Wasserstein Barycenter. We use the Sliced Wasserstein to keep the maths simple, but the neural approach aligns more closely with the...
+
+
+
+## Conclusion

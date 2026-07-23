@@ -1,0 +1,8 @@
+# Algorithms for Optimal Transport
+
+## Exact Algorithmic Optimal Transport
+
+
+
+## Approximate Algorithmic Optimal Transport
+
